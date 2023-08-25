@@ -26,51 +26,6 @@ function page() {
 
     <div className="flex flex-col items-center space-y-8 p-20 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
-      {/* <Card className="w-full md:w-1/3 ">
-        <CardHeader className="flex items-center justify-center font-bold capitalize">
-          preach events
-        </CardHeader>
-        <CardContent>
-          <Image 
-            className="object-cover z-5"
-            alt="Avatar"
-            width="700"
-            height="700" 
-            src='/images/img-home.jpg'
-            sizes="(max-width: 768px) 100vw"
-          />
-        </CardContent>
-      </Card>
-      <Card className="w-full md:w-1/3  ">
-        <CardHeader className="flex items-center justify-center font-bold capitalize">
-          preach events
-        </CardHeader>
-        <CardContent>
-          <Image 
-            className="object-cover z-5"
-            alt="Avatar"
-            width="700"
-            height="700" 
-            src='/images/img-home.jpg'
-            sizes="(max-width: 768px) 100vw"
-          />
-        </CardContent>
-      </Card>
-      <Card className="w-full md:w-1/3  ">
-        <CardHeader className="flex items-center justify-center font-bold capitalize">
-          preach events
-        </CardHeader>
-        <CardContent>
-          <Image 
-            className="object-cover z-5"
-            alt="Avatar"
-            width="700"
-            height="700" 
-            src='/images/img-home.jpg'
-            sizes="(max-width: 768px) 100vw"
-          />
-        </CardContent>
-      </Card> */}
     </div>
     <Blog/>
     </div>

@@ -1,4 +1,3 @@
-import Container from '@/lib/container'
 import React from 'react'
 
 function Blog() {
