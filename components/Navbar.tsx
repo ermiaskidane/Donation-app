@@ -21,9 +21,9 @@ const Navbar = () => {
 
   const routes = [
     {
-      href: `/home`,
+      href: `/`,
       label: "Home",
-      active: pathName === `/home`
+      active: pathName === `/`
     },
     {
       href: `/blog`,

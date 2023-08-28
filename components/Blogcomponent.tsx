@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Blog() {
+function Blogcomponent() {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
       <div className="mb-12 space-y-2 text-center">
@@ -69,4 +69,4 @@ function Blog() {
   )
 }
 
-export default Blog
+export default Blogcomponent

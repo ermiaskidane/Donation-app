@@ -1,4 +1,4 @@
-import Blog from '@/components/Blog'
+import Blogcomponent from '@/components/Blogcomponent'
 import Event from '@/components/Event'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
@@ -27,7 +27,7 @@ function page() {
     <div className="flex flex-col items-center space-y-8 p-20 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
-    <Blog/>
+    <Blogcomponent/>
     </div>
   )
 }
