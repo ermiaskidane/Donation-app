@@ -6,10 +6,13 @@ import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "./ui/menub
 import Link from "next/link";
 import { ChurchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import useLoginModal from "@/hooks/useLoginModal";
 
 const Navbar = () => {
   const pathName = usePathname();
   const params = useParams() 
+
+  const loginModal = useLoginModal()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,11 +38,6 @@ const Navbar = () => {
       label: "About",
       active: pathName === `/about`
     },
-    {
-      href: `/login`,
-      label: "Login",
-      active: pathName === `/login`
-    }
     // {
     //   href: `/contact`,
     //   label: "Contact Us",
@@ -74,19 +72,35 @@ const Navbar = () => {
                             {
                                 routes.map((link) => (
                                     <li>
-                                        <Link key={link.label} href={link.href} className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                        <Link 
+                                          key={link.label} 
+                                          href={link.href}
+                                          className={
+                                          cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", 
+                                          link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}
+                                        >
                                             <span>{link.label}</span>
                                         </Link>
                                     </li>
                                 ))
                             }
+                            <li>
+                              <Link href="/login" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>members</span>
+                              </Link>
+                            </li>
+                            <li>
+                              <p
+                                onClick={loginModal.onOpen} 
+                                className="hover:text-primary cursor-pointer block transition dark:hover:text-white md:px-4 md:text-base"
+                              >
+                                  <span>Login</span>
+                              </p>
+                            </li>
                         </ul>
                     </div>
 
                     <div className="mt-12 lg:mt-0">
-                        <Link href="/register" className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
-                            <span className="relative text-sm font-semibold text-white"> Get Started</span>
-                        </Link>
                     </div>
                 </div>
 
@@ -99,19 +113,23 @@ const Navbar = () => {
                             {
                                 routes.map((link) => (
                                     <li>
-                                        <Link href={link.href} className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                        <Link href={link.href} className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base",  link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
                                             <span>{link.label}</span>
                                         </Link>
                                     </li>
                                 ))
                             }
+                            <li>
+                              <Link href="/login" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>members</span>
+                              </Link>
+                            </li>
+                            <li>
+                              <p className=" text-gray-600 cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base ">
+                                  <span>Login</span>
+                              </p>
+                            </li>
                         </ul>
-                    </div>
-
-                    <div className="mt-12 lg:mt-0">
-                        <Link href="/register" className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
-                            <span className="relative text-sm font-semibold text-white"> Get Started</span>
-                        </Link>
                     </div>
                 </div>  
                 </>

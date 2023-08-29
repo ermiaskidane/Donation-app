@@ -1,3 +1,4 @@
+import Blogcomponent from '@/components/Blogcomponent'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -46,6 +47,7 @@ function page() {
             </Link> 
         </div>
       </article>
+      <Blogcomponent />
     </section>
   )
 }
