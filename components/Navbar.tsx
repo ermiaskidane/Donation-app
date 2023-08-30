@@ -125,7 +125,9 @@ const Navbar = () => {
                               </Link>
                             </li>
                             <li>
-                              <p className=" text-gray-600 cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base ">
+                              <p 
+                              onClick={loginModal.onOpen} 
+                              className=" text-gray-600 cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base ">
                                   <span>Login</span>
                               </p>
                             </li>
