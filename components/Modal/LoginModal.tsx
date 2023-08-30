@@ -1,9 +1,9 @@
 "use client"
 
+import { useCallback, useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 // import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
-import { useCallback, useState } from "react";
 import { 
   FieldValues, 
   SubmitHandler,
@@ -23,6 +23,12 @@ const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [shieldModal, setShieldModal] = useState(loginModal.isOpen);
+
+  useEffect(() => {
+    setShieldModal(loginModal.isOpen);
+  }, [loginModal.isOpen]);
 
   const { 
     register, 
@@ -99,16 +105,19 @@ const onToggle = useCallback(() => {
   )
 
   return (
-    <Modal
-      disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      title="Login"
-      actionLabel="Continue"
-      onClose={loginModal.onClose}
-      onSubmit={onSubmit}
-      body={bodyContent}
-      footer={footerContent}
-    />
+    <>
+      {shieldModal ? <div className="fixed left-0 top-0 w-screen h-screen z-40  opacity-70 bg-current" onClick={loginModal.onClose}></div> : <></>}
+        <Modal
+        disabled={isLoading}
+        isOpen={loginModal.isOpen}
+        title="Login"
+        actionLabel="Continue"
+        onClose={loginModal.onClose}
+        onSubmit={onSubmit}
+        body={bodyContent}
+        footer={footerContent}
+      />
+    </>
   )
 }
 

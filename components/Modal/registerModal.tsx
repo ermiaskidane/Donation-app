@@ -1,9 +1,9 @@
 'use client';
 
+import { useCallback, useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 // import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
-import { useCallback, useState } from "react";
 // import { toast } from "react-hot-toast";
 import { 
   FieldValues, 
@@ -24,6 +24,12 @@ const RegisterModal = () =>{
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false)
+
+  const [shieldModal, setShieldModal] = useState(registerModal.isOpen);
+
+  useEffect(() => {
+    setShieldModal(registerModal.isOpen);
+  }, [registerModal.isOpen]);
 
   const { 
     register, 
@@ -114,7 +120,9 @@ const RegisterModal = () =>{
   )
 
   return (
-    <Modal
+    <>
+      {shieldModal ? <div className="fixed left-0 top-0 w-screen h-screen z-40  opacity-70 bg-current" onClick={registerModal.onClose}></div> : <></>}
+      <Modal
       disabled={isLoading}
       isOpen={registerModal.isOpen}
       title="Register"
@@ -124,6 +132,7 @@ const RegisterModal = () =>{
       body={bodyContent}
       footer={footerContent}
     />
+    </>
   );
 }
 
