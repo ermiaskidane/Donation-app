@@ -24,7 +24,7 @@ export const MembersClient: React.FC<MembersClientProps> = ({
     <>
     <div className="flex items-center justify-between">
     <Heading title={`Products ()`} subtitle="Manage products for your store" />
-    <Button >
+    <Button onClick={() => router.push(`/members/new`)} >
       <Plus className="mr-2 h-4 w-4" /> Add New
     </Button>
     </div>
