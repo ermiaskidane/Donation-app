@@ -1,6 +1,7 @@
 "use client"
 
 import * as z from "zod"
+import axios from "axios"
 import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Heading from '../../../../../../components/Heading'
@@ -11,22 +12,24 @@ import { Trash } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { User, Member, Donation } from "@prisma/client"
 
 const formSchema = z.object({
   name: z.string().min(1),
-  phone: z.number().min(1),
+  phone: z.coerce.number().min(1),
   email: z.string().min(1),
-  amount: z.number().min(1),
+  amount: z.coerce.number().min(1),
 })
 
 type MemberFormValues = z.infer<typeof formSchema>
 
 interface MemberFormProps {
-  initialData?: {
-    name?: string,
-    phone?: number,
-    email?: string,
-    amount?: number} | null;
+  initialData: Member | null
+  // initialData?: {
+  //   name?: string,
+  //   phone?: number,
+  //   email?: string,
+  //   amount?: number} | null;
 }
 
 export const MemberForm: React.FC<MemberFormProps> = ({
@@ -54,7 +57,21 @@ export const MemberForm: React.FC<MemberFormProps> = ({
   })
 
   const onSubmit = async (data: MemberFormValues) => {
-    console.log("MemberFormValues type")
+    try {
+      setLoading(true)
+
+      // if(initialData){
+      //   await axios.patch(`/api/member/${params.memberId}`, data)
+      // } else {
+        await axios.post(`/api/member/${params.memberId}`, data)
+      // }
+    } catch(error: any){
+      console.log("something went wrong")
+      // toast.error('Something went wrong.');
+    } finally{
+      setLoading(false);
+    }
+    // console.log("MemberFormValues type", data)
   }
 
   return (

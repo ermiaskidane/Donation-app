@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
+import { UserButton, auth, useAuth } from '@clerk/nextjs';
 import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import Link from "next/link";
 import { ChurchIcon } from "lucide-react";
@@ -11,11 +12,13 @@ import useLoginModal from "@/hooks/useLoginModal";
 const Navbar = () => {
   const pathName = usePathname();
   const params = useParams() 
+  const { userId } = useAuth();
 
   const loginModal = useLoginModal()
 
   const [isOpen, setIsOpen] = useState(false)
 
+  // mobile ToggleBar
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)
   },[])
@@ -67,7 +70,7 @@ const Navbar = () => {
                 </div>
                 <div id="navLayer" aria-hidden="true" className="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 bg-white/70 backdrop-blur-2xl transition duration-500 dark:bg-gray-900/70 lg:hidden"></div>
                 <div id="navlinks" className="invisible absolute top-full left-0 z-20 w-full origin-top-right translate-y-1 scale-90 flex-col flex-wrap justify-end gap-6 rounded-3xl border border-gray-100 bg-white p-8 opacity-0 shadow-2xl shadow-gray-600/10 transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none lg:visible lg:relative lg:flex lg:w-7/12 lg:translate-y-0 lg:scale-100 lg:flex-row lg:items-center lg:gap-0 lg:border-none lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none">
-                    <div className="w-full text-gray-600 dark:text-gray-200 lg:w-auto lg:pr-4 lg:pt-0">
+                    <div className="w-full flex text-gray-600 dark:text-gray-200 lg:w-auto lg:pr-4 lg:pt-0">
                         <ul className="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                             {
                                 routes.map((link) => (
@@ -89,21 +92,29 @@ const Navbar = () => {
                                   <span>members</span>
                               </Link>
                             </li>
-                            <li>
-                              <p
-                                onClick={loginModal.onOpen} 
-                                className="hover:text-primary cursor-pointer block transition dark:hover:text-white md:px-4 md:text-base"
-                              >
+                            {!userId  && (
+                              <li>
+                                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
                                   <span>Login</span>
-                              </p>
-                            </li>
+                                </Link>
+                              </li>)
+                            }
+                            {userId  && (
+                              <li>
+                                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>profile</span>
+                                </Link>
+                              </li>
+                              )
+                            }
                         </ul>
-                    </div>
-
-                    <div className="mt-12 lg:mt-0">
+                        <div className={`${userId ? "ml-5 -translate-y-1": "" }`}>
+                          <UserButton afterSignOutUrl='/' />
+                        </div>
                     </div>
                 </div>
 
+                {/* for mobile NavBar  */}
                 {isOpen && (
                   <>
                   <div id="navLayer" aria-hidden="true" className="fixed inset-0 z-10 h-screen w-screen origin-top scale-y-100  bg-white/70 backdrop-blur-2xl transition duration-500 dark:bg-gray-900/70 lg:hidden"></div>
@@ -124,14 +135,25 @@ const Navbar = () => {
                                   <span>members</span>
                               </Link>
                             </li>
-                            <li>
-                              <p 
-                              onClick={loginModal.onOpen} 
-                              className=" text-gray-600 cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base ">
+                            {!userId  && (
+                              <li>
+                                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
                                   <span>Login</span>
-                              </p>
-                            </li>
+                                </Link>
+                              </li>)
+                            }
+                            {userId  && (
+                              <li>
+                                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>profile</span>
+                                </Link>
+                              </li>
+                              )
+                            }
                         </ul>
+                        <div className={`${userId ? "ml-4 translate-y-6": "" }`}>
+                          <UserButton afterSignOutUrl='/' />
+                        </div>
                     </div>
                 </div>  
                 </>

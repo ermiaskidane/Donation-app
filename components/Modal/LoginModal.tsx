@@ -106,7 +106,7 @@ const onToggle = useCallback(() => {
 
   return (
     <>
-      {shieldModal ? <div className="fixed left-0 top-0 w-screen h-screen z-40  opacity-70 bg-current" onClick={loginModal.onClose}></div> : <></>}
+      {shieldModal ? <div className="fixed left-0 top-0 w-screen h-screen z-40  opacity-70 bg-current" onClick={() => console.log("hello")}></div> : <></>}
         <Modal
         disabled={isLoading}
         isOpen={loginModal.isOpen}

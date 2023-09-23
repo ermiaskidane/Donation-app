@@ -1,0 +1,76 @@
+import { NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs';
+
+import { db } from '@/lib/db';
+
+export async function POST(
+  req: Request,
+  {params}: {params: {memberId: string}}
+){
+  try{
+    const {userId} = auth()
+
+    const body = await req.json();
+
+    const { name, phone, email, amount} = body
+
+    if(!userId) {
+      return new NextResponse("Unauthenticated", { status: 403 });
+    }
+
+    if (!name) {
+      return new NextResponse("Name is required", { status: 400 });
+    }
+
+    if (!phone) {
+      return new NextResponse("Phone is required", { status: 400 });
+    }
+
+    if (!email) {
+      return new NextResponse("Email is required", { status: 400 });
+    }
+
+    if (!amount) {
+      return new NextResponse("Amount is required", { status: 400 });
+    }
+
+    if (!params.memberId) {
+      return new NextResponse("Member id is required", { status: 400 });
+    }
+
+    // first check if user in model user
+    const UserById = await db.user.findFirst({
+      where: {
+        userId 
+      }
+    })
+
+    console.log("@@@@@@@@@@@@@@@@@@", UserById)
+
+    if (!UserById) {
+      return new NextResponse("Unauthorized", { status: 405 });
+    }
+
+    const member = await db.member.create({
+      data: {
+        name,
+        phone,
+        email,
+        amount,
+        userId
+        // donations: {
+        //   create: {
+        //     data: {
+        //       amount
+        //     }
+        //   }
+        // }
+      }
+    })
+
+    return NextResponse.json(member);
+  } catch(error){
+    console.log('[MEMBER_POST]', error)
+    return new NextResponse("Internal Error", {status: 500})
+  }
+}
