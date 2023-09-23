@@ -49,8 +49,8 @@ model Member {
 }
 
 model Donation {
-  id     String   @id @default(auto()) @map("_id") @db.ObjectId
-  date   DateTime
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  dtime  String
   amount Float
 
   memberId String  @db.ObjectId

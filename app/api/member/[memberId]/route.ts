@@ -57,16 +57,20 @@ export async function POST(
         phone,
         email,
         amount,
-        userId
-        // donations: {
-        //   create: {
-        //     data: {
-        //       amount
-        //     }
-        //   }
-        // }
+        userId: UserById.id,
+        donations: {
+          create: {
+              dtime: "jan-2023",
+              amount,
+          }
+        }
+      },
+      include: {
+        donations: true
       }
     })
+
+    console.log("::::::::::::::member:::::::::::::", member)
 
     return NextResponse.json(member);
   } catch(error){

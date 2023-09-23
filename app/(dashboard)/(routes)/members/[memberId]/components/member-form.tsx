@@ -65,6 +65,9 @@ export const MemberForm: React.FC<MemberFormProps> = ({
       // } else {
         await axios.post(`/api/member/${params.memberId}`, data)
       // }
+
+      router.refresh();
+      router.push('/members');
     } catch(error: any){
       console.log("something went wrong")
       // toast.error('Something went wrong.');
