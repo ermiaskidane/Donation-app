@@ -13,10 +13,11 @@ import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { User, Member, Donation } from "@prisma/client"
+import toast from "react-hot-toast"
 
 const formSchema = z.object({
   name: z.string().min(1),
-  phone: z.coerce.number().min(1),
+  phone: z.string().min(1),
   email: z.string().min(1),
   amount: z.coerce.number().min(1),
 })
@@ -24,7 +25,9 @@ const formSchema = z.object({
 type MemberFormValues = z.infer<typeof formSchema>
 
 interface MemberFormProps {
-  initialData: Member | null
+  initialData: Member & {
+    donations: Donation[]
+  } | null
   // initialData?: {
   //   name?: string,
   //   phone?: number,
@@ -38,6 +41,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
   const params = useParams();
   const router = useRouter();
 
+  console.log("param memberID", params.memberId)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -50,7 +54,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: "",
-      phone: 0,
+      phone: "",
       email: "",
       amount: 0
     }
@@ -60,17 +64,19 @@ export const MemberForm: React.FC<MemberFormProps> = ({
     try {
       setLoading(true)
 
-      // if(initialData){
-      //   await axios.patch(`/api/member/${params.memberId}`, data)
-      // } else {
+      if(initialData){
+        // console.log("here is the initial data", initialData)
+        await axios.patch(`/api/member/${params.memberId}/update`, data)
+      } else {
         await axios.post(`/api/member/${params.memberId}`, data)
-      // }
+      }
 
       router.refresh();
       router.push('/members');
+      toast.success(toastMessage)
     } catch(error: any){
-      console.log("something went wrong")
-      // toast.error('Something went wrong.');
+      // console.log("something went wrong")
+      toast.error('Something went wrong.');
     } finally{
       setLoading(false);
     }

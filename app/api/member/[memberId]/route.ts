@@ -78,3 +78,43 @@ export async function POST(
     return new NextResponse("Internal Error", {status: 500})
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { memberId: string} }
+) {
+  try {
+    const { userId } = auth();
+
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", params.memberId)
+
+    if (!userId) {
+      return new NextResponse("Unauthenticated", { status: 403 });
+    }
+
+    if (!params.memberId) {
+      return new NextResponse("Product id is required", { status: 400 });
+    }
+
+    const UserAdmin = await db.user.findFirst({
+      where: {
+        userId
+      }
+    });
+
+    if (UserAdmin?.role !== "ADMIN"){
+      return new NextResponse("Unauthorized", { status: 405 });
+    }
+
+    const product = await db.member.delete({
+      where: {
+        id: params.memberId
+      },
+    });
+  
+    return NextResponse.json(product);
+  } catch (error) {
+    console.log('[PRODUCT_DELETE]', error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+};

@@ -23,8 +23,9 @@ export const MembersClient: React.FC<MembersClientProps> = ({
   return  (
     <>
     <div className="flex items-center justify-between">
-    <Heading title={`Products ()`} subtitle="Manage products for your store" />
-    <Button onClick={() => router.push(`/members/new`)} >
+    <Heading title={`Members ()`} subtitle="Manage members for your group" />
+    {/* as mongodb has to check through ObjectIDwhich has hex string with 12 bytes I used a random number insted of string */}
+    <Button onClick={() => router.push(`/members/6512c326f323f44d75c5414d`)} >
       <Plus className="mr-2 h-4 w-4" /> Add New
     </Button>
     </div>

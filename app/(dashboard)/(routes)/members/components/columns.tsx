@@ -10,7 +10,7 @@ export type MembersColumn = {
   name: string;
   phone: string;
   email: string;
-  amount: string;
+  amount: number;
   createdAt: string;
 }
 
