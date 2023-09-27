@@ -22,6 +22,8 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
+  // console.log("£££££££££££££££££££££££", data.id)
+
   const onConfirm = async () => {
     try {
       setLoading(true);
@@ -53,9 +55,16 @@ export const CellAction: React.FC<CellActionProps> = ({
       <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
+          // the long hex string is a random number I place inorder to create a new donation
+          // otherwise it will go for update donation
+            onClick={() => router.push(`/members/650eaede98613587b24e4d7b/donation`)}
+          >
+            <Copy className="mr-2 h-4 w-4" /> Add Donation
+          </DropdownMenuItem>
+          <DropdownMenuItem
             onClick={() => router.push(`/members/${data.id}/donation`)}
           >
-            <Copy className="mr-2 h-4 w-4" /> Copy Id
+            <Copy className="mr-2 h-4 w-4" /> Update Donation
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/${data.id}/chart`)}
@@ -65,12 +74,12 @@ export const CellAction: React.FC<CellActionProps> = ({
           <DropdownMenuItem
             onClick={() => router.push(`/members/${data.id}`)}
           >
-            <Edit className="mr-2 h-4 w-4" /> Update
+            <Edit className="mr-2 h-4 w-4" /> Update member
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setOpen(true)}
           >
-            <Trash className="mr-2 h-4 w-4" /> Delete
+            <Trash className="mr-2 h-4 w-4" /> Delete member
           </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

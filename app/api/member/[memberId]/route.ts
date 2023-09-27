@@ -39,15 +39,26 @@ export async function POST(
     }
 
     // first check if user in model user
-    const UserById = await db.user.findFirst({
+    // const UserById = await db.user.findFirst({
+    //   where: {
+    //     userId 
+    //   }
+    // })
+
+    // console.log("@@@@@@@@@@@@@@@@@@", UserById)
+
+    // if (!UserById) {
+    //   return new NextResponse("Unauthorized", { status: 405 });
+    // }
+
+    // first check if user role is ADMIN
+    const UserAdmin = await db.user.findFirst({
       where: {
-        userId 
+        userId,
       }
     })
 
-    console.log("@@@@@@@@@@@@@@@@@@", UserById)
-
-    if (!UserById) {
+    if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
@@ -57,7 +68,7 @@ export async function POST(
         phone,
         email,
         amount,
-        userId: UserById.id,
+        userId: UserAdmin.id,
         donations: {
           create: {
               dtime: "jan-2023",
@@ -69,8 +80,6 @@ export async function POST(
         donations: true
       }
     })
-
-    console.log("::::::::::::::member:::::::::::::", member)
 
     return NextResponse.json(member);
   } catch(error){
@@ -85,8 +94,6 @@ export async function DELETE(
 ) {
   try {
     const { userId } = auth();
-
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", params.memberId)
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -114,7 +121,7 @@ export async function DELETE(
   
     return NextResponse.json(product);
   } catch (error) {
-    console.log('[PRODUCT_DELETE]', error);
+    console.log('[MEMBER_DELETE]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };

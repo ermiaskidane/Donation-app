@@ -1,4 +1,5 @@
 import React from 'react'
+import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import {DonationForm} from './components/donation-form'
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
@@ -7,15 +8,19 @@ const AddDonation = async ({
   params
 }: {
   params: { memberId?: string }
-}) =>{
+}) => {
 
-  const member = await db.member.findUnique({
+  const user = await currentUser();
+
+  const userRole = await db.user.findUnique({
     where: {
-      id: params.memberId,
+      userId: user?.id,
     }
   });
 
-  if(!member?.id){
+  // console.log("@@@@@@@@@@@@@", userRole)
+
+  if(userRole?.role !== "ADMIN"){
     redirect("/members");
   }
 
@@ -26,7 +31,7 @@ const AddDonation = async ({
   });
 
   console.log("@@@@@@@@@@@@@", donation)
-  console.log("......../", params.memberId)
+  // console.log("......../", params.memberId)
   return (
     <div className='flex-col'>
       <div className="flex-1 space-y-4 p-8 pt-6">

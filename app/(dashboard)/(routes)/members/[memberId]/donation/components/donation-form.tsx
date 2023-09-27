@@ -2,6 +2,11 @@
 
 import React, {useState} from 'react'
 import * as z from "zod"
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useForm } from "react-hook-form"
+import { Donation } from '@prisma/client'
+import { useParams, useRouter } from 'next/navigation'
 import {
   Form,
   FormControl,
@@ -11,11 +16,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import { Donation } from '@prisma/client'
 
 const formSchema = z.object({
   dtime: z.string().min(1),
@@ -32,6 +35,8 @@ export const DonationForm: React.FC<DonationFormProps> = ({
   initialData
 }) => {
 
+  const params = useParams();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? 'Edit member' : 'Create member';
@@ -43,12 +48,28 @@ export const DonationForm: React.FC<DonationFormProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       dtime: "",
-      amount: 0
+      amount: 0,
     }
   })
 
   const onSubmit = async (data: DonationFormValues) => {
-    console.log("£££££££££££££", )
+    console.log("@@@@@@@@@@@@@@@@@" ,params.memberId)
+    try {
+      setLoading(true)
+      if(initialData) {
+        console.log("update data")
+      } else {
+        await axios.post(`/api/donation/${params.memberId}`, data)
+      }
+      router.refresh();
+      router.push("/members");
+      toast.success(toastMessage);
+    } catch(error: any){
+      toast.error("something went wrong.")
+    }finally{
+      setLoading(false)
+    }
+    // console.log("£££££££££££££", )
   }
   return (
     <div>
@@ -102,8 +123,8 @@ export const DonationForm: React.FC<DonationFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
-            <FormField
+            /> */}
+            {/* <FormField
               control={form.control}
               name="colorId"
               render={({ field }) => (
