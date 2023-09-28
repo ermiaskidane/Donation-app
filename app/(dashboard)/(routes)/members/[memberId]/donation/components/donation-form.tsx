@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
+import { useSearchParams } from 'next/navigation'
 
 const formSchema = z.object({
   dtime: z.string().min(1),
@@ -37,6 +38,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({
 
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? 'Edit member' : 'Create member';
@@ -52,6 +54,9 @@ export const DonationForm: React.FC<DonationFormProps> = ({
     }
   })
 
+  const currentMemberId = searchParams.get('id')
+  // console.log("KKKKKKKKKKKKKK", search)
+
   const onSubmit = async (data: DonationFormValues) => {
     console.log("@@@@@@@@@@@@@@@@@" ,params.memberId)
     try {
@@ -59,7 +64,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({
       if(initialData) {
         console.log("update data")
       } else {
-        await axios.post(`/api/donation/${params.memberId}`, data)
+        await axios.post(`/api/donation/${currentMemberId}`, data)
       }
       router.refresh();
       router.push("/members");

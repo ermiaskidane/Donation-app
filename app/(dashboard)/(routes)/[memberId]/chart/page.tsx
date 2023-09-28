@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { data } from "@/lib/data"
+import { db } from '@/lib/db';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 // const data2 = [
@@ -25,9 +26,20 @@ import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAx
 //   data: any[]
 // }
 
-const Chartview = () => {
+const Chartview = async() => {
 
   const params = useParams();
+
+  const donation = await db.member.findUnique({
+    where: {
+      id: params.memberId,
+    },
+    include: {
+      donations: true
+    }
+  });
+
+  console.log("::::::::::::::::::::",donation)
 
   const userMember = data.find((el) => el.id == params.memberId)
 

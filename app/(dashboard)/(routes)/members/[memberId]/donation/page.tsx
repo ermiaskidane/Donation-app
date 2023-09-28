@@ -23,6 +23,12 @@ const AddDonation = async ({
   if(userRole?.role !== "ADMIN"){
     redirect("/members");
   }
+  
+  const member = await db.member.findMany({include: {
+    donations:true
+  }});
+
+console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", member)
 
   const donation = await db.donation.findFirst({
     where: {

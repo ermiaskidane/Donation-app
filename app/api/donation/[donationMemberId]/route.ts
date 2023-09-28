@@ -10,6 +10,7 @@ export async function POST(
   try {
 
     console.log("@@@@@@@@@@@@@@@@@" ,params.donationMemberId)
+
     const { userId } = auth();
 
     const body = await req.json();
@@ -32,6 +33,10 @@ export async function POST(
       return new NextResponse("donationMember id is required", { status: 400 });
     }
 
+    // if (!currentMemberId) {
+    //   return new NextResponse("Server ID missing", { status: 400 });
+    // }
+
     const UserAdmin = await db.user.findFirst({
       where: {
         userId,
@@ -47,17 +52,46 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const donatorMember = await db.member.findFirst({
-      where: {
-        id: params.donationMemberId,
-      }
+    const Donator = await db.donation.create({
+      data: {
+            dtime,
+            amount,
+            memberId: params.donationMemberId
+        }
     })
 
-    console.log("donatorMember", donatorMember)
+    return NextResponse.json(Donator);
+    // const donatorMember = await db.member.create({
+    //   where: {
+    //     userId,
+    //     donation: {
+    //       some:{
+    //         memberId: params.donationMemberId
+    //       }
+    //     }
+    //   },
+    //   data: {
+    //     donations:{
+    //       create: { 
+    //           dtime,
+    //           amount,
+    //           memberId: params.donationMemberId
+    //       }
+    //     }
+    //   }
+    // })
 
-    if (!donatorMember){
-      return new NextResponse("Unauthorized", { status: 405 });
-    }
+    // const donatorMember = await db.member.findFirst({
+    //   where: {
+    //     id: params.donationMemberId,
+    //   }
+    // })
+
+    // console.log("donatorMember", donatorMember)
+
+    // if (!donatorMember){
+    //   return new NextResponse("Unauthorized", { status: 405 });
+    // }
 
     // const donation = await db.donation.create({
     //   data: {
@@ -67,7 +101,7 @@ export async function POST(
     //   },
     // });
   
-    return NextResponse.json(donation);
+    // return NextResponse.json(donation);
   } catch (error) {
     console.log('[DONATION_POST]', error);
     return new NextResponse("Internal error", { status: 500 });

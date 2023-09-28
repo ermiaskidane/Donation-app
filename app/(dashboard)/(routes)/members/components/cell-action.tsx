@@ -57,7 +57,7 @@ export const CellAction: React.FC<CellActionProps> = ({
           <DropdownMenuItem
           // the long hex string is a random number I place inorder to create a new donation
           // otherwise it will go for update donation
-            onClick={() => router.push(`/members/650eaede98613587b24e4d7b/donation`)}
+            onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
           >
             <Copy className="mr-2 h-4 w-4" /> Add Donation
           </DropdownMenuItem>
