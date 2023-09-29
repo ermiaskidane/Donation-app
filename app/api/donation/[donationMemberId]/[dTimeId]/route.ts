@@ -3,20 +3,24 @@ import { auth } from '@clerk/nextjs';
 
 import {db} from '@/lib/db';
 
-export async function POST(
+export async function PATCH(
   req: Request,
-  { params }: { params: { donationMemberId: string } }
+  { params }: { params: { donationMemberId: string, dTimeId: string} }
 ) {
   try {
-
     const { userId } = auth();
 
     const body = await req.json();
 
     const { dtime, amount } = body;
 
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
+    }
+
+    if (!params.donationMemberId) {
+      return new NextResponse("donationMember id is required", { status: 400 });
     }
 
     if (!dtime) {
@@ -27,9 +31,6 @@ export async function POST(
       return new NextResponse("amount are required", { status: 400 });
     }
 
-    if (!params.donationMemberId) {
-      return new NextResponse("donationMember id is required", { status: 400 });
-    }
 
     const UserAdmin = await db.user.findFirst({
       where: {
@@ -40,40 +41,41 @@ export async function POST(
       }
     })
 
+    // console.log("{{{{{{{{{{{{{{{{{{{", UserAdmin)
+
     if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }
-
-    //try to update by member schema
-    // const member = await db.member.update({
+   const member = await db.member.update({
+    where: {
+      id: params.donationMemberId
+    },
+    data: {
+      amount,
+      donations: {
+        update: {
+          where: {
+            id: params.dTimeId
+          },
+          data: {
+           amount
+          }
+        }
+      }
+    }
+   })
+    // const donations = await db.donation.update({
     //   where: {
-    //     id: params.donationMemberId
-    //   }, 
+    //     id: params.dTimeId 
+    //   },
     //   data: {
     //     amount,
-    //     donations: {
-    //       create:{
-    //         data: {
-    //           dtime,
-    //           amount,
-    //           memberId: params.donationMemberId
-    //         }
-    //       }
-    //     }
     //   }
     // })
-
-    const Donator = await db.donation.create({
-      data: {
-        dtime,
-        amount,
-        memberId: params.donationMemberId 
-        }
-    })
-
-    return NextResponse.json(Donator);
+ 
+    return NextResponse.json(member);
   } catch (error) {
-    console.log('[DONATION_POST]', error);
+    console.log('[Donation_PATCH]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };

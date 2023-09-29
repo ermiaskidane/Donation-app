@@ -18,17 +18,18 @@ const AddDonation = async ({
     }
   });
 
-  // console.log("@@@@@@@@@@@@@", userRole)
-
   if(userRole?.role !== "ADMIN"){
     redirect("/members");
   }
   
-  const member = await db.member.findMany({include: {
-    donations:true
-  }});
-
-console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", member)
+  const member = await db.member.findUnique({
+    where: {
+      id: params.memberId 
+    },
+    include: {
+      donations: true
+    }
+  });
 
   const donation = await db.donation.findFirst({
     where: {
@@ -36,12 +37,10 @@ console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", member)
     }
   });
 
-  console.log("@@@@@@@@@@@@@", donation)
-  // console.log("......../", params.memberId)
   return (
     <div className='flex-col'>
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <DonationForm initialData={donation} />
+        <DonationForm initialData={donation} updateDonation={member?.donations } />
       </div>
     </div>
   )

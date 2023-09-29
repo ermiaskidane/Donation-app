@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
+import { format } from "date-fns";
 
 import { db } from '@/lib/db';
 
@@ -38,18 +39,6 @@ export async function POST(
       return new NextResponse("Member id is required", { status: 400 });
     }
 
-    // first check if user in model user
-    // const UserById = await db.user.findFirst({
-    //   where: {
-    //     userId 
-    //   }
-    // })
-
-    // console.log("@@@@@@@@@@@@@@@@@@", UserById)
-
-    // if (!UserById) {
-    //   return new NextResponse("Unauthorized", { status: 405 });
-    // }
 
     // first check if user role is ADMIN
     const UserAdmin = await db.user.findFirst({
@@ -71,7 +60,7 @@ export async function POST(
         userId: UserAdmin.id,
         donations: {
           create: {
-              dtime: "jan-2023",
+              dtime: format(Date.now(), "MMMM do, yyyy"),
               amount,
           }
         }

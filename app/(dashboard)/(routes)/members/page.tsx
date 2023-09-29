@@ -11,7 +11,7 @@ import { MembersColumn } from "./components/columns";
 const MembersPage = async() => {
 
   const user = await initialUser()
-  // console.log("user", user)
+  
   if (!user) {
     return redirectToSignIn();
   }
@@ -37,9 +37,7 @@ const MembersPage = async() => {
     amount: item.amount,
     createdAt: format(item.createdAt, "MMMM do, yyyy")
   }))
-  
-  // console.log("::::::::::::::::::::::", members)
-  // console.log(">>>>>>>>>>>>>>>>>", formattedMembers)
+
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
