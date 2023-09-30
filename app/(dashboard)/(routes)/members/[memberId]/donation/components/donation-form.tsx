@@ -132,7 +132,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({
                   <FormItem>
                     <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <Input disabled={loading} placeholder="date of donation" {...field} />
+                      <Input type="date" disabled={loading} placeholder="date of donation" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -32,11 +32,15 @@ const AddDonation = async ({
     }
   });
 
+  console.log("@@@@@@@@@@@@@", member)
+
   const donation = await db.donation.findFirst({
     where: {
       memberId: params.memberId,
     }
   });
+
+  console.log("????????????????????", donation)
 
   return (
     <div className='flex-col'>

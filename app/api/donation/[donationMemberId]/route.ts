@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 import {db} from '@/lib/db';
 
@@ -15,6 +15,12 @@ export async function POST(
     const body = await req.json();
 
     const { dtime, amount } = body;
+
+    // change the string dtime to Date type dtime
+    const dt = parseISO(dtime)
+
+    // parseISO('2018-13-32')
+    // console.log("£££££££££££££££", format(dtime, "MMMM do, yyyy"))
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -53,7 +59,7 @@ export async function POST(
         amount,
         donations: {
           create:{ 
-              dtime: format(Date.now(), "MMMM do, yyyy"),
+              dtime: format(dt, "MMMM do, yyyy"),
               amount,
           }
         }
