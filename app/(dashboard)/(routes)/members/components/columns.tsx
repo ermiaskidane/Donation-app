@@ -11,8 +11,12 @@ export type MembersColumn = {
   phone: string;
   email: string;
   amount: number;
-  createdAt: string;
+  updatedAt: string;
 }
+
+// we alter the createdAt to updateAt cz on creation of the donation 
+// we update the the member and on update the updateAt is only match with the current time
+// so to see the latest time I had to go with updateAt
 
 export const columns: ColumnDef<MembersColumn>[] = [
   {
@@ -42,7 +46,7 @@ export const columns: ColumnDef<MembersColumn>[] = [
     header: "Amount",
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "updatedAt",
     header: "Date",
   },
   {

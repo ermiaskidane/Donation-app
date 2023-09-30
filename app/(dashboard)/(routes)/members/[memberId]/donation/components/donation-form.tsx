@@ -92,11 +92,11 @@ export const DonationForm: React.FC<DonationFormProps> = ({
               name="dtime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>Date</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue defaultValue={field.value} placeholder="Select a category" />
+                        <SelectValue defaultValue={field.value} placeholder="Select a Date" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

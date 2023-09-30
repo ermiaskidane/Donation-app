@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
+import { format } from "date-fns";
 
 import {db} from '@/lib/db';
 
@@ -44,34 +45,31 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    //try to update by member schema
-    // const member = await db.member.update({
-    //   where: {
-    //     id: params.donationMemberId
-    //   }, 
-    //   data: {
-    //     amount,
-    //     donations: {
-    //       create:{
-    //         data: {
-    //           dtime,
-    //           amount,
-    //           memberId: params.donationMemberId
-    //         }
-    //       }
-    //     }
-    //   }
-    // })
-
-    const Donator = await db.donation.create({
+    const member = await db.member.update({
+      where: {
+        id: params.donationMemberId
+      }, 
       data: {
-        dtime,
         amount,
-        memberId: params.donationMemberId 
+        donations: {
+          create:{ 
+              dtime: format(Date.now(), "MMMM do, yyyy"),
+              amount,
+          }
         }
+      }
     })
 
-    return NextResponse.json(Donator);
+
+    // const Donator = await db.donation.create({
+    //   data: {
+    //     dtime,
+    //     amount,
+    //     memberId: params.donationMemberId 
+    //     }
+    // })
+
+    return NextResponse.json(member);
   } catch (error) {
     console.log('[DONATION_POST]', error);
     return new NextResponse("Internal error", { status: 500 });

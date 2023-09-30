@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { MembersColumn } from "./components/columns";
 
 
+
 const MembersPage = async() => {
 
   const user = await initialUser()
@@ -35,8 +36,9 @@ const MembersPage = async() => {
     email: item.email,
     phone: item.phone,
     amount: item.amount,
-    createdAt: format(item.createdAt, "MMMM do, yyyy")
+    updatedAt: format(item.updatedAt, "MMMM do, yyyy")
   }))
+
 
   return (
     <div className="flex-col">

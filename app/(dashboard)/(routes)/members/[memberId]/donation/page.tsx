@@ -17,6 +17,7 @@ const AddDonation = async ({
       userId: user?.id,
     }
   });
+  // console.log("@@@@@@@@@@@@@@@", userRole)
 
   if(userRole?.role !== "ADMIN"){
     redirect("/members");

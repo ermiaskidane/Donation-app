@@ -124,7 +124,7 @@ const Navbar = () => {
                             {
                                 routes.map((link) => (
                                     <li>
-                                        <Link href={link.href} className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base",  link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
+                                        <Link  key={link.label} href={link.href} className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base",  link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
                                             <span>{link.label}</span>
                                         </Link>
                                     </li>

@@ -8,7 +8,6 @@ import Heading from '../../../../../../components/Heading'
 import { Button } from '../../../../../../components/ui/button'
 import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { Trash } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -28,11 +27,6 @@ interface MemberFormProps {
   initialData: Member & {
     donations: Donation[]
   } | null
-  // initialData?: {
-  //   name?: string,
-  //   phone?: number,
-  //   email?: string,
-  //   amount?: number} | null;
 }
 
 export const MemberForm: React.FC<MemberFormProps> = ({
@@ -80,22 +74,12 @@ export const MemberForm: React.FC<MemberFormProps> = ({
     } finally{
       setLoading(false);
     }
-    // console.log("MemberFormValues type", data)
   }
 
   return (
     <>
       <div className='flex items-center justify-center'>
         <Heading title={title} subtitle={subtitle} center />
-          {initialData && (
-            <Button 
-              disabled={loading}
-              variant="destructive"
-              size="sm"
-              onClick={() => setOpen(true)}>
-                <Trash className="h-4 w-4"/>
-            </Button>
-          )}
       </div>
       <Separator />
       <Form {...form}>
