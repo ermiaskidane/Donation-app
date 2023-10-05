@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function Blogcomponent() {
@@ -22,9 +23,9 @@ function Blogcomponent() {
             <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
               Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
             </p>
-            <a className="inline-block" href="#">
+            <Link className="inline-block" href="/blog">
               <span className="text-info dark:text-blue-300">Read more</span>
-            </a>
+            </Link>
           </div>
           
         </div>
@@ -40,9 +41,9 @@ function Blogcomponent() {
             <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
               Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
             </p>
-            <a className="inline-block" href="#">
+            <Link className="inline-block" href="/blog">
               <span className="text-info dark:text-blue-300">Read more</span>
-            </a>
+            </Link>
           </div>
           
         </div>
@@ -58,9 +59,9 @@ function Blogcomponent() {
             <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
               Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
             </p>
-            <a className="inline-block" href="#">
+            <Link className="inline-block" href="/blog">
               <span className="text-info dark:text-blue-300">Read more</span>
-            </a>
+            </Link>
           </div>
           
         </div>

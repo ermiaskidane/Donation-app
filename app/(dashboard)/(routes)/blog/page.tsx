@@ -47,6 +47,9 @@ function page() {
             </Link> 
         </div>
       </article>
+      <div>
+        <h2>(Comments)</h2>
+      </div>
       <Blogcomponent />
     </section>
   )
