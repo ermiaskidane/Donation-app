@@ -1,18 +1,33 @@
 "use clients"
 
+import { Category } from '@prisma/client'
 import Link from 'next/link'
 import React from 'react'
 
-const CatagoryStyles = {
-  style: "bg-zinc-600",
-  fashion: "bg-red-300",
-  food: "bg-orange-300",
-  travel: "bg-lime-400",
-  culture: "bg-green-300",
-  // coding: "bg-sky-300"
+interface BlogcomponentProps {
+  categories: Category[]
 }
 
-function Blogcomponent() {
+interface CatagoryStyles {
+  cloth: string
+  bible: string,
+  saints: string,
+  monastery: string,
+  cross: string,
+}
+
+
+const CatagoryStyles: CatagoryStyles = {
+  cloth: "bg-zinc-600",
+  bible: "bg-red-300",
+  saints: "bg-orange-300",
+  monastery: "bg-lime-400",
+  cross: "bg-green-300",
+}
+
+const Blogcomponent = ({
+  categories
+}: BlogcomponentProps) => {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
       <div className="mb-12 space-y-2 text-center">
@@ -27,7 +42,17 @@ function Blogcomponent() {
         {/* <h1 className="text-2xl font-semibold my-12 mx-0">Catagories</h1> */}
 
         <div className="flex flex-wrap justify-between gap-4">
-          {Object.keys(CatagoryStyles).map((cat) => (
+          {categories.map((cat) => (
+             <Link href="/blog" className={`
+             flex items-center 
+             gap-4 capitalize 
+            h-12 justify-center 
+             rounded-xl 
+             ${CatagoryStyles[cat.slug]} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
+               {cat.title}
+             </Link>
+          ))}
+          {/* {Object.keys(CatagoryStyles).map((cat) => (
             <Link href="/blog" className={`
             flex items-center 
             gap-4 capitalize 
@@ -36,31 +61,9 @@ function Blogcomponent() {
             ${CatagoryStyles.style} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
               {cat}
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
-
-
-      {/* <div className="w-full py-4" >
-        <div className="block sm:hidden">
-            <a
-                href="#"
-                className="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center"
-            >
-                Topics <i  className="fas ml-2"></i>
-            </a>
-        </div>
-        <div  className="w-full flex-grow sm:flex sm:items-center sm:w-auto">
-            <div className="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Technology</Link>
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Automotive</Link>
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Finance</Link>
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Politics</Link>
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Culture</Link>
-                <Link href="#" className="hover:bg-gray-400 rounded py-2 px-4 mx-2">Sports</Link>
-            </div>
-        </div>
-    </div> */}
 
 
       {/* ################################# */}
