@@ -1,4 +1,4 @@
-import Blogcomponent from '@/components/Blogcomponent'
+import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'

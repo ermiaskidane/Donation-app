@@ -1,4 +1,4 @@
-import Blogcomponent from '@/components/Blogcomponent'
+import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -50,7 +50,7 @@ function page() {
       <div>
         <h2>(Comments)</h2>
       </div>
-      <Blogcomponent />
+      <Blogcomponent  />
     </section>
   )
 }

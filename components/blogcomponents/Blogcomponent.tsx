@@ -4,8 +4,9 @@ import { Category } from '@prisma/client'
 import Link from 'next/link'
 import React from 'react'
 
+// make optional for the blog page as not neccessary to display the category
 interface BlogcomponentProps {
-  categories: Category[]
+  categories?: Category[]
 }
 
 interface CatagoryStyles {
@@ -42,13 +43,13 @@ const Blogcomponent = ({
         {/* <h1 className="text-2xl font-semibold my-12 mx-0">Catagories</h1> */}
 
         <div className="flex flex-wrap justify-between gap-4">
-          {categories.map((cat) => (
-             <Link href="/blog" className={`
+          {categories?.map((cat) => (
+             <Link href={`/blog?cat=${cat.slug}`} className={`
              flex items-center 
              gap-4 capitalize 
             h-12 justify-center 
              rounded-xl 
-             ${CatagoryStyles[cat.slug]} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
+             ${CatagoryStyles[cat.slug  as keyof CatagoryStyles]} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
                {cat.title}
              </Link>
           ))}
@@ -122,7 +123,18 @@ const Blogcomponent = ({
           </div>
           
         </div>
+
+        
       </div>
+
+      <div className="flex justify-between my-8">
+          <button className="w-24 border-none p-4 bg-rose-500 text-white pointer">
+            Previous
+          </button>
+          <button className="w-24 border-none p-4 bg-rose-500 text-white pointer">
+            Next
+          </button>
+        </div>
   </div>
   )
 }

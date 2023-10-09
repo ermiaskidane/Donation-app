@@ -89,7 +89,7 @@ const Navbar = () => {
                             }
                             <li>
                               <Link href="/members" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>members</span>
+                                  <span>Members</span>
                               </Link>
                             </li>
                             {!userId  && (
@@ -101,8 +101,16 @@ const Navbar = () => {
                             }
                             {userId  && (
                               <li>
+                                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>Write</span>
+                                </Link>
+                              </li>
+                              )
+                            }
+                            {userId  && (
+                              <li>
                                 <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>profile</span>
+                                  <span>Profile</span>
                                 </Link>
                               </li>
                               )
@@ -132,7 +140,7 @@ const Navbar = () => {
                             }
                             <li>
                               <Link href="/members" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>members</span>
+                                  <span>Members</span>
                               </Link>
                             </li>
                             {!userId  && (
@@ -144,8 +152,16 @@ const Navbar = () => {
                             }
                             {userId  && (
                               <li>
+                                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                                  <span>Write</span>
+                                </Link>
+                              </li>
+                              )
+                            }
+                            {userId  && (
+                              <li>
                                 <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>profile</span>
+                                  <span>Profile</span>
                                 </Link>
                               </li>
                               )
