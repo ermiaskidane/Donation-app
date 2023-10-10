@@ -1,22 +1,14 @@
 "use client"
 
+import React, { useState, useEffect } from 'react'
 import * as z from "zod"
 import axios from "axios"
 import { Category } from '@prisma/client'
 import Image from 'next/image'
-import React, { useState } from 'react'
 import 'react-quill/dist/quill.bubble.css'
 import ReactQuill from 'react-quill'
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
-
-// const formSchema = z.object({
-//   title: z.string().min(1),
-//   catSlug: z.string().min(1),
-//   open: z.boolean()
-// })
-
-// type WriteBlogValues = z.infer<typeof formSchema>
 
 interface WriteBlogProps {
   categories?: Category[]
@@ -73,16 +65,37 @@ str
 
   const handleSubmit = async () => {
     // submit blog here
+    if (!file) {
+      return; // Don't proceed if file is null
+    }
     try {
       setLoading(true)
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('upload_preset', 'upload')
+
+      // send the image to cloudinary first
+      const uploadRes = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      )
+
+      const { url } = uploadRes.data
       const response = await axios.post('/api/blog', {
         title: state.title,
         desc: value,
-        // img: media,
+        img: url,
         slug: slugify(state.title),
         catSlug: state.catSlug || 'cloth', // If not selected, choose the general category
       });
+
       router.refresh();
+      //set them back to initail state
+      setState({
+        title: '',
+        catSlug: '',
+        open: false,
+      });
       router.push('/blog');
       toast.success("blog posted successfully")
     } catch(error: any){
@@ -127,12 +140,12 @@ str
               <input 
                 type="file"
                 id="image"
-                onChange={(e) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  file: e.target.files?.[0] || null,
-                }))}
-                // onChange={(e) => setFile(e.target.files?.[0] || null)}
+                // onChange={(e) =>
+                // setState((prevState) => ({
+                //   ...prevState,
+                //   file: e.target.files?.[0] || null,
+                // }))}
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
                 className='hidden' />
 
                 <button className='w-9 h-9 rounded-full 

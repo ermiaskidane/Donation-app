@@ -2,15 +2,12 @@ import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
-import Image from 'next/image'
 import React from 'react'
 
 const  HomePage = async() => {
-
   const categories = await db.category.findMany()
 
-
-  console.log("££££££££££££££££££", categories)
+  // console.log("££££££££££££££££££", categories)
   return (
     <div className="flex flex-col " >
       <div className="h-screen w-full z-5 bg-[url('/images/img-home.jpg')]">
@@ -33,7 +30,7 @@ const  HomePage = async() => {
     <div className="flex flex-col items-center space-y-8 p-20 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
-    <Blogcomponent categories={categories}/>
+    <Blogcomponent categories={categories} />
     </div>
   )
 }

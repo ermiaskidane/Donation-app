@@ -1,8 +1,10 @@
-"use clients"
+"use client"
 
 import { Category } from '@prisma/client'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
+import CardList from './cardList'
 
 // make optional for the blog page as not neccessary to display the category
 interface BlogcomponentProps {
@@ -29,6 +31,12 @@ const CatagoryStyles: CatagoryStyles = {
 const Blogcomponent = ({
   categories
 }: BlogcomponentProps) => {
+  
+  const searchParams = useSearchParams()
+
+  // console.log("jjjjjjjjjjjjjj", searchParams)
+  // searchParams.page is string has to be number
+  const page = parseInt(searchParams.page) || 1
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
       <div className="mb-12 space-y-2 text-center">
@@ -68,7 +76,7 @@ const Blogcomponent = ({
 
 
       {/* ################################# */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
           <div className="relative overflow-hidden rounded-xl">
             <img src="/images/Screenshot (247).png"
@@ -123,9 +131,9 @@ const Blogcomponent = ({
           </div>
           
         </div>
-
-        
-      </div>
+      </div> */}
+      {/* create the blog  */}
+      <CardList page={page}/>
 
       <div className="flex justify-between my-8">
           <button className="w-24 border-none p-4 bg-rose-500 text-white pointer">

@@ -3,6 +3,36 @@ import { auth } from '@clerk/nextjs';
 
 import {db} from '@/lib/db';
 
+export const GET = async (req: Request) => {
+  const {searchParams} = new URL(req.url)
+
+  const page = searchParams.get('page')
+  const cat = searchParams.get('cat')
+
+  console.log("lllllllllllllllllllll", page)
+
+  try {
+    // transaction makes multiple query at once
+    // const [posts, count] = await pridbsma.$transaction([
+    //   db.post.findMany(query),
+    //   db.post.count({ where: query.where }),
+    // ])
+
+    // console.log(
+    //   '$$$$$$$$$$$$$$$$$$$$$',
+    //   posts,
+    //   '!!!!!!!!!!!!!!!!!!!!!!!!',
+    //   count
+    // )
+    return new NextResponse(JSON.stringify( "hello"))
+  } catch (err) {
+    console.log(err)
+    return new NextResponse(
+      JSON.stringify({ message: 'Something went wrong!' })
+    )
+  }
+}
+
 // CREATE A POST
 export async function POST (
   req: Request
@@ -15,7 +45,7 @@ export async function POST (
 
   const body = await req.json();
 
-  const { title, desc, slug, catSlug} = body
+  const { title, desc, slug, catSlug, img} = body
 
   if (!userId) {
     return new NextResponse("Unauthenticated", { status: 403 });
@@ -54,15 +84,14 @@ export async function POST (
   const post = await db.post.create({
     data: {
       title, 
-      desc, 
+      desc,
+      img, 
       slug, 
       catSlug,
       userEmail: UserAdmin.email
     }
   })
 
-  console.log("!!!!!!!!!!!!!!!!!!!!!",body, "3££££333333333333333", userId )
-  // return new NextResponse(JSON.stringify(post, { status: 200 }))
   return NextResponse.json(post);
   } catch(error) {
     console.log('[BLOG_POST]', error);
