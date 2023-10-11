@@ -5,6 +5,8 @@ import { db } from '@/lib/db'
 import React from 'react'
 
 const  HomePage = async() => {
+
+
   const categories = await db.category.findMany()
 
   // console.log("££££££££££££££££££", categories)

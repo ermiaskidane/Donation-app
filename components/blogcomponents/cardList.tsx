@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from './card'
 
 interface cardListprops {
@@ -7,9 +7,9 @@ interface cardListprops {
   cat?: string
 }
 
-const getData = async (page: number, cat: string) => {
+const getData = async (page: number, cat: string | undefined) => {
   const res = await fetch(
-    `http://localhost:3000/api/blog?page=${page}&cat=${cat || ''}`,
+    `http://localhost:3001/api/blog?page=${page}&cat=${cat || ''}`,
     {
       cache: 'no-store',
     }
@@ -22,10 +22,27 @@ const getData = async (page: number, cat: string) => {
   return res.json()
 }
 
-const CardList = async ({
+const CardList = ({
   page, cat
 }: cardListprops) => {
-  const { posts, count } = await getData(page, cat)
+  // const { posts, count } = await getData(page, cat)
+  const [data, setData] = useState<any>({ posts: [], count: 0 });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getData(page, cat);
+        setData(result);
+      } catch (error) {
+        // Handle errors
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [page, cat]);
+
+  console.log("@@@@@@@@@@@@@@@@LLLLLLLLLLLLLLLLL", data)
   return (
     <div>
       cardList

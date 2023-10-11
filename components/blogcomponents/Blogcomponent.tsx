@@ -31,12 +31,12 @@ const CatagoryStyles: CatagoryStyles = {
 const Blogcomponent = ({
   categories
 }: BlogcomponentProps) => {
-  
   const searchParams = useSearchParams()
 
-  // console.log("jjjjjjjjjjjjjj", searchParams)
-  // searchParams.page is string has to be number
-  const page = parseInt(searchParams.page) || 1
+  // searchParams.page is string has to be number and 
+  // parseInt doesnot expect a null value for that we use terinary operator
+  const page = parseInt(searchParams.get("page") ?? "", 10) || 1
+ 
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
       <div className="mb-12 space-y-2 text-center">
