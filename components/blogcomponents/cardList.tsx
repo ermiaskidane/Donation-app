@@ -1,3 +1,4 @@
+"use client"
 
 import React, { useEffect, useState } from 'react'
 import Card from './card'
@@ -44,9 +45,12 @@ const CardList = ({
 
   console.log("@@@@@@@@@@@@@@@@LLLLLLLLLLLLLLLLL", data)
   return (
-    <div>
-      cardList
-      <Card/>
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {data?.posts.map((blog: any) => (
+          <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+            <Card blog={blog} key={blog._id}/>
+          </div>
+        ))}
     </div>
   )
 }

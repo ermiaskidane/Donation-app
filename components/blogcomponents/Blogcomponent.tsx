@@ -76,7 +76,7 @@ const Blogcomponent = ({
 
 
       {/* ################################# */}
-      {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
           <div className="relative overflow-hidden rounded-xl">
             <img src="/images/Screenshot (247).png"
@@ -131,7 +131,7 @@ const Blogcomponent = ({
           </div>
           
         </div>
-      </div> */}
+      </div>
       {/* create the blog  */}
       <CardList page={page}/>
 
