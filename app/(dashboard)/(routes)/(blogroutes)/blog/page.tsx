@@ -2,11 +2,13 @@ import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import BlogCategory from './blogCategory'
 
-function page() {
+const BlogPage = () => {
   return (
     <section className="w-full flex flex-col items-center px-20 pt-20 pb-10">
-      <article className="flex flex-col my-4">
+      <BlogCategory />
+      {/* <article className="flex flex-col my-4">
         
         <Link href="#" className="hover:opacity-75">
             <Image src="/images/Screenshot (247).png"
@@ -46,13 +48,10 @@ function page() {
                 Quisquam.
             </Link> 
         </div>
-      </article>
-      <div>
-        <h2>(Comments)</h2>
-      </div>
-      <Blogcomponent  />
+      </article> */}
+      {/* <Blogcomponent  /> */}
     </section>
   )
 }
 
-export default page
+export default BlogPage

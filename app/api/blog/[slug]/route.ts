@@ -7,7 +7,7 @@ export const GET = async (req: Request,
   { params } : {params : {slug: string}}) => {
   const { slug } = params
 
-  console.log("888888888888888888888", slug)
+  // console.log("888888888888888888888", slug)
 
   try {
 
@@ -16,7 +16,7 @@ export const GET = async (req: Request,
       // include: { user: true },
     });
 
-    console.log("888888888888888888888", post)
+    // console.log("888888888888888888888", post)
 
     if (post) {
       const updatedPost = await db.post.update({
@@ -32,7 +32,7 @@ export const GET = async (req: Request,
         where: {email: post.userEmail}
       })
 
-      console.log('99999999999999999999999999', updatedPost);
+      // console.log('99999999999999999999999999', updatedPost);
 
       return new NextResponse(JSON.stringify({updatedPost, user}));
     } else {

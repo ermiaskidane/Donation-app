@@ -96,7 +96,7 @@ str
         catSlug: '',
         open: false,
       });
-      router.push('/blog');
+      router.push('/');
       toast.success("blog posted successfully")
     } catch(error: any){
       toast.error('Something went wrong.');

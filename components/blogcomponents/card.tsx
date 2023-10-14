@@ -12,6 +12,9 @@ const Card = ({
   blog,
   key
 }: cardProps) => {
+  const wpm = 225;
+  const word = blog?.desc.trim().split(/\s+/).length
+  const readTime = Math.ceil(word / wpm);
   return (
     <>
       <div className="relative overflow-hidden rounded-xl" key={key}>
@@ -25,8 +28,9 @@ const Card = ({
           {blog.title}
         </h3>
         <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: blog?.desc.substring(0, 100) }}></p>
-        <Link className="inline-block" href={`/blog/${blog.slug}`}>
+        <Link className=" flex justify-between " href={`/blog/${blog.slug}`}>
           <span className="text-info dark:text-blue-300">Read more</span>
+          <span className='text-info'>{readTime} minute</span>
         </Link>
       </div>
     </>

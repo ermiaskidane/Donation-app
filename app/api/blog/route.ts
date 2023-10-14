@@ -6,7 +6,7 @@ import {db} from '@/lib/db';
 export const GET = async (req: Request) => {
   const {searchParams} = new URL(req.url)
 
-  console.log("hhhhhhhhhhhhhhhhhhhhhh", req.url)
+  // console.log("hhhhhhhhhhhhhhhhhhhhhh", req.url)
 
   const page = searchParams.get('page')
   const cat = searchParams.get('cat')
@@ -14,7 +14,7 @@ export const GET = async (req: Request) => {
   // Provide a default value for page if it's null
   const pageValue = page ? parseInt(page, 10) : 1;
 
-  console.log("lllllllllllllllllllll", pageValue)
+  // console.log("lllllllllllllllllllll", pageValue)
 
   const POST_PER_PAGE = 3
 
@@ -23,6 +23,9 @@ export const GET = async (req: Request) => {
     skip: POST_PER_PAGE * (pageValue - 1),
     where: {
       ...(cat && {catSlug: cat})
+    },
+    orderBy: {
+      createdAt: "desc", // Sort by creation timestamp in descending order
     }
   }
   try {
@@ -32,12 +35,12 @@ export const GET = async (req: Request) => {
       db.post.count({ where: query.where }),
     ])
 
-    console.log(
-      '$$$$$$$$$$$$$$$$$$$$$',
-      posts,
-      '!!!!!!!!!!!!!!!!!!!!!!!!',
-      count
-    )
+    // console.log(
+    //   '$$$$$$$$$$$$$$$$$$$$$',
+    //   posts,
+    //   '!!!!!!!!!!!!!!!!!!!!!!!!',
+    //   count
+    // )
     // return new NextResponse(JSON.stringify( "hello"))
     return new NextResponse(JSON.stringify({ posts, count }))
   } catch (err) {

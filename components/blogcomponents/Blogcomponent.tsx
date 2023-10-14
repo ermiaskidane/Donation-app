@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import CardList from './cardList'
+import Pagination from './Pagination'
 
 // make optional for the blog page as not neccessary to display the category
 interface BlogcomponentProps {
@@ -61,22 +62,12 @@ const Blogcomponent = ({
                {cat.title}
              </Link>
           ))}
-          {/* {Object.keys(CatagoryStyles).map((cat) => (
-            <Link href="/blog" className={`
-            flex items-center 
-            gap-4 capitalize 
-           h-12 justify-center 
-            rounded-xl 
-            ${CatagoryStyles.style} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
-              {cat}
-            </Link>
-          ))} */}
         </div>
       </div>
 
 
       {/* ################################# */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
           <div className="relative overflow-hidden rounded-xl">
             <img src="/images/Screenshot (247).png"
@@ -131,18 +122,9 @@ const Blogcomponent = ({
           </div>
           
         </div>
-      </div>
+      </div> */}
       {/* create the blog  */}
       <CardList page={page}/>
-
-      <div className="flex justify-between my-8">
-          <button className="w-24 border-none p-4 bg-rose-500 text-white pointer">
-            Previous
-          </button>
-          <button className="w-24 border-none p-4 bg-rose-500 text-white pointer">
-            Next
-          </button>
-        </div>
   </div>
   )
 }
