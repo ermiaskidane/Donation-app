@@ -12,6 +12,7 @@ const Pagination = ({
 }: paginationProps) => {
 
   const router = useRouter()
+
   return (
     <div className="flex justify-between my-8">
       <button

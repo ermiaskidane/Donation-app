@@ -18,6 +18,8 @@ const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false)
 
+  // console.log("£££££££££££££££", useAuth())
+
   // mobile ToggleBar
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)

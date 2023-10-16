@@ -32,7 +32,7 @@ const  HomePage = async() => {
     <div className="flex flex-col items-center space-y-8 p-20 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
-    <Blogcomponent categories={categories} />
+    <Blogcomponent categories={categories} blogRoute={true} />
     </div>
   )
 }
