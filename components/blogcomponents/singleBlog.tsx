@@ -51,7 +51,7 @@ const SingleBlog = ({
   // const dt = format(parseISO(data.updatedPost?.createdAt), 'MMMM do, yyyy')
   console.log("£££££££££££££££££££££33", data)
   return (
-    <section className="w-full flex flex-col items-center px-20 pt-20 pb-10">
+    <section className="w-full flex flex-col items-center px-8 pt-8 pb-8 md:px-20 md:pt-20">
         <article className="flex flex-col my-4">
         
         <Link href="#" className="hover:opacity-75">
@@ -63,7 +63,7 @@ const SingleBlog = ({
                 className='!w-11/12'/>
           )}
         </Link>
-        <div className="bg-white flex flex-col justify-start p-6">
+        <div className="bg-white flex flex-col justify-start p-2 md:p-4">
             <Link href="#" className="text-blue-700 text-sm font-bold uppercase pb-4">{data?.updatedPost.catSlug}</Link>
             <Link href="#" className="text-3xl font-bold hover:text-gray-700 pb-4 capitalize">{data?.updatedPost.title}</Link>
             {data?.updatedPost.createdAt && (

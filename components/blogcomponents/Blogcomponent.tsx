@@ -80,7 +80,7 @@ const Blogcomponent = ({
   return (
     <>
     {data.posts.length !== 0 ? (
-      <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
         {blogRoute && (
           <div className="mb-12 space-y-2 text-center">
             <h2 className="text-3xl font-bold text-gray-800 md:text-4xl dark:text-white">Latest Articles</h2>

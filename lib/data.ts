@@ -110,3 +110,115 @@ export const data = [
     ]
   }
 ];
+
+export const comment = [
+  {
+    "id": 1,
+    "description": "Great post! I really enjoyed reading it.",
+    "userEmail": "john.doe@example.com",
+    "postSlug": "a-guide-to-fake-data-generation",
+    "createdAt": "2023-10-17T08:00:00Z",
+    "comments": [
+      {
+        "id": 11,
+        "description": "I agree, it's an informative post.",
+        "userEmail": "susan.james@example.com",
+        "createdAt": "2023-10-17T09:30:00Z"
+      },
+      {
+        "id": 12,
+        "description": "This article provides some valuable insights.",
+        "userEmail": "robert.anderson@example.com",
+        "createdAt": "2023-10-17T10:45:00Z"
+      },
+      {
+        "id": 13,
+        "description": "Thanks for sharing this! I learned a lot.",
+        "userEmail": "emily.wilson@example.com",
+        "createdAt": "2023-10-17T12:15:00Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "description": "I found this article very informative. Thanks for sharing!",
+    "userEmail": "jane.smith@example.com",
+    "postSlug": "a-guide-to-fake-data-generation",
+    "createdAt": "2023-10-17T10:15:00Z",
+    "comments": [
+      {
+        "id": 21,
+        "description": "It's always great to learn something new.",
+        "userEmail": "michael.brown@example.com",
+        "createdAt": "2023-10-17T11:30:00Z"
+      },
+      {
+        "id": 22,
+        "description": "I have a question about a specific point in the post.",
+        "userEmail": "lisa.evans@example.com",
+        "createdAt": "2023-10-17T12:45:00Z"
+      },
+      {
+        "id": 23,
+        "description": "This post is a must-read for everyone interested in the topic.",
+        "userEmail": "daniel.martin@example.com",
+        "createdAt": "2023-10-17T13:15:00Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "description": "Can you provide more details about the topic?",
+    "userEmail": "alice.johnson@example.com",
+    "postSlug": "data-faking-techniques",
+    "createdAt": "2023-10-16T14:30:00Z",
+    "comments": [
+      {
+        "id": 31,
+        "description": "I'm also interested in learning more about this.",
+        "userEmail": "george.thompson@example.com",
+        "createdAt": "2023-10-16T16:00:00Z"
+      },
+      {
+        "id": 32,
+        "description": "Please share some additional resources on the topic.",
+        "userEmail": "mary.wilson@example.com",
+        "createdAt": "2023-10-16T17:30:00Z"
+      },
+      {
+        "id": 33,
+        "description": "Great question! I hope we get more insights soon.",
+        "userEmail": "peter.davis@example.com",
+        "createdAt": "2023-10-16T18:45:00Z"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "description": "I have a similar experience to share. Let's discuss it further.",
+    "userEmail": "david.wilson@example.com",
+    "postSlug": "data-faking-techniques",
+    "createdAt": "2023-10-16T16:45:00Z",
+    "comments": [
+      {
+        "id": 41,
+        "description": "I'd love to hear your experiences and insights.",
+        "userEmail": "olivia.smith@example.com",
+        "createdAt": "2023-10-16T18:00:00Z"
+      },
+      {
+        "id": 42,
+        "description": "Sharing experiences can be really valuable.",
+        "userEmail": "william.jones@example.com",
+        "createdAt": "2023-10-16T19:15:00Z"
+      },
+      {
+        "id": 43,
+        "description": "Looking forward to your contribution to the discussion.",
+        "userEmail": "sophia.anderson@example.com",
+        "createdAt": "2023-10-16T20:30:00Z"
+      }
+    ]
+  }
+]
+
