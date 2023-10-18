@@ -25,9 +25,10 @@ model User {
 
   role MemberRole @default(GUEST)
 
-  members Member[]
-  Post    Post[]
-  Comment Comment[]
+  members      Member[]
+  Post         Post[]
+  Comment      Comment[]
+  NestComments NestComment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,6 +95,21 @@ model Comment {
   user      User   @relation(fields: [userEmail], references: [email])
   postSlug  String
   post      Post   @relation(fields: [postSlug], references: [slug])
+
+  NestComments NestComment[]
+
+  createdAt DateTime @default(now())
+}
+
+model NestComment {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  desc String
+
+  userEmail String
+  user      User   @relation(fields: [userEmail], references: [email])
+
+  commentId  String   @db.ObjectId
+  parentNest Comment? @relation(fields: [commentId], references: [id])
 
   createdAt DateTime @default(now())
 }

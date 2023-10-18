@@ -7,9 +7,6 @@ import React, { useState } from 'react'
 const SinglePage = async ({
   params
 }: {params: {slug: string}}) => {
-  
-  // const [data, setData] = useState<any>({ posts: [], count: 0 });
-
 
   const { slug } = params
   return (

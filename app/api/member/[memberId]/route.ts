@@ -97,7 +97,7 @@ export async function DELETE(
         userId
       }
     });
-
+ 
     if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }

@@ -4,19 +4,46 @@ import Loading from '@/app/loading';
 import { useAuth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import useSWR from 'swr'
 import React, { useState } from 'react'
 import { comment } from '@/lib/data';
 import { format, parseISO } from 'date-fns'
 
-const Comments = () =>{
+interface CommentProps {
+  postSlug: string
+}
+
+const fetcher = async (url) => {
+  console.log('@@@@@@@@@@@@@@', url)
+  const res = await fetch(url)
+
+  const data = await res.json()
+
+  if(!res.ok){
+    const error = new Error(data.message)
+    throw error;
+  }
+
+  return data
+}
+
+const Comments = ({
+  postSlug
+}: CommentProps) =>{
   const { isSignedIn } = useAuth();
   const [desc, setDesc] = useState('')
-  const [open, setOpen] = useState(false)
+
+
+  // swr make a continious request for any update of the data
+  const { data, mutate, isLoading } = useSWR(
+    `http://localhost:3000/api/comments?postSlug=${postSlug}`,
+    fetcher
+  )
 
  // Create an array to track the open/closed state of each comment
  const [commentOpen, setCommentOpen] = useState(new Array(comment.length).fill(false));
 
- console.log("Commmmmmmm", commentOpen)
+//  console.log("Commmmmmmm", commentOpen)
  const getOpenComment = (index: number) => {
    // Create a copy of the commentOpen array to avoid mutating state directly
    const newCommentOpen = [...commentOpen];
@@ -28,6 +55,17 @@ const Comments = () =>{
    setCommentOpen(newCommentOpen);
  };
 
+ const handleSubmit = async () => {
+  await fetch("/api/comments", {
+    method: "POST",
+    body:JSON.stringify({desc, postSlug})
+  })
+
+  // mutate helps to display the comment after created
+  mutate()
+  setDesc('')
+ }
+
   return (
     <div className='w-full my-12'>
       <h1 className="mb-8 text-neutral-600 text-center text-base font-semibold">Comments</h1>
@@ -37,6 +75,12 @@ const Comments = () =>{
             placeholder='Write a comment...' 
             onChange={(e) => setDesc(e.target.value)}
             className='p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
+            <button 
+              className='px-4 py-5 bg-gray-500 text-white font-bold border-0 rounded cursor-pointer'
+              onClick={handleSubmit}
+              >
+              Send
+            </button>
           </div>
         ) : (
           <Link href='/login'>Login to write a comment</Link>
@@ -73,6 +117,9 @@ const Comments = () =>{
                           placeholder='Write a comment...' 
                           onChange={(e) => setDesc(e.target.value)}
                           className='mb-4 p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
+                          <button className='mb-4 px-4 py-5 bg-gray-500 text-white font-bold border-0 rounded cursor-pointer'>
+                            Send
+                          </button>
                         </div>
                       )}
                     {com.comments.map((comt, index) => (

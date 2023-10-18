@@ -101,7 +101,7 @@ const SingleBlog = ({
       {/* to match with fetch time of the data I choose to display once
       the desc property is fetched */}
       {data?.updatedPost.desc && (
-      <Comments/>
+      <Comments postSlug={slug}/>
       )}
       <Blogcomponent  blogRoute={false}/>
     </section>
