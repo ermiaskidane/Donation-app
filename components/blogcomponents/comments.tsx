@@ -14,10 +14,12 @@ interface CommentProps {
 }
 
 const fetcher = async (url) => {
-  console.log('@@@@@@@@@@@@@@', url)
+  console.log('@@@@@@@@@@@@@@KKKKKKKKKKKKKK', url)
   const res = await fetch(url)
 
   const data = await res.json()
+
+  console.log('::::::::::::::>>>>>>>>>>>', data)
 
   if(!res.ok){
     const error = new Error(data.message)
@@ -30,8 +32,9 @@ const fetcher = async (url) => {
 const Comments = ({
   postSlug
 }: CommentProps) =>{
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, userId } = useAuth();
   const [desc, setDesc] = useState('')
+  const [nestDesc, setNestDesc] = useState("")
 
 
   // swr make a continious request for any update of the data
@@ -55,33 +58,51 @@ const Comments = ({
    setCommentOpen(newCommentOpen);
  };
 
- const handleSubmit = async () => {
+ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  // Preventing the page from reloading
+  event.preventDefault();
+
   await fetch("/api/comments", {
     method: "POST",
     body:JSON.stringify({desc, postSlug})
   })
-
+  
   // mutate helps to display the comment after created
   mutate()
   setDesc('')
+ }
+
+ const handleNestedSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault()
+  // console.log("£££££££££££", userId)
+  // return "hello"
+  await fetch(`/api/comments/${userId}`, {
+    method: "POST",
+    body:JSON.stringify({nestDesc, postSlug})
+  })
+
+  // mutate helps to display the comment after created
+  mutate()
+  setNestDesc('')
  }
 
   return (
     <div className='w-full my-12'>
       <h1 className="mb-8 text-neutral-600 text-center text-base font-semibold">Comments</h1>
         {isSignedIn ? (
-          <div className="flex items-center justify-between gap-8">
+          <form className="flex items-center justify-between gap-8" onSubmit={handleSubmit}>
             <textarea 
             placeholder='Write a comment...' 
+            value={desc}
             onChange={(e) => setDesc(e.target.value)}
             className='p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
-            <button 
+            <button
+              type="submit"
               className='px-4 py-5 bg-gray-500 text-white font-bold border-0 rounded cursor-pointer'
-              onClick={handleSubmit}
               >
               Send
             </button>
-          </div>
+          </form>
         ) : (
           <Link href='/login'>Login to write a comment</Link>
         )}
@@ -112,15 +133,16 @@ const Comments = ({
                   <div className='ml-6 mb-4 md:ml-16'>
                     <div className='cursor-pointer font-semibold mb-4' onClick={() => getOpenComment(com.id)}>{com.comments.length} {commentOpen[com.id] ? 'hide' : 'reply'}</div>
                     {commentOpen[com.id] && isSignedIn && (
-                        <div className="flex items-center justify-between gap-8">
+                        <form className="flex items-center justify-between gap-8" onSubmit={handleNestedSubmit}>
                           <textarea 
                           placeholder='Write a comment...' 
-                          onChange={(e) => setDesc(e.target.value)}
+                          value={nestDesc}
+                          onChange={(e) => setNestDesc(e.target.value)}
                           className='mb-4 p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
-                          <button className='mb-4 px-4 py-5 bg-gray-500 text-white font-bold border-0 rounded cursor-pointer'>
+                          <button type="submit" className='mb-4 px-4 py-5 bg-gray-500 text-white font-bold border-0 rounded cursor-pointer'>
                             Send
                           </button>
-                        </div>
+                        </form>
                       )}
                     {com.comments.map((comt, index) => (
                       <>

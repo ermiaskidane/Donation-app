@@ -5,35 +5,32 @@ import { auth } from '@clerk/nextjs';
 // GET ALL COMMENTS OF A POST
 export const GET = async (req: Request) => {
   try {
-    const { searchParams } = new URL(req.url)
+    const { searchParams } = new URL(req.url);
+    const postSlug = searchParams.get('postSlug');
 
-    const postSlug = searchParams.get('postSlug')
-  
     if (!postSlug) {
       return new NextResponse("postSlug is required", { status: 400 });
     }
 
     const comments = await db.comment.findMany({
       where: {
-        ...(postSlug && { postSlug }),
+        ...(postSlug && { postSlug }), // Only include the condition if postSlug is provided.
       },
-      include: { user: true },
-    })
+      include: {
+        NestComments: true,
+        post: true,
+        user: true,
+      }
+    });
 
-  //   return NextResponse.json(server);
-  // } catch (error) {
-  //   console.log("[CHANNEL_ID_DELETE]", error);
-  //   return new NextResponse("Internal Error", { status: 500 });
-  // }
-    return NextResponse.json(comments)
-    // return new NextResponse(JSON.stringify(comments, { status: 200 }))
+    return NextResponse.json(comments);
   } catch (err) {
-    console.log("[CHANNEL_ID_DELETE]", err);
+    console.log("[COMMENT_ROUTES]", err);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
-// CREATE A COMMENT
+// // CREATE A COMMENT
 export const POST = async (req: Request) => {
   try {
   // check if there is user
