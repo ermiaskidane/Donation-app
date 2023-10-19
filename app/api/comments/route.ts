@@ -17,8 +17,16 @@ export const GET = async (req: Request) => {
         ...(postSlug && { postSlug }), // Only include the condition if postSlug is provided.
       },
       include: {
-        NestComments: true,
-        post: true,
+        NestComments: {
+          include: {
+            user:{
+              select: {
+                name: true,
+                imageUrl: true
+              }
+            }
+          }
+        },
         user: true,
       }
     });
@@ -37,10 +45,6 @@ export const POST = async (req: Request) => {
   const {userId} = auth()
 
   const body = await req.json();
-
-  console.log("LLLLLLLLLLLLLLLLLLAAAAAAAAA", auth())
-
-  console.log("SSSSSSSSSSSSSSSSSSSSSSSSS", body)
 
   const { desc, postSlug} = body
 
@@ -61,8 +65,6 @@ export const POST = async (req: Request) => {
       userId
     }
   });
-
-  console.log("::::::::::::::::::", user)
 
   // Handle the possibility that user?.email is undefined
   const userEmail = user?.email || "default@example.com";

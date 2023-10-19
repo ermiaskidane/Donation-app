@@ -76,7 +76,6 @@ const Blogcomponent = ({
     fetchData();
   }, [page, cat]);
 
-//  console.log("@@@@@@@@@@@@@@@@@@@@@", middlewareData)
   return (
     <>
     {data.posts.length !== 0 ? (
@@ -92,8 +91,6 @@ const Blogcomponent = ({
       {/* ################################# */}
 
       <div className='my-8'>
-        {/* <h1 className="text-2xl font-semibold my-12 mx-0">Catagories</h1> */}
-
         <div className="flex flex-wrap justify-between gap-4">
           {categories?.map((cat) => (
              <Link href={`/blog?cat=${cat.slug}`} key={cat.id} className={`
@@ -107,65 +104,6 @@ const Blogcomponent = ({
           ))}
         </div>
       </div>
-
-
-      {/* ################################# */}
-      {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
-          <div className="relative overflow-hidden rounded-xl">
-            <img src="/images/Screenshot (247).png"
-            alt="art cover" loading="lazy" width="1000" height="667" className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"/>
-          </div>
-          <div className="mt-6 relative">
-            <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-              De fuga fugiat lorem ispum laboriosam expedita.
-            </h3>
-            <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
-              Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
-            </p>
-            <Link className="inline-block" href="/blog">
-              <span className="text-info dark:text-blue-300">Read more</span>
-            </Link>
-          </div>
-          
-        </div>
-        <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
-          <div className="relative overflow-hidden rounded-xl">
-            <img src="/images/Screenshot (248).png"
-            alt="art cover" loading="lazy" width="1000" height="667" className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"/>
-          </div>
-          <div className="mt-6 relative">
-            <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-              De fuga fugiat lorem ispum laboriosam expedita.
-            </h3>
-            <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
-              Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
-            </p>
-            <Link className="inline-block" href="/blog">
-              <span className="text-info dark:text-blue-300">Read more</span>
-            </Link>
-          </div>
-          
-        </div>
-        <div className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
-          <div className="relative overflow-hidden rounded-xl">
-            <img src="/images/Screenshot (249).png"
-            alt="art cover" loading="lazy" width="1000" height="667" className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"/>
-          </div>
-          <div className="mt-6 relative">
-            <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-              De fuga fugiat lorem ispum laboriosam expedita.
-            </h3>
-            <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
-              Voluptates harum aliquam totam, doloribus eum impedit atque! Temporibus...
-            </p>
-            <Link className="inline-block" href="/blog">
-              <span className="text-info dark:text-blue-300">Read more</span>
-            </Link>
-          </div>
-          
-        </div>
-      </div> */}
       {/* create the blog  */}
       <CardList data={data} page={page}/>
   </div>

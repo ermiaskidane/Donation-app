@@ -7,10 +7,17 @@ export const POST = async (req: Request,
   {params}: {params: {userId: string}}) => {
   try {
 
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
+
   const body = await req.json();
 
-  const { nestDesc, postSlug} = body
+  const { nestDesc} = body
 
+  
+  if (!id) {
+    return new NextResponse("comment id is required", { status: 400 });
+  }
   
   if(!params.userId) {
     return new NextResponse("User id is required", { status: 400 });
@@ -34,47 +41,31 @@ export const POST = async (req: Request,
     return new NextResponse("userEmail can not be null", { status: 400 });
   }
 
-  // const comments = await db.comment.findFirst({
-  //   where: {
-  //     ...(postSlug && { postSlug }), // Only include the condition if postSlug is provided.
-  //   }
-  // });
-
-  // const commentsId = comments?.id || null;
-
-  // if(commentsId === null) {
-  //   return new NextResponse("commentsId can not be null", { status: 400 });
-  // }
-  
-  // const nestComment = await db.nestComment.create({
-  //   data: {
-  //     desc: nestDesc,
-  //     userEmail,
-  //     commentId: commentsId
-  //   },
-  //   include: {
-  //     user: true,
-  //     parentNest: true
-  //   }
-  // })
-
-  // give it a try with id instead of postSlug
-  // I have to pass from the comment.tsx
-  const nestComment  = await db.comment.update({
+  const comments = await db.comment.findFirst({
     where: {
-      ...(postSlug && { postSlug })
-    },
+      ...(id && { id }), // Only include the condition if comment id is provided.
+    }
+  });
+
+  const commentsId = comments?.id || null;
+
+  if(commentsId === null) {
+    return new NextResponse("commentsId can not be null", { status: 400 });
+  }
+  
+  const nestComment = await db.nestComment.create({
     data: {
-      NestComments: {
-        create: {
-          desc: nestDesc,
-          userEmail,
-        }
-      }
+      desc: nestDesc,
+      userEmail,
+      commentId: commentsId
+    },
+    include: {
+      user: true,
+      parentNest: true
     }
   })
 
-  console.log("nestComment", nestComment)
+  // console.log("nestComment", nestComment)
 
     return NextResponse.json(nestComment);
   } catch (err) {
