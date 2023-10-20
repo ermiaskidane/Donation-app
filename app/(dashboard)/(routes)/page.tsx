@@ -1,4 +1,5 @@
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
+import BlogTest from '@/components/blogcomponents/blogTest'
 import Event from '@/components/Event'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
@@ -33,6 +34,7 @@ const  HomePage = async() => {
       <Event/>
     </div>
     <Blogcomponent categories={categories} blogRoute={true} />
+    <BlogTest/>
     </div>
   )
 }

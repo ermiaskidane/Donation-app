@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import DOMPurify from 'dompurify'
+import { string } from 'zod'
 
 interface cardProps {
   blog: any,
@@ -15,6 +17,12 @@ const Card = ({
   const wpm = 225;
   const word = blog?.desc.trim().split(/\s+/).length
   const readTime = Math.ceil(word / wpm);
+
+  const sanitizedData = (): { __html: string } => {
+    const trimDesc: string = blog.desc.substring(0, 100)
+    return {__html: DOMPurify.sanitize(trimDesc)}
+  }
+
   return (
     <>
       <div className="relative overflow-hidden rounded-xl" key={key}>
@@ -27,7 +35,7 @@ const Card = ({
         <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
           {blog.title}
         </h3>
-        <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: blog?.desc.substring(0, 100) }}></p>
+        <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={sanitizedData()}/>
         <Link className=" flex justify-between " href={`/blog/${blog.slug}`}>
           <span className="text-info dark:text-blue-300">Read more</span>
           <span className='text-info'>{readTime} minute</span>

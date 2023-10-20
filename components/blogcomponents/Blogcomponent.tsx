@@ -13,7 +13,6 @@ import Loading from '@/app/loading'
 // make optional for the blog page as not neccessary to display the category
 interface BlogcomponentProps {
   categories?: Category[]
-  cat?: string | null
   blogRoute: boolean
 }
 
@@ -51,7 +50,6 @@ const getData = async (page: number, cat: string | null | undefined): Promise<Bl
 
 const Blogcomponent = ({
   categories,
-  cat,
   blogRoute
 }: BlogcomponentProps) => {
   const searchParams = useSearchParams()
@@ -59,6 +57,9 @@ const Blogcomponent = ({
   // searchParams.page is string has to be number and 
   // parseInt doesnot expect a null value for that we use terinary operator
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
+  const cat = searchParams.get("cat")
+
+  console.log("£3333333333333333333", cat)
 
   const [data, setData] = useState<BlogData>({ posts: [], count: 0 });
 
@@ -78,7 +79,7 @@ const Blogcomponent = ({
 
   return (
     <>
-    {data.posts.length !== 0 ? (
+    {/* {data.posts.length !== 0 ? ( */}
       <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
         {blogRoute && (
           <div className="mb-12 space-y-2 text-center">
@@ -105,11 +106,14 @@ const Blogcomponent = ({
         </div>
       </div>
       {/* create the blog  */}
-      <CardList data={data} page={page}/>
+      {data?.count !== 0 ? (
+        <CardList data={data} page={page}/>
+      ) : <p>cat not found</p> }
+      
   </div>
-    ) : (
-      <Loading/>
-    )}
+    {/* // ) : (
+    //   <Loading/>
+    // )} */}
     </>
   )
 }

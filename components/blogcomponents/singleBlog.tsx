@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import DOMPurify from 'dompurify'
 import Blogcomponent from './Blogcomponent'
 import toast from 'react-hot-toast';
 import Comments from './comments';
@@ -49,7 +50,11 @@ const SingleBlog = ({
 
   // const dt = data.updatedPost ? (format(parseISO(data.updatedPost?.createdAt), 'MMMM do, yyyy')) : ""
   // const dt = format(parseISO(data.updatedPost?.createdAt), 'MMMM do, yyyy')
-  console.log("£££££££££££££££££££££33", data)
+  
+  const sanitizedData = (): { __html: string } => ({
+    __html: DOMPurify.sanitize(data.updatedPost.desc)
+  })
+  
   return (
     <section className="w-full flex flex-col items-center px-8 pt-8 pb-8 md:px-20 md:pt-20">
         <article className="flex flex-col my-4">
@@ -74,7 +79,7 @@ const SingleBlog = ({
 
         {data?.updatedPost.desc && (
           <Link href="#" className="pb-6">
-          <div dangerouslySetInnerHTML={{ __html: data?.updatedPost.desc }}/>
+          <div dangerouslySetInnerHTML={sanitizedData()}/>
           <br/>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, deserunt eos. Quam consectetur obcaecati corrupti possimus
           adipisci quo dignissimos pariatur, similique repellendus voluptates quasi excepturi delectus nisi a consequuntur voluptatum?
