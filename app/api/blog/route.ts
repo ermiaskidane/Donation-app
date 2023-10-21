@@ -14,8 +14,6 @@ export const GET = async (req: Request) => {
   // Provide a default value for page if it's null
   const pageValue = page ? parseInt(page, 10) : 1;
 
-  console.log("lllllllllllllllllllll", pageValue)
-  console.log("lllllllllllllllllllll", cat)
 
   const POST_PER_PAGE = 3
 
@@ -25,9 +23,9 @@ export const GET = async (req: Request) => {
     where: {
       ...(cat && {catSlug: cat})
     },
-    // orderBy: {
-    //   createdAt: "desc", // Sort by creation timestamp in descending order
-    // }
+    orderBy: {
+      createdAt: "desc", // Sort by creation timestamp in descending order
+    }
   }
   try {
     // transaction makes multiple query at once
@@ -35,14 +33,7 @@ export const GET = async (req: Request) => {
       db.post.findMany(query),
       db.post.count({ where: query.where }),
     ])
-
-    console.log(
-      '$$$$$$$$$$$$$$$$$$$$$',
-      posts,
-      '!!!!!!!!!!!!!!!!!!!!!!!!',
-      count
-    )
-    // return new NextResponse(JSON.stringify( "hello"))
+    
     return new NextResponse(JSON.stringify({ posts, count }))
   } catch (err) {
     console.log(err)

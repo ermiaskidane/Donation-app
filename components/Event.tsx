@@ -3,7 +3,7 @@ import React from 'react'
 const Event = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-      <div className="space-y-6 justify-between text-gray-600 md:flex flex-row-reverse md:gap-6 md:space-y-0 lg:gap-12 lg:items-center">
+      <div className="space-y-6 justify-between text-gray-600 md:flex md:flex-row-reverse md:gap-6 md:space-y-0 lg:gap-12 lg:items-center">
         <div className="md:5/12 lg:w-1/2">
           <img
             src="./images/img-home.jpg"

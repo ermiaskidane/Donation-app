@@ -59,7 +59,7 @@ const Blogcomponent = ({
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
   const cat = searchParams.get("cat")
 
-  console.log("£3333333333333333333", cat)
+  // console.log("£3333333333333333333", cat)
 
   const [data, setData] = useState<BlogData>({ posts: [], count: 0 });
 
@@ -79,7 +79,7 @@ const Blogcomponent = ({
 
   return (
     <>
-    {/* {data.posts.length !== 0 ? ( */}
+    {data.posts.length !== 0 ? (
       <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
         {blogRoute && (
           <div className="mb-12 space-y-2 text-center">
@@ -91,7 +91,7 @@ const Blogcomponent = ({
         )}
       {/* ################################# */}
 
-      <div className='my-8'>
+      {/* <div className='my-8'>
         <div className="flex flex-wrap justify-between gap-4">
           {categories?.map((cat) => (
              <Link href={`/blog?cat=${cat.slug}`} key={cat.id} className={`
@@ -104,16 +104,13 @@ const Blogcomponent = ({
              </Link>
           ))}
         </div>
-      </div>
+      </div> */}
       {/* create the blog  */}
-      {data?.count !== 0 ? (
-        <CardList data={data} page={page}/>
-      ) : <p>cat not found</p> }
-      
-  </div>
-    {/* // ) : (
-    //   <Loading/>
-    // )} */}
+        <CardList data={data} page={page}/> 
+      </div>
+      ) : (
+            <Loading/>
+          )}
     </>
   )
 }

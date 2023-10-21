@@ -15,7 +15,7 @@ const MembersPage = async() => {
   
   if (!user) {
     return redirectToSignIn();
-  }
+  } 
 
   if(user.role === "GUEST"){
     redirect("/");

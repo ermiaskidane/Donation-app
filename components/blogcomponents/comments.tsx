@@ -46,7 +46,7 @@ const Comments = ({
  // Create an array to track the open/closed state of each comment
  const [commentOpen, setCommentOpen] = useState(new Array(data?.length).fill(false));
 
- console.log("Commmmmmmm", data) 
+//  console.log("Commmmmmmm", data) 
  const getOpenComment = (index: number) => {
    // Create a copy of the commentOpen array to avoid mutating state directly
    const newCommentOpen = [...commentOpen];

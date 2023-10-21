@@ -78,27 +78,7 @@ const SingleBlog = ({
             )}
 
         {data?.updatedPost.desc && (
-          <Link href="#" className="pb-6">
-          <div dangerouslySetInnerHTML={sanitizedData()}/>
-          <br/>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, deserunt eos. Quam consectetur obcaecati corrupti possimus
-          adipisci quo dignissimos pariatur, similique repellendus voluptates quasi excepturi delectus nisi a consequuntur voluptatum?
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos rem alias quia architecto quod autem aliquid beatae repellat 
-          soluta laborum perspiciatis quae, praesentium corrupti tempora tempore aspernatur magni. Porro quisquam in modi, odit distinctio 
-          facilis sunt excepturi dolore delectus veniam doloribus cupiditate temporibus voluptatum nostrum voluptatem repellendus eveniet, 
-          corporis omnis! Impedit incidunt ullam itaque reprehenderit error maiores sit beatae accusantium placeat nemo in doloribus commodi 
-          asperiores deleniti eius quidem, perferendis distinctio veniam tenetur? Ab molestias nobis placeat, repellendus molestiae est. 
-          Aut exercitationem, consectetur ab quis ut officia, corporis minus quo assumenda nam cum natus nostrum non doloremque aliquam dicta quidem.
-
-          <br/>
-          <br/>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit corporis dolore eveniet pariatur nobis distinctio voluptate magnam consectetur 
-          assumenda. Voluptas unde a maiores odio. Commodi, cumque totam. Quibusdam asperiores a facere iste aliquam atque numquam est impedit molestiae 
-          sunt ex exercitationem natus harum, laudantium voluptas unde alias error recusandae fugiat qui labore velit! Voluptatem totam harum tenetur repellat! 
-          Illo, quisquam repudiandae ab, quasi ipsum, eius minima incidunt nostrum quaerat laborum soluta aliquam unde aspernatur a. Aut magni voluptate iusto 
-          quo nisi atque, aspernatur quia! Eveniet porro tenetur, consectetur veritatis, fugiat hic nemo cum praesentium officia modi excepturi veniam cupiditate!
-            Quisquam.
-        </Link> 
+          <div className="pb-6" dangerouslySetInnerHTML={sanitizedData()}/> 
         )}
             
         </div>

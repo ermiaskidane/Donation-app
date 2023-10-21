@@ -1,5 +1,4 @@
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
-import BlogTest from '@/components/blogcomponents/blogTest'
 import Event from '@/components/Event'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
@@ -30,11 +29,10 @@ const  HomePage = async() => {
       </div>
     </div>
 
-    <div className="flex flex-col items-center space-y-8 p-20 md:flex-row md:space-x-8 md:space-y-0">
+    <div className="flex flex-col items-center space-y-8 py-20 md:px-4 xl:px-6 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
-    <Blogcomponent categories={categories} blogRoute={true} />
-    <BlogTest/>
+      <Blogcomponent categories={categories} blogRoute={true} />
     </div>
   )
 }
