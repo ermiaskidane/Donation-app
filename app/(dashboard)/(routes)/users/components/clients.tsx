@@ -20,7 +20,7 @@ export const UsersClient: React.FC<UsersClientProps> = ({
   return (
     <>
     <div className="flex items-center justify-between">
-    <Heading title={`Users ()`} subtitle="Manage users role" />
+    <Heading title={`Users (${data.length.toString()})`} subtitle="Manage users role" />
     </div>
     <Separator />
     <DataTable searchKey="name" columns={columns} data={data} />

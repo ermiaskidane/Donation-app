@@ -12,6 +12,14 @@ export type MembersColumn = {
   email: string;
   amount: number;
   updatedAt: string;
+  donations: {
+    id: string;
+    dtime: string;
+    amount: number;
+    memberId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }[]
 }
 
 // we alter the createdAt to updateAt cz on creation of the donation 
@@ -51,6 +59,6 @@ export const columns: ColumnDef<MembersColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({row}) => <CellAction data={row.original}/>
+    cell: ({row}) => <CellAction data={row.original} />
   }
 ]

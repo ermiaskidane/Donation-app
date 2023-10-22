@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import React, {useState} from 'react'
+import React, { useState} from 'react'
 import { toast } from "react-hot-toast";
 
 import { MembersColumn } from './columns';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart4, Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from '@/components/Modal/alert-modal';
+import useMemberStore from "@/hooks/useMember";
 
 interface CellActionProps {
   data: MembersColumn;
@@ -21,8 +22,9 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const [userRole, setUserRole ] = useState("")
 
-  // console.log("£££££££££££££££££££££££", data.id)
+  const { roleUser} = useMemberStore()
 
   const onConfirm = async () => {
     try {
@@ -55,32 +57,36 @@ export const CellAction: React.FC<CellActionProps> = ({
       <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-          // the long hex string is a random number I place inorder to create a new donation
-          // otherwise it will go for update donation
-            onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
-          >
-            <Copy className="mr-2 h-4 w-4" /> Add Donation
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => router.push(`/members/${data.id}/donation`)}
-          >
-            <Copy className="mr-2 h-4 w-4" /> Update Donation
-          </DropdownMenuItem>
-          <DropdownMenuItem
             onClick={() => router.push(`/${data.id}/chart`)}
           >
             <BarChart4 className="mr-2 h-4 w-4" /> BarChart
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => router.push(`/members/${data.id}`)}
-          >
-            <Edit className="mr-2 h-4 w-4" /> Update member
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setOpen(true)}
-          >
-            <Trash className="mr-2 h-4 w-4" /> Delete member
-          </DropdownMenuItem>
+          {roleUser === "ADMIN" && (
+            <>
+              <DropdownMenuItem
+              // the long hex string is a random number I place inorder to create a new donation
+              // otherwise it will go for update donation
+                onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
+              >
+                <Copy className="mr-2 h-4 w-4" /> Add Donation
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push(`/members/${data.id}/donation`)}
+              >
+                <Copy className="mr-2 h-4 w-4" /> Update Donation
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push(`/members/${data.id}`)}
+              >
+                <Edit className="mr-2 h-4 w-4" /> Update member
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setOpen(true)}
+              >
+                <Trash className="mr-2 h-4 w-4" /> Delete member
+              </DropdownMenuItem>
+            </>
+          )} 
         </DropdownMenuContent>
     </DropdownMenu>
     </>

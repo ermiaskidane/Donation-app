@@ -1,5 +1,6 @@
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
+import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
 import React from 'react'
@@ -24,8 +25,10 @@ const  HomePage = async() => {
     /> */}
 
       <div className="flex flex-col justify-center items-center h-full ">
-        <h3 className='flex flex-col justify-center text-[40px] capitalize font-medium md:block md:font-semibold md:text-[50px]'>Church of <span className="text-[35px] md:text-[50px]">st. Micheal</span></h3>
-        <p className='text-md md:text-2xl '>For god. For love. For Life</p>
+        <h3 className='flex flex-col justify-center text-slate-100 text-4xl w-full text-center sm:text-5xl md:text-6xl lg:text-7xl  capitalize font-medium md:block md:font-bold'>Church of <span className="sm:text-5xl md:text-6xl lg:text-7xl">st. Micheal</span></h3>
+        <p className='text-xl sm:text-3xl md:text-4xl lg:text-5xl space-y-5 font-bold   '>
+          <HomeTypeWriteEffect/>
+        </p>
       </div>
     </div>
 
