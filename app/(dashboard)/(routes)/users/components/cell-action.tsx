@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from '@/components/ui/button';
 import { BarChart4, Copy, Edit, MoreHorizontal, Trash, User } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import { AlertModal } from '@/components/Modal/alert-modal';
+import { AlertUserRoleModal } from '@/components/Modal/alert-userRoleModal';
 
 const FormSchema = z.object({
   type: z.enum(["Admin", "Member", "Guest"], {
@@ -49,11 +49,10 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   return(
     <>
-    <AlertModal 
+    <AlertUserRoleModal 
         isOpen={open} 
         onClose={() => setOpen(false)}
         loading={loading}
-        manageUser={true}
         onSubmit={onSubmit}
       />
     <DropdownMenu>

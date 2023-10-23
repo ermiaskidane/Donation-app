@@ -108,8 +108,8 @@ const Comments = ({
             <div className='flex flex-col '>
         {isLoading ?
           <Loading/> : data?.map((item: Comment & { NestComments: NestComment[] }, index: number) => (
-              <>
-                <div className='flex flex-col items-start gap-4 mb-4 md:flex-row md:items-center' key={item.id}>
+              <div key={item.id}>
+                <div className='flex flex-col items-start gap-4 mb-4 md:flex-row md:items-center'>
                   <Image
                     src={item.user.imageUrl}
                     alt="alternative"
@@ -141,9 +141,9 @@ const Comments = ({
                       </form>
                     )}
                   {item.NestComments.map((comt: NestComment, indexs: number) => (
-                    <>
+                    <div key={indexs}>
                     {commentOpen[index] && (
-                    <div className='flex flex-col items-start gap-4 mb-4 md:flex-row md:items-center'>
+                    <div className='flex flex-col items-start gap-4 mb-4 md:flex-row md:items-center' >
                       <Image
                         src={comt.user.imageUrl}
                         alt="alternative"
@@ -160,10 +160,10 @@ const Comments = ({
                         </p>
                     </div>
                     )}
-                    </>
+                    </div>
                   ))}
                 </div>
-              </>
+              </div>
           ))}
           </div>
         </div>

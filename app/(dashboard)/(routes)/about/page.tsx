@@ -39,18 +39,18 @@ function About() {
             </div>
           </div>
           <div className="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi quibusdam, doloremque ab blanditiis hic at omnis, 
-            distinctio vero culpa voluptas minima recusandae suscipit reprehenderit cumque nobis inventore accusantium illum.
+              The Eritrean Church in Manchester is a vibrant and integral part of the city's 
+              diverse religious landscape. Located in the heart of Manchester, this church serves
+               as a spiritual and cultural center for the Eritrean community in the region.
+               With its colorful and ornate architecture, it stands as a beautiful testament to Eritrean heritage. 
             <br />
             <br/>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil eius cupiditate suscipit aperiam assumenda necessitatibus 
-            magnam totam, nulla at? Hic, totam! Magnam illo ea fugiat.
-
+              The church plays a crucial role in fostering a sense of community and belonging among Eritrean 
+              expatriates, offering religious services, cultural events, and a place for Eritreans to celebrate 
+              their rich traditions.
             <br />
             <br/>
-            Architecto animi eos iure doloremque debitis mollitia veritatis 
-            sed voluptate maiores, modi consectetur, illum ipsam nobis? Autem iure quibusdam, 
-            dignissimos animi vero sunt, repudiandae quam. Id, esse?
+            It serves as a bridge between the Eritrean diaspora and their homeland, providing a sense of connection and continuity in a foreign land.
           </div>
         </div>
         <Slider/>

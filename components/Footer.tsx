@@ -4,6 +4,9 @@ import Link from 'next/link'
 import React from 'react'
 
 function Footer() {
+  const date = new Date();
+  const year = date.getFullYear();
+
   return (
     <div className='px-20 pt-20 pb-10'>
       <div className="flex flex-col space-y-8">
@@ -28,13 +31,13 @@ function Footer() {
 
         <div className='self-center'>
         <Image
-          className="translate-x-12 md:translate-x-0"
+          className="translate-x-12 md:translate-x-10"
           src="/images/Screenshot (246).png"
           width={80}
           height={80}
           alt="Picture of the author"
         />
-        <p className='text-sm pt-4 md:-translate-x-12 md:text-base'>© ALL RIGHTS RESERVED.</p>
+        <p className='text-sm pt-4 md:-translate-x-12 md:text-base'> ©{year} ALL RIGHTS RESERVED.</p>
         </div>
       </div>
     </div>

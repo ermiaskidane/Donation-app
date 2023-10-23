@@ -32,7 +32,7 @@ const AddDonation = async ({
     }
   });
 
-  console.log("@@@@@@@@@@@@@", member)
+  // console.log("@@@@@@@@@@@@@", member)
 
   const donation = await db.donation.findFirst({
     where: {
@@ -40,7 +40,7 @@ const AddDonation = async ({
     }
   });
 
-  console.log("????????????????????", donation)
+  // console.log("????????????????????", donation)
 
   return (
     <div className='flex-col'>

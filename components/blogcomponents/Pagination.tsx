@@ -18,13 +18,13 @@ const Pagination = ({
       <button
         disabled={!hasPrev}
         onClick={() => router.push(`?page=${page - 1}`)}
-        className="w-24 border-none p-4 bg-rose-500 text-white pointer disabled:cursor-not-allowed disabled:bg-rose-300">
+        className="w-24 border-none p-4 bg-blue-600 text-white pointer disabled:cursor-not-allowed disabled:bg-blue-300">
         Previous
       </button>
       <button 
         disabled={!hasNext}
         onClick={() => router.push(`?page=${page + 1}`)}
-        className="w-24 border-none p-4 bg-rose-500 text-white pointer disabled:cursor-not-allowed disabled:bg-rose-300">
+        className="w-24 border-none p-4 bg-blue-600 text-white pointer disabled:cursor-not-allowed disabled:bg-blue-300">
         Next
       </button>
     </div>

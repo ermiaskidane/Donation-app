@@ -26,9 +26,9 @@ const  HomePage = async() => {
 
       <div className="flex flex-col justify-center items-center h-full ">
         <h3 className='flex flex-col justify-center text-slate-100 text-4xl w-full text-center sm:text-5xl md:text-6xl lg:text-7xl  capitalize font-medium md:block md:font-bold'>Church of <span className="sm:text-5xl md:text-6xl lg:text-7xl">st. Micheal</span></h3>
-        <p className='text-xl sm:text-3xl md:text-4xl lg:text-5xl space-y-5 font-bold   '>
+        <div className='text-xl sm:text-3xl md:text-4xl lg:text-5xl space-y-5 font-bold   '>
           <HomeTypeWriteEffect/>
-        </p>
+        </div>
       </div>
     </div>
 

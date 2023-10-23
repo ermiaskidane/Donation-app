@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, User } from "lucide-react";
-import { redirect, useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -23,7 +23,6 @@ export const MembersClient: React.FC<MembersClientProps> = ({
   data,
   userRole
 }) => {
-  const params = useParams();
   const router = useRouter();
 
   const { roleUser, setRoleUser} = useMemberStore()
@@ -32,8 +31,8 @@ export const MembersClient: React.FC<MembersClientProps> = ({
       setRoleUser(userRole.role);
   }, [userRole, setRoleUser]);
 
-  console.log("::::::::::::AAAAAAAAAAAAAAAAA", userRole.role)
-  console.log("::::::::::::SSSSSSSSSSS", roleUser)
+  // console.log("::::::::::::AAAAAAAAAAAAAAAAA", userRole.role)
+  // console.log("::::::::::::SSSSSSSSSSS", roleUser)
 
 
   const totalDonationsAmount = data.reduce((total, item) => {
@@ -43,8 +42,8 @@ export const MembersClient: React.FC<MembersClientProps> = ({
 
     return total + donationsAmount;
 }, 0);
-console.log("ZZZZZZZZZZZZZZZZZZZZZZZZ", data)
-console.log("ASSSSSSSSSSSSSSSSSSS", totalDonationsAmount)
+// console.log("ZZZZZZZZZZZZZZZZZZZZZZZZ", data)
+// console.log("ASSSSSSSSSSSSSSSSSSS", totalDonationsAmount)
   return  (
     <>
     <AlertDemo/>

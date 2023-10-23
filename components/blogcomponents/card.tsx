@@ -6,13 +6,11 @@ import { string } from 'zod'
 
 interface cardProps {
   blog: any,
-  key: string
 }
 
 
 const Card = ({
   blog,
-  key
 }: cardProps) => {
   const wpm = 225;
   const word = blog?.desc.trim().split(/\s+/).length
@@ -25,7 +23,7 @@ const Card = ({
 
   return (
     <>
-      <div className="relative overflow-hidden rounded-xl" key={key}>
+      <div className="relative overflow-hidden rounded-xl">
         {blog.img && (
           <Image src={blog.img}
           alt="art cover" loading="lazy" width="1000" height="667" className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"/>
