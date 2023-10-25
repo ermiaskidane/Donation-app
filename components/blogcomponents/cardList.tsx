@@ -9,12 +9,14 @@ import { BlogData } from '@/type';
 
 interface cardListprops {
   page: number,
-  data: BlogData
+  data: BlogData,
+  cat?:string
 }
 
 const CardList = ({
   data,
-  page
+  page,
+  cat
 }: cardListprops) => {
 
   const POST_PER_PAGE = 3
@@ -31,7 +33,7 @@ const CardList = ({
         </div>
       ))}
     </div>
-    <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext}/>
+    <Pagination cat={cat} page={page} hasPrev={hasPrev} hasNext={hasNext}/>
  </>
   )
 }

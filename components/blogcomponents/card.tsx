@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'dompurify';
 import { string } from 'zod'
 
 interface cardProps {
@@ -20,6 +20,7 @@ const Card = ({
     const trimDesc: string = blog.desc.substring(0, 100)
     return {__html: DOMPurify.sanitize(trimDesc)}
   }
+
 
   return (
     <>

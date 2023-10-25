@@ -3,17 +3,16 @@
 import { Category, Post } from '@prisma/client'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import CardList from './cardList'
-import Pagination from './Pagination'
-import toast from 'react-hot-toast'
 import { BlogData } from '@/type'
 import Loading from '@/app/loading'
 
 // make optional for the blog page as not neccessary to display the category
 interface BlogcomponentProps {
   categories?: Category[]
-  blogRoute: boolean
+  blogRoute: boolean,
+  Blogs: BlogData,
 }
 
 interface CatagoryStyles {
@@ -33,25 +32,12 @@ const CatagoryStyles: CatagoryStyles = {
   cross: "bg-green-300",
 }
 
-const getData = async (page: number, cat: string | null | undefined): Promise<BlogData>  => {
-  const res = await fetch(
-    `http://localhost:3000/api/blog?page=${page}&cat=${cat || ''}`,
-    {
-      cache: 'no-store',
-    }
-  )
-
-  if (!res.ok) {
-    throw new Error('Failed')
-  }
-
-  return res.json()
-}
-
 const Blogcomponent = ({
   categories,
-  blogRoute
+  blogRoute,
+  Blogs
 }: BlogcomponentProps) => {
+
   const searchParams = useSearchParams()
 
   // searchParams.page is string has to be number and 
@@ -59,27 +45,9 @@ const Blogcomponent = ({
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
   const cat = searchParams.get("cat")
 
-  // console.log("£3333333333333333333", cat)
-
-  const [data, setData] = useState<BlogData>({ posts: [], count: 0 });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData(page, cat);
-        setData(result);
-      } catch (error) {
-        // Handle errors
-        toast.error("something went wrong");
-      }
-    };
-
-    fetchData();
-  }, [page, cat]);
-
   return (
     <>
-    {data.posts.length !== 0 ? (
+    {Blogs.posts.length !== 0 ? (
       <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
         {blogRoute && (
           <div className="mb-12 space-y-2 text-center">
@@ -91,7 +59,7 @@ const Blogcomponent = ({
         )}
       {/* ################################# */}
 
-      {/* <div className='my-8'>
+      <div className='my-8'>
         <div className="flex flex-wrap justify-between gap-4">
           {categories?.map((cat) => (
              <Link href={`/blog?cat=${cat.slug}`} key={cat.id} className={`
@@ -104,9 +72,9 @@ const Blogcomponent = ({
              </Link>
           ))}
         </div>
-      </div> */}
+      </div>
       {/* create the blog  */}
-        <CardList data={data} page={page}/> 
+        <CardList data={Blogs} page={page} cat={cat}/>
       </div>
       ) : (
             <Loading/>

@@ -1,3 +1,4 @@
+import getBlog, { IParams } from '@/app/actions/getBlogs'
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
@@ -5,10 +6,16 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
 import React from 'react'
 
-const  HomePage = async() => {
+interface BlogPageProps {
+  // searchParams: string
+  searchParams: IParams
+}
+
+const  HomePage = async({searchParams}: BlogPageProps) => {
 
 
   const categories = await db.category.findMany()
+  const blogList = await getBlog(searchParams)
 
   // console.log("££££££££££££££££££", categories)
   return (
@@ -35,7 +42,7 @@ const  HomePage = async() => {
     <div className="flex flex-col items-center space-y-8 py-20 md:px-4 xl:px-6 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
-      <Blogcomponent categories={categories} blogRoute={true} />
+      <Blogcomponent Blogs={blogList} categories={categories} blogRoute={true} />
     </div>
   )
 }
