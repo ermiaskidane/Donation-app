@@ -16,9 +16,13 @@ const Card = ({
   const word = blog?.desc.trim().split(/\s+/).length
   const readTime = Math.ceil(word / wpm);
 
+
   const sanitizedData = (): { __html: string } => {
-    const trimDesc: string = blog.desc.substring(0, 100)
-    return {__html: DOMPurify.sanitize(trimDesc)}
+    if (!blog.desc) {
+      return { __html: '' }; // Handle empty input
+    }
+    const trimDesc: string = blog.desc.substring(0, 100);
+    return { __html: DOMPurify.sanitize(trimDesc) };
   }
 
 
