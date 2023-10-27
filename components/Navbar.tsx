@@ -7,14 +7,11 @@ import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "./ui/menub
 import Link from "next/link";
 import { ChurchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import useLoginModal from "@/hooks/useLoginModal";
 
 const Navbar = () => {
   const pathName = usePathname();
   const params = useParams() 
   const { userId } = useAuth();
-
-  const loginModal = useLoginModal()
 
   const [isOpen, setIsOpen] = useState(false)
 
