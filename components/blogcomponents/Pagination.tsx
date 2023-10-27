@@ -5,7 +5,7 @@ interface paginationProps {
   page: number,
   hasPrev: boolean,
   hasNext: boolean,
-  cat?: string
+  cat: string | null
 }
 
 const Pagination = ({

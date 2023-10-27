@@ -10,7 +10,7 @@ import { BlogData } from '@/type';
 interface cardListprops {
   page: number,
   data: BlogData,
-  cat?:string
+  cat:string | null
 }
 
 const CardList = ({

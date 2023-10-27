@@ -31,6 +31,7 @@ export default async function getBlogs(
 
     // transaction makes multiple query at once
     const [posts, count] = await db.$transaction([
+      // @ts-ignore
       db.post.findMany(query),
       db.post.count({ where: query.where }),
     ])
