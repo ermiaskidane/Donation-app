@@ -12,7 +12,7 @@ import { MembersColumn, columns } from "./columns";
 import { User as userRole} from "@prisma/client";
 import useMemberStore from "@/hooks/useMember";
 import { useEffect } from "react";
-import AlertDemo from "@/components/UserInformation";
+// import AlertDemo from "@/components/UserInformation";
 
 interface MembersClientProps {
   data: MembersColumn[];
@@ -46,7 +46,7 @@ export const MembersClient: React.FC<MembersClientProps> = ({
 // console.log("ASSSSSSSSSSSSSSSSSSS", totalDonationsAmount)
   return  (
     <>
-    <AlertDemo/>
+{/*     <AlertDemo/> */}
     <div className="flex items-center justify-between">
     <Heading title={`Members (${data.length.toString()})`} subtitle={`Total Amount of Money £${totalDonationsAmount}`} />
     {userRole.role === "ADMIN" && (
