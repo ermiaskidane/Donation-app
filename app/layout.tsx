@@ -4,8 +4,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import LoginModal from '@/components/Modal/LoginModal'
-import RegisterModal from '@/components/Modal/registerModal'
 import {ToasterProvider} from '@/providers/toast-provider'
 import { CrispProvider } from '@/components/crisp-provider'
 
@@ -27,8 +25,6 @@ export default function RootLayout({
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
-          <LoginModal />
-          <RegisterModal/>
           <Navbar/>
           {children}
           <Footer/>
