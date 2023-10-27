@@ -11,14 +11,14 @@ import toast from 'react-hot-toast';
 import Comments from './comments';
 import { BlogData } from '@/type';
 
-interface blogProps {
-  updatedPost: Post,
-  user: User,
-}
+// interface blogProps {
+//   updatedPost: Post,
+//   user: User,
+// }
 interface SingleBlogprops {
   slug: string,
   blogs: BlogData,
-  blog: blogProps
+  blog: any
 }
 
 
