@@ -10,8 +10,8 @@ interface ChartClientProps {
 const ChartClient: React.FC<ChartClientProps> = ({
   data
 }) => {
-  console.log("DATA", data?.length)
-  console.log("DATA", data)
+  // console.log("DATA", data?.length)
+  // console.log("DATA", data)
   return (
     <div className="w-screen md:w-full">
         <ResponsiveContainer width="100%" height={350}>
