@@ -51,7 +51,10 @@ export const AlertUserRoleModal: React.FC<AlertModalProps> = ({
       onClose={onClose}
     >
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form 
+      // @ts-ignore
+      onSubmit={form.handleSubmit(onSubmit)} 
+      className="w-2/3 space-y-6">
         <FormField
           control={form.control}
           name="type"
