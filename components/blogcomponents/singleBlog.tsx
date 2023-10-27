@@ -33,9 +33,12 @@ const SingleBlog = ({
 // console.log("ZZZZZZZZZZZZZZZZZZzz", blogs)
 // console.log("ZZZZZZZZZZZZZZZZZZzz", blog)
   
-  const sanitizedData = (): { __html: string } => ({
-    __html: DOMPurify.sanitize(blog.updatedPost.desc)
-  })
+  const sanitizedData = (): { __html: string } => {
+    if (!blog.updatedPost.desc) {
+      return { __html: '' }; // Handle empty input
+    }
+    return {__html: DOMPurify.sanitize(blog.updatedPost.desc)}
+  }
   
   return (
     <section className="w-full flex flex-col items-center px-8 pt-8 pb-8 md:px-20 md:pt-20">

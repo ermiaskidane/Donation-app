@@ -15,22 +15,22 @@ interface BlogcomponentProps {
   Blogs: BlogData,
 }
 
-interface CatagoryStyles {
-  cloth: string
-  bible: string,
-  saints: string,
-  monastery: string,
-  cross: string,
-}
+// interface CatagoryStyles {
+//   cloth: string
+//   bible: string,
+//   saints: string,
+//   monastery: string,
+//   cross: string,
+// }
 
 
-const CatagoryStyles: CatagoryStyles = {
-  cloth: "bg-zinc-600",
-  bible: "bg-red-300",
-  saints: "bg-orange-300",
-  monastery: "bg-lime-400",
-  cross: "bg-green-300",
-}
+// const CatagoryStyles: CatagoryStyles = {
+//   cloth: "#ffb04f45",
+//   bible: "#da85c731",
+//   saints: "#7fb88133",
+//   monastery: "#ff795736",
+//   cross: "#ffb04f45",
+// }
 
 const Blogcomponent = ({
   categories,
@@ -44,6 +44,7 @@ const Blogcomponent = ({
   // parseInt doesnot expect a null value for that we use terinary operator
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
   const cat = searchParams.get("cat")
+  // console.log("@@@@@@@@@@", categories)
 
   return (
     <>
@@ -67,7 +68,7 @@ const Blogcomponent = ({
              gap-4 capitalize 
             h-12 justify-center 
              rounded-xl 
-             ${CatagoryStyles[cat.slug  as keyof CatagoryStyles]} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
+             bg-${cat.slug as string} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
                {cat.title}
              </Link>
           ))}
