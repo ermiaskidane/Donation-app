@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 ">
         <Input
           placeholder="Search members ..."
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
@@ -95,6 +95,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="md:not-sr-only"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

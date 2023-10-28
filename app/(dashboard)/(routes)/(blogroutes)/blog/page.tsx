@@ -12,7 +12,7 @@ const BlogPage = async({searchParams}: BlogPageProps) => {
   const blogList = await getBlog(searchParams)
   
   return (
-    <section className="w-full flex flex-col items-center px-20 pt-20 pb-10">
+    <section className=" flex flex-col">
       <Blogcomponent Blogs={blogList} blogRoute={false} />
     </section>
   )

@@ -41,8 +41,8 @@ const SingleBlog = ({
   }
   
   return (
-    <section className="w-full flex flex-col items-center px-8 pt-8 pb-8 md:px-20 md:pt-20">
-        <article className="flex flex-col my-4">
+    <section className="w-full flex flex-col items-center ">
+        <article className="flex flex-col my-4 px-6 pt-6 pb-6 md:px-20 md:pt-20">
         
         <Link href="#" className="hover:opacity-75">
           {blog?.updatedPost.img && (

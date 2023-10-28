@@ -13,7 +13,7 @@ const ChartClient: React.FC<ChartClientProps> = ({
   // console.log("DATA", data?.length)
   // console.log("DATA", data)
   return (
-    <div className="w-screen md:w-full">
+    <div className=" w-full">
         <ResponsiveContainer width="100%" height={350}>
            <BarChart 
               width={150} 

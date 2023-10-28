@@ -55,11 +55,6 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        cloth: '#57c4ff31',
-        bible: '#da85c731',
-        saints: '#7fb88133',
-        monastery: '#ff795736',
-        cross: '#ffb04f45',
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -15,22 +15,22 @@ interface BlogcomponentProps {
   Blogs: BlogData,
 }
 
-// interface CatagoryStyles {
-//   cloth: string
-//   bible: string,
-//   saints: string,
-//   monastery: string,
-//   cross: string,
-// }
+interface CatagoryStyles {
+  cloth: string
+  bible: string,
+  saints: string,
+  monastery: string,
+  cross: string,
+}
 
 
-// const CatagoryStyles: CatagoryStyles = {
-//   cloth: "#ffb04f45",
-//   bible: "#da85c731",
-//   saints: "#7fb88133",
-//   monastery: "#ff795736",
-//   cross: "#ffb04f45",
-// }
+const CatagoryStyles: CatagoryStyles = {
+  cloth: "#ffb04f45",
+  bible: "#da85c731",
+  saints: "#7fb88133",
+  monastery: "#ff795736",
+  cross: "#ffb04f45",
+}
 
 const Blogcomponent = ({
   categories,
@@ -63,12 +63,20 @@ const Blogcomponent = ({
       <div className='my-8'>
         <div className="flex flex-wrap justify-between gap-4">
           {categories?.map((cat) => (
-             <Link href={`/blog?cat=${cat.slug}`} key={cat.id} className={`
-             flex items-center 
-             gap-4 capitalize 
-            h-12 justify-center 
-             rounded-xl 
-             bg-${cat.slug as string} w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}>
+             <Link 
+                href={`/blog?cat=${cat.slug}`} 
+                key={cat.id} 
+                style={{
+                  backgroundColor: `${CatagoryStyles[cat.slug  as keyof CatagoryStyles]}`
+                }}
+                className={`
+                flex items-center 
+                gap-4 capitalize 
+                h-12 justify-center 
+                rounded-xl
+               
+                w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}
+             >
                {cat.title}
              </Link>
           ))}

@@ -84,7 +84,7 @@ const Comments = ({
  }
 
   return (
-    <div className='w-full my-12'>
+    <div className='w-full my-12 px-6 pt-6 pb-6 md:px-20 md:pt-20'>
       <h1 className="mb-8 text-neutral-600 text-center text-base font-semibold">Comments</h1>
         {isSignedIn ? (
           <form className="flex items-center justify-between gap-8" onSubmit={handleSubmit}>
@@ -92,10 +92,10 @@ const Comments = ({
             placeholder='Write a comment...' 
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
-            className='p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
+            className='p-2 w-full h-12 border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600 md:h-16'/>
             <button
               type="submit"
-              className='px-4 py-5 bg-blue-500 text-white font-bold border-0 rounded cursor-pointer'
+              className='px-4 h-12 bg-blue-500 text-white font-bold border-0 rounded cursor-pointer md:h-16'
               >
               Send
             </button>
@@ -134,8 +134,8 @@ const Comments = ({
                         placeholder='Write a comment...' 
                         value={nestDesc}
                         onChange={(e) => setNestDesc(e.target.value)}
-                        className='mb-4 p-2 w-full border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600'/>
-                        <button type="submit" className='mb-4 px-4 py-5 bg-blue-500 text-white font-bold border-0 rounded cursor-pointer'>
+                        className='mb-4 p-2 w-full h-12 border-2 rounded-md border-gray-600 focus:border-gray-600 active:border-gray-600 md:h-16'/>
+                        <button type="submit" className='mb-4 px-4 h-12 bg-blue-500 text-white font-bold border-0 rounded cursor-pointer md:h-16'>
                           Send
                         </button>
                       </form>

@@ -21,7 +21,7 @@ const Chartview = async ({
   }, 0)
 
   return (
-      <div className="mx-auto w-9/12">
+      <div className="mx-auto w-11/12  md:w-9/12">
         <h2 className="text-2xl font-semibold text-center py-10">Detail donation by {member?.name}</h2>
         <ChartClient data={member?.donations}/>
 
