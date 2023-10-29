@@ -36,16 +36,43 @@ const Navbar = () => {
       active: pathName === `/blog`
     },
     {
+      href: `/members`,
+      label: "Members",
+      active: pathName === `/members`
+    },
+    {
       href: `/about`,
       label: "About",
       active: pathName === `/about`
     },
-    // {
-    //   href: `/contact`,
-    //   label: "Contact Us",
-    //   active: pathName === `/contact`
-    // }
   ]
+
+  const renderConditional = () => {
+    if(!userId){
+      return (<li>
+                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                  <span>Login</span>
+                </Link>
+              </li>) 
+              }
+
+    if (userId) {
+      return (<>
+              <li>
+                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                  <span>Write</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                  <span>Profile</span>
+                </Link>
+              </li>
+            </>)
+    }
+
+    return null 
+  }
   return (
     <header>
     <nav className=" z-10 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent">
@@ -85,34 +112,7 @@ const Navbar = () => {
                                     </li>
                                 ))
                             }
-                            <li>
-                              <Link href="/members" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Members</span>
-                              </Link>
-                            </li>
-                            {!userId  && (
-                              <li>
-                                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Login</span>
-                                </Link>
-                              </li>)
-                            }
-                            {userId  && (
-                              <li>
-                                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Write</span>
-                                </Link>
-                              </li>
-                              )
-                            }
-                            {userId  && (
-                              <li>
-                                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Profile</span>
-                                </Link>
-                              </li>
-                              )
-                            }
+                          {renderConditional()}
                         </ul>
                         <div className={`${userId ? "ml-5 -translate-y-1": "" }`}>
                           <UserButton afterSignOutUrl='/' />
@@ -136,34 +136,7 @@ const Navbar = () => {
                                     </li>
                                 ))
                             }
-                            <li>
-                              <Link href="/members" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Members</span>
-                              </Link>
-                            </li>
-                            {!userId  && (
-                              <li>
-                                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Login</span>
-                                </Link>
-                              </li>)
-                            }
-                            {userId  && (
-                              <li>
-                                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Write</span>
-                                </Link>
-                              </li>
-                              )
-                            }
-                            {userId  && (
-                              <li>
-                                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                                  <span>Profile</span>
-                                </Link>
-                              </li>
-                              )
-                            }
+                            {renderConditional()}
                         </ul>
                         <div className={`${userId ? "ml-4 translate-y-6": "" }`}>
                           <UserButton afterSignOutUrl='/' />

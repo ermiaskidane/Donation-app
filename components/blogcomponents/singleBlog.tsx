@@ -42,7 +42,7 @@ const SingleBlog = ({
   
   return (
     <section className="w-full flex flex-col items-center ">
-        <article className="flex flex-col my-4 px-6 pt-6 pb-6 md:px-20 md:pt-20">
+        <article className="flex flex-col mt-4 px-6 pt-6  md:mb-4 md:px-20 md:pt-10">
         
         <Link href="#" className="hover:opacity-75">
           {blog?.updatedPost.img && (
@@ -73,7 +73,7 @@ const SingleBlog = ({
       {blog?.updatedPost.desc && (
       <Comments postSlug={slug}/>
       )}
-      <Blogcomponent Blogs={blogs}  blogRoute={false}/>
+      <Blogcomponent Blogs={blogs}  blogRoute={true}/>
     </section>
   )
 }

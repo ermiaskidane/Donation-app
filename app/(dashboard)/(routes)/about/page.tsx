@@ -14,7 +14,7 @@ function About() {
             About Us
           </h2>
         </div>
-        <div className="items-start px-16 space-y-2 md:px-28 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
+        <div className="items-start px-6 space-y-2 md:px-20 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
           <div className="flex flex-col items-center space-x-2 pt-8">
               <Image
                 src="/images/Screenshot (247).png"
@@ -38,7 +38,7 @@ function About() {
               </Link>
             </div>
           </div>
-          <div className="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">
+          <div className="prose text-sm max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2 md:text-base">
               The Eritrean Church in Manchester is a vibrant and integral part of the city's 
               diverse religious landscape. Located in the heart of Manchester, this church serves
                as a spiritual and cultural center for the Eritrean community in the region.

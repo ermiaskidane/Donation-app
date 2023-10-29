@@ -39,7 +39,7 @@ const Comments = ({
 
   // swr make a continious request for any update of the data
   const { data, mutate, isLoading } = useSWR(
-    `http://localhost:3000/api/comments?postSlug=${postSlug}`,
+    `${process.env.NEXT_PUBLIC_COMMENT_API}?postSlug=${postSlug}`,
     fetcher
   )
 
@@ -84,8 +84,8 @@ const Comments = ({
  }
 
   return (
-    <div className='w-full my-12 px-6 pt-6 pb-6 md:px-20 md:pt-20'>
-      <h1 className="mb-8 text-neutral-600 text-center text-base font-semibold">Comments</h1>
+    <div className='w-full mb-4 px-6 pt-6 pb-6 md:mt-4 md:px-20 '>
+      <h1 className="mb-8 text-neutral-600 text-center text-xl font-semibold md:text-2xl">Comments</h1>
         {isSignedIn ? (
           <form className="flex items-center justify-between gap-8" onSubmit={handleSubmit}>
             <textarea 

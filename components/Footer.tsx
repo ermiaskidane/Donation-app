@@ -8,7 +8,7 @@ function Footer() {
   const year = date.getFullYear();
 
   return (
-    <div className='px-20 pt-20 pb-10'>
+    <div className=' px-6 py-6 md:px-20 md:pt-10 md:pb-10 '>
       <div className="flex flex-col space-y-8">
         <div className="flex flex-col space-y-8 items-center justify-between md:flex-row">
           <ul className="list-none flex space-x-4 md:flex-initial md:w-64 md:flex md:justify-center md:self-end md:-translate-y-4 md:font-medium">

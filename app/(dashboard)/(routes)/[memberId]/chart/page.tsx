@@ -26,7 +26,7 @@ const Chartview = async ({
         <ChartClient data={member?.donations}/>
 
         <div className="mt-10">
-          <h2 className="text-center text-lg">Total amount: £{totalAmount}</h2>
+          <h2 className="text-center text-lg font-medium">Total amount: £{totalAmount}</h2>
         </div>
       </div>
   )
