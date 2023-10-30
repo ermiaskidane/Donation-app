@@ -39,6 +39,8 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
         </div>
       </div>
 
+      
+
     <div className="flex flex-col items-center space-y-8 py-20 md:px-4 xl:px-6 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>

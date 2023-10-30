@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import { comment } from '@/lib/data';
 import { format, parseISO } from 'date-fns'
 import { Comment, NestComment } from '@/type';
+import { usePathname } from 'next/navigation';
 
 // import { Comment, NestComment, User } from '@prisma/client';
 
@@ -35,8 +36,9 @@ const Comments = ({
   const { isSignedIn, userId } = useAuth();
   const [desc, setDesc] = useState('')
   const [nestDesc, setNestDesc] = useState("")
+  const path = usePathname()
 
-
+  console.log("::::::::::::::::", path)
   // swr make a continious request for any update of the data
   const { data, mutate, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_COMMENT_API}?postSlug=${postSlug}`,

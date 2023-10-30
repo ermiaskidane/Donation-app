@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import {ToasterProvider} from '@/providers/toast-provider'
 import { CrispProvider } from '@/components/crisp-provider'
+import InfiniteSlide from '@/components/inifiniteslide'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
+          <InfiniteSlide/>
           <Navbar/>
           {children}
           <Footer/>
