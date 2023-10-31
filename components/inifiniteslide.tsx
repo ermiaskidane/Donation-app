@@ -1,57 +1,70 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './inifiniteslide.module.css'
 import gsap from 'gsap';
+import toast from 'react-hot-toast';
+import { Info } from '@prisma/client';
 
-const newsArray = [
-  { title: "Breaking News 1 The church plays a crucial role in fostering a sense of community and belonging among Eritrean expatriates, offering religious services, cultural events, and a place for Eritreans to celebrate their rich traditions." },
-  { title: "Latest Updates on COVID-19" },
-  { title: "Technology Advancements in 2023" },
-  { title: "World Economy Outlook" },
-  { title: "Sports Highlights of the Week" },
-];
+const getInfo = async ()  => {
+  const res = await fetch(
+    `http://localhost:3000/api/info`,
+    {
+      cache: 'no-store',
+    }
+  )
 
-function InfiniteSlide() {
+  if (!res.ok) {
+    throw new Error('Failed')
+  }
+
+  return res.json()
+}
+
+const InfiniteSlide = () => {
   const slider = useRef(null);
 
-  // useEffect(() => {
-  //   // Start the animation after a 2-second delay
-  //   const startAnimationTimeout = setTimeout(() => {
-  //     const sliderRef = slider.current;
-  //     const animation = gsap.to(sliderRef, {
-  //       x: '-100%',
-  //       ease: 'linear',
-  //       duration: 10,
-  //       repeat: -1,
-  //       onComplete: () => {
-  //         gsap.set(sliderRef, { x: '100%' }); // Reset the position to the right corner
-  //       },
-  //     });
+  const [info, setInfo] = useState<Info[]>([]);
 
-  //     // Stop the animation after 10 seconds
-  //     const stopAnimationTimeout = setTimeout(() => {
-  //       animation.kill();
-  //     }, 10000); // 10 seconds
+  // console.log("99999999999999999999", info)
 
-  //     // Clear the stop animation timeout when the component unmounts
-  //     return () => {
-  //       clearTimeout(stopAnimationTimeout);
-  //     };
-  //   }, 2000); // 2 seconds
 
-  //   // Clear the start animation timeout when the component unmounts
-  //   return () => {
-  //     clearTimeout(startAnimationTimeout);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getInfo();
+
+        // let updatedNews = []
+
+        // // Get the current date and time
+        // const currentTime = new Date();
+
+        // for (let i in result){
+
+        //   const createdAt = new Date(result[i].createdAt);
+
+        //   // Compare createdAt with the current time
+        //   if (createdAt >= currentTime) {
+        //     updatedNews.push(result[i]);
+        //   }
+        // }
+        // setInfo(updatedNews);
+        setInfo(result);
+      } catch (error) {
+        // Handle errors
+        toast.error("something went wrong");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const sliderRef = slider.current;
     const animation = gsap.to(sliderRef, {
       x: '-100%',
       ease: 'linear',
-      duration: 10,
+      duration: 20,
       repeat: -1,
       onComplete: () => {
         gsap.set(sliderRef, { x: '100%' }); // Reset the position to the right corner
@@ -63,12 +76,18 @@ function InfiniteSlide() {
     };
   }, []);
 
+  // if (info.length === 0) {
+  //   return null; // Don't render anything if the info array is empty
+  // }
+  
+
+
   return (
     <main className={styles.main}>
       <div className={styles.sliderContainer}>
         <div ref={slider} className={styles.slider}>
-        {newsArray.map((news, index) => (
-            <p key={news.title} className="slide-text">
+        {info.slice(0, 1).map((news, index) => (
+            <p key={news.title} className={styles.slideText}>
             {news.title}
           </p>
           ))}
@@ -79,92 +98,3 @@ function InfiniteSlide() {
 }
 
 export default InfiniteSlide;
-
-
-// import Image from 'next/image'
-
-// import styles from './inifiniteslide.module.css'
-// import gsap from "gsap";
-
-// import { useEffect, useRef } from 'react';
-
-// const newsArray = [
-//   { title: "Breaking News 1" },
-//   { title: "Latest Updates on COVID-19" },
-//   { title: "Technology Advancements in 2023" },
-//   { title: "World Economy Outlook" },
-//   { title: "Sports Highlights of the Week" }
-// ];
-
-// function InfiniteSlide() {
-//   const firstText = useRef(null);
-
-//   const secondText = useRef(null);
-
-//   const slider = useRef(null);
-
-//   let xPercent = 0;
-//   let direction = -1
-
-//   useEffect(() => {
-//     requestAnimationFrame(animation)
-//   },[])
-
-//   const animation = () => {
-//     if(xPercent <= -100){
-//       xPercent = 0;
-//     }
-//     gsap.set(firstText.current, {xPercent: xPercent})
-//     gsap.set(secondText.current, {xPercent: xPercent})
-//     xPercent += 0.25 * direction
-//     requestAnimationFrame(animation)
-//   }
-
-//   return (
-
-//     <main className={styles.main}>
-
-//       {/* <Image 
-
-//         src="/images/Screenshot (246).png"
-
-//         fill={true}
-
-//         alt="background"
-
-//       /> */}
-
-//       <div className={styles.sliderContainer}>
-
-//         <div ref={slider} className={styles.slider}>
-
-//         {newsArray.map((news, index) => (
-//             <p
-//               key={news.title}
-//               style={{ whiteSpace: 'nowrap' }}
-//               ref={firstText}
-//             >
-//               {news.title}
-//             </p>
-//           ))}
-//           {/* {newsArray.map((news) => (
-//             <p ref={firstText} key={news.title}>{news.title}</p>
-//           ))}
-
-//           {newsArray.map((news) => (
-//             <p ref={secondText} key={news.title}>{news.title}</p>
-//           ))} */}
-//           {/* <p ref={firstText}>Freelance Developer -</p>
-
-//           <p ref={secondText}>Freelance Developer -</p> */}
-
-//         </div>
-
-//       </div>
-
-//     </main>
-
-//   )
-// }
-
-// export default InfiniteSlide

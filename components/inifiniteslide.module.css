@@ -66,6 +66,11 @@
 
 }
 
+.slidetext {
+  /* transform: translateX(11rem);
+  color: red */
+}
+
 
 
 .slider p:nth-of-type(2){

@@ -113,3 +113,10 @@ model NestComment {
 
   createdAt DateTime @default(now())
 }
+
+// information headline eg. events, meeting
+model Info {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  createdAt DateTime @default(now())
+}
