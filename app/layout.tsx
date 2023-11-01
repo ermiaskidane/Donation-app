@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import {ToasterProvider} from '@/providers/toast-provider'
 import { CrispProvider } from '@/components/crisp-provider'
 import InfiniteSlide from '@/components/inifiniteslide'
+import { db } from '@/lib/db'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,18 +16,22 @@ export const metadata: Metadata = {
   description: 'Donation contribute by members',
 }
 
-export default function RootLayout({
+
+ const RootLayout = async({
   children,
 }: {
   children: React.ReactNode
-}) {
+}) => {
+
+  const info = await db.info.findMany()
+
   return (
     <ClerkProvider>
       <html lang="en">
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
-          <InfiniteSlide/>
+          <InfiniteSlide infoList={info}/>
           <Navbar/>
           {children}
           <Footer/>
@@ -35,3 +40,5 @@ export default function RootLayout({
     </ClerkProvider>
   )
 }
+
+export default RootLayout

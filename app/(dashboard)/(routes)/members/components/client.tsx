@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import Heading  from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
-
+ 
 import { MembersColumn, columns } from "./columns";
 import { User as userRole} from "@prisma/client";
 import useMemberStore from "@/hooks/useMember";
