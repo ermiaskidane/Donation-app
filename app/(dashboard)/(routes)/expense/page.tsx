@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { ExpenseClient } from './components/client'
+import { db } from '@/lib/db'
  
 const invoices = [
   {
@@ -62,7 +63,17 @@ const invoices = [
   },
 ]
 
-function ExpensePage() {
+const ExpensePage = async() =>{
+  
+  const donated = await db.donation.findMany()
+
+  console.log("@@@@@@@@@@@@@@@", donated)
+
+  const sum = donated.reduce((acc, total) => {
+    return acc + total.amount;
+  }, 0)
+
+  console.log("::::::::::::::::::", sum)
   return (
     <div className="px-4">
       <ExpenseClient invoices={invoices} />
