@@ -17,49 +17,51 @@ import {
 } from "@/components/ui/table"
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
- 
+import {dataExpense} from '@/lib/data'
+
+
 const invoices = [
   {
-    expense: "INV002",
+    // expense: "INV002",
     paymentStatus: "Paid",
     totalAmount: "$250.00",
-    paymentMethod: "Credit Card PayPal PayPal PayPal",
+    description: "Credit Card PayPal PayPal PayPal",
   },
   {
-    expense: "INV002",
+    // description: "INV002",
     paymentStatus: "Pending",
     totalAmount: "$150.00",
-    paymentMethod: "PayPal",
+    description: "PayPal",
   },
   {
-    expense: "INV003",
+    // description: "INV003",
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
+    description: "Bank Transfer",
   },
   {
-    expense: "INV004",
+    // description: "INV004",
     paymentStatus: "Paid",
     totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
+    description: "Credit Card",
   },
   {
-    expense: "INV005",
+    // description: "INV005",
     paymentStatus: "Paid",
     totalAmount: "$550.00",
-    paymentMethod: "PayPal",
+    description: "PayPal",
   },
   {
-    expense: "INV006",
+    // description: "INV006",
     paymentStatus: "Pending",
     totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
+    description: "Bank Transfer",
   },
   {
-    expense: "INV007",
+    // description: "INV007",
     paymentStatus: "Unpaid",
     totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
+    description: "Credit Card",
   },
 ]
 
@@ -67,18 +69,25 @@ const ExpensePage = async() =>{
   
   const donated = await db.donation.findMany()
 
-  console.log("@@@@@@@@@@@@@@@", donated)
+  const expense = await db.year.findMany({
+    include: {
+      expenses: true
+    }
+  })
+
+  console.log("@@@@@@@@@@@@@@@", expense)
 
   const sum = donated.reduce((acc, total) => {
     return acc + total.amount;
   }, 0)
 
-  console.log("::::::::::::::::::", sum)
+  // console.log("::::::::::::::::::", donated)
   return (
     <div className="px-4">
-      <ExpenseClient invoices={invoices} />
+      <ExpenseClient invoices={expense} donation={donated}/>
     </div>
   )
 }
+
 
 export default ExpensePage

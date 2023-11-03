@@ -120,3 +120,18 @@ model Info {
   title     String
   createdAt DateTime @default(now())
 }
+
+model Year {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  year     Int       @unique
+  expenses Expense[]
+}
+
+model Expense {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  description   String
+  amount        Int
+  paymentStatus String
+  yearId        String @db.ObjectId
+  year          Year   @relation(fields: [yearId], references: [id], onDelete: Cascade)
+}

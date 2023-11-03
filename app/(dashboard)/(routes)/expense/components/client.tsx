@@ -106,33 +106,115 @@ import {  columns } from "./columns";
 // } from "@/components/ui/table"
 // import {  columns } from "./columns";
 
+// interface ExpenseClientProps {
+//   invoices: any[];
+// }
+
+// const YearlyExpenses = [
+//   {"Exyear": "Expenses in 2021"},
+//   {"Exyear": "Expenses in 2022"},
+//   {"Exyear": "Expenses in 2023"}
+// ]
+
+// // console.log(":::::::", Object.keys(YearlyExpenses))
+// // console.log(":::::::", Object.values(YearlyExpenses)[i])
+
+// export const ExpenseClient: React.FC<ExpenseClientProps> = ({
+//   invoices,
+// }) => {
+//   return (
+//     <>
+//       <Accordion type="single" collapsible className="w-full">
+//         {YearlyExpenses.map((year, i) => (
+//           // <div key={Object.keys(year)[0]}></div>
+//           <AccordionItem value={year.Exyear} key={Object.keys(year)[0]}>
+//           <AccordionTrigger>{year.Exyear}</AccordionTrigger>
+//           <AccordionContent>
+//           <DataTable hideContent={true} searchKey="name" columns={columns} data={invoices}/>
+//           <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in 2021: £2250</AccordionContent>
+//           <AccordionContent className='font-semibold text-black text-center'>Total Amount in 2021: £10000 - £2250 = £7750</AccordionContent>
+//           </AccordionContent>
+//         </AccordionItem>
+//         ))}
+        
+//       </Accordion>
+//     </>
+//   )
+// }
+
+
+
+
 interface ExpenseClientProps {
   invoices: any[];
+  donation: any[]
 }
 
-const YearlyExpenses = [
-  {"Exyear": "Expenses in 2021"},
-  {"Exyear": "Expenses in 2022"},
-  {"Exyear": "Expenses in 2023"}
-]
 
-// console.log(":::::::", Object.keys(YearlyExpenses))
-// console.log(":::::::", Object.values(YearlyExpenses)[i])
+const groupExpensesByYear = (expenses) => {
+  const groupedExpenses = {};
+
+  expenses.forEach((expense) => {
+    const year = expense.dtime.trim().split(',')[1];
+    if (groupedExpenses[year]) {
+      groupedExpenses[year].push(expense);
+    } else {
+      groupedExpenses[year] = [expense];
+    }
+  });
+
+  const yearlyTotals = Object.keys(groupedExpenses).map((year) => ({
+    year,
+    expenses: groupedExpenses[year],
+    total: groupedExpenses[year].reduce((acc, expense) => acc + expense.amount, 0),
+  }));
+
+  return yearlyTotals;
+};
+
+const YearlyExpenseSum = (spent) => {
+  return spent.reduce((acc, total) => {
+    return acc + total.amount
+  }, 0)
+}
+
 
 export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   invoices,
+  donation
 }) => {
+
+  const yearlyExpenses = useState(() => groupExpensesByYear(donation))[0];
+  // Sort yearlyExpenses by the year in ascending order
+  yearlyExpenses.sort((a, b) => parseInt(a.year) - parseInt(b.year));
+
+  const TotalSum = (exp) => {
+    // Find the yearly expenses object for the current year
+    const yearlyExpense = yearlyExpenses.find((item) => Number(item.year) === exp.year);
+  
+    // console.log("~~~~~~~~~~~~~", yearlyExpense)
+    if (yearlyExpense) {
+      const total = yearlyExpense.total - YearlyExpenseSum(exp.expenses);
+      return total;
+    }
+  
+    return 0; // Handle the case when there's no matching yearly expense data
+  };
+  console.log(":?>>>>>>>>>><<<<<<<<<", invoices)
+  console.log(":??????????????", yearlyExpenses)
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
-        {YearlyExpenses.map((year, i) => (
+        {invoices.map((exp, i) => (
           // <div key={Object.keys(year)[0]}></div>
-          <AccordionItem value={year.Exyear} key={Object.keys(year)[0]}>
-          <AccordionTrigger>{year.Exyear}</AccordionTrigger>
+          <AccordionItem value={exp.id} key={exp.id}>
+          <AccordionTrigger>{exp.year}</AccordionTrigger>
           <AccordionContent>
-          <DataTable hideContent={true} searchKey="name" columns={columns} data={invoices}/>
-          <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in 2021: £2250</AccordionContent>
-          <AccordionContent className='font-semibold text-black text-center'>Total Amount in 2021: £10000 - £2250 = £7750</AccordionContent>
+          <DataTable hideContent={true} searchKey="name" columns={columns} data={exp.expenses}/>
+          <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in {exp.year}: {YearlyExpenseSum(exp.expenses)} </AccordionContent>
+          {/* {yearlyExpenses.map((amount) => ( */}
+            <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: {TotalSum(exp)}</AccordionContent>
+          {/* // ))} */}
           </AccordionContent>
         </AccordionItem>
         ))}
@@ -142,65 +224,5 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   )
 }
 
-{/* <AccordionItem value="item-2">
-          <AccordionTrigger>Expenses in 2022</AccordionTrigger>
-          <AccordionContent>
-          <DataTable hideContent={true} searchKey="name" columns={columns} data={invoices}/>
-          <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in 2021: £2250</AccordionContent>
-          <AccordionContent className='font-semibold text-black text-center'>Total Amount in 2021: £10000 - £2250 = £7750</AccordionContent>
-            <Table>
-                <TableCaption className='font-semibold text-black'>Total Expense in 2022: £2250</TableCaption>
-                <TableCaption className='font-semibold text-black'>Total Amount in 2022: £10000 - £2250 = £7750</TableCaption>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">Invoice</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invoices.map((invoice) => (
-                    <TableRow key={invoice.expense}>
-                      <TableCell className="font-medium">{invoice.expense}</TableCell>
-                      <TableCell>{invoice.paymentMethod}</TableCell>
-                      <TableCell>{invoice.paymentStatus}</TableCell>
-                      <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Expenses in 2023</AccordionTrigger>
-          <AccordionContent>
-          <DataTable hideContent={true} searchKey="name" columns={columns} data={invoices}/>
-          <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in 2021: £2250</AccordionContent>
-          <AccordionContent className='font-semibold text-black text-center'>Total Amount in 2021: £10000 - £2250 = £7750</AccordionContent>
-          <Table>
-            <TableCaption className='font-semibold text-black'>Total Expense in 2023: £2250</TableCaption>
-            <TableCaption className='font-semibold text-black'>Total Amount in 2023: £10000 - £2250 = £7750</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Invoice</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow key={invoice.expense}>
-                    <TableCell className="font-medium">{invoice.expense}</TableCell>
-                    <TableCell>{invoice.paymentMethod}</TableCell>
-                    <TableCell>{invoice.paymentStatus}</TableCell>
-                    <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </AccordionContent>
-        </AccordionItem> */}
 
 

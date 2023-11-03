@@ -222,3 +222,50 @@ export const comment = [
   }
 ]
 
+export const dataExpense = [
+  {"2017": [
+    {description:"church rent", amount: "5000", paymentStatus: "Paid"},
+    {description:"Buy Books", amount:"1500", paymentStatus: "Paid"},
+    {description:"Buy clothes", amount:"500", paymentStatus: "Paid"},
+    {description:"Buy carpets", amount:"500", paymentStatus: "Paid"},
+  ]
+  },
+  {"2018": [
+    {description:"church rent", amount: "5000", paymentStatus: "Paid"},
+    {description:"Buy Books", amount:"800", paymentStatus: "Paid"},
+    {description:"Buy clothes", amount:"400", paymentStatus: "Paid"},
+  ]
+},
+  {"2019": [
+    {description:"church rent", amount: "5000", paymentStatus: "Paid"},
+    {description:"Buy Books", amount:"1000", paymentStatus: "Unpaid"},
+    {description:"Buy clothes", amount:"300", paymentStatus: "Paid"},
+    {description:"Buy carpents", amount:"100", paymentStatus: "Paid"}
+  ]
+},
+  {"2020": [
+    {description:"church rent", amount: "5000", paymentStatus: "paid"},
+    {description:"Buy Books", amount:"600", paymentStatus: "Unpaid"},
+    {description:"Buy clothes", amount:"150", paymentStatus: "Paid"},
+  ]
+},
+  {"2021": [
+    {description:"church rent", amount: "5000", paymentStatus: "paid"},
+    {description:"Buy Books", amount:"200", paymentStatus: "paid"},
+    {description:"Buy clothes", amount:"100", paymentStatus: "paid"},
+  ]
+},
+  {"2022": [
+    {description:"church rent", amount: "5000", paymentStatus: "paid"},
+    {description:"Buy Books", amount:"200", paymentStatus: "Unpaid"},
+    {description:"Buy clothes", amount:"100", paymentStatus: "Unpaid"},
+  ]
+},
+  {"2023": [
+    {description:"church rent", amount: "5000", paymentStatus: "paid"},
+    {description:"Buy Books", amount:"200", paymentStatus: "paid"},
+    {description:"Buy clothes", amount:"100", paymentStatus: "paid"},
+  ]
+}
+]
+

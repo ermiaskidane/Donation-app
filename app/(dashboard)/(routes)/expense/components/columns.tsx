@@ -23,8 +23,8 @@ import CellAction from "./cell-action";
 
 export const columns: ColumnDef<any>[] = [
   {
-    accessorKey: "paymentMethod",
-    header: "PaymentMethod",
+    accessorKey: "description",
+    header: "Description",
   },
   // {
   //   accessorKey: "expense",
@@ -35,8 +35,8 @@ export const columns: ColumnDef<any>[] = [
     header: "PaymentStatus",
   },
   {
-    accessorKey: "totalAmount",
-    header: "TotalAmount",
+    accessorKey: "amount",
+    header: "Amount",
   },
   {
     //implement id in your data later at the moment invoices daoes not have id 
