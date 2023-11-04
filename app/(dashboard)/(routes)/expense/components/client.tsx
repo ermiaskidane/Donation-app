@@ -9,6 +9,14 @@ import {
 } from "@/components/ui/accordion"
 import { DataTable } from "@/components/ui/data-table";
 import {  columns } from "./columns";
+import { Button } from '@/components/ui/button';
+import { ExpenseModal } from '@/components/Modal/expense-modal';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import Heading from '@/components/Heading';
+import { Component, Plus, PoundSterling, User } from 'lucide-react';
+import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 
 // interface Donate {
 //   id: string;
@@ -172,7 +180,7 @@ const groupExpensesByYear = (expenses) => {
   return yearlyTotals;
 };
 
-const YearlyExpenseSum = (spent) => {
+export const YearlyExpenseSum = (spent) => {
   return spent.reduce((acc, total) => {
     return acc + total.amount
   }, 0)
@@ -183,6 +191,12 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   invoices,
   donation
 }) => {
+
+  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [poundOpen, setPoundOpen] = useState(false);
+  const [year, setYear] = useState();
 
   const yearlyExpenses = useState(() => groupExpensesByYear(donation))[0];
   // Sort yearlyExpenses by the year in ascending order
@@ -200,25 +214,70 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   
     return 0; // Handle the case when there's no matching yearly expense data
   };
+
+  const OpenModal = (exp) => {
+    setOpen(true);
+    setYear(exp.year)
+
+    console.log("BBBBBBBBBBBBBBB", exp)
+  }
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true)
+
+      console.log("KKKKKKKKKKKKK",{data, year})
+      await axios.post(`/api/expense/${year}`, data)
+
+      router.refresh();
+      router.push('/expense');
+      toast.success("expense has been created")
+    } catch(error: any){
+      toast.error('Something went wrong.');
+    } finally{
+      setLoading(false);
+      setOpen(!open);
+    }
+  }
   console.log(":?>>>>>>>>>><<<<<<<<<", invoices)
   console.log(":??????????????", yearlyExpenses)
   return (
     <>
+    <ExpenseModal
+        isOpen={open} 
+        onClose={() => setOpen(false)}
+        onSubmit={onSubmit}
+        loading={loading}
+      />
+      <CurrentAmountModal
+        isOpen={poundOpen} 
+        onClose={() => setPoundOpen(false)}
+        TotalExpense={invoices}
+        loading={loading}
+      />
+      <div className="flex items-center justify-between">
+        <h2 className="py-4 text-center text-xl font-bold sm:text-2xl">Yearly Expenses</h2>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <Button onClick={() => setPoundOpen(true)} >
+            <PoundSterling className="mr-2 h-4 w-4" /> Current Amount
+          </Button>
+        </div>
+      </div>
+      {/* <Heading title="Yearly Expenses" subtitle="Manage users role" center /> */}
       <Accordion type="single" collapsible className="w-full">
         {invoices.map((exp, i) => (
-          // <div key={Object.keys(year)[0]}></div>
           <AccordionItem value={exp.id} key={exp.id}>
-          <AccordionTrigger>{exp.year}</AccordionTrigger>
-          <AccordionContent>
-          <DataTable hideContent={true} searchKey="name" columns={columns} data={exp.expenses}/>
-          <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in {exp.year}: {YearlyExpenseSum(exp.expenses)} </AccordionContent>
-          {/* {yearlyExpenses.map((amount) => ( */}
-            <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: {TotalSum(exp)}</AccordionContent>
-          {/* // ))} */}
-          </AccordionContent>
-        </AccordionItem>
+            <AccordionTrigger>{exp.year}</AccordionTrigger>
+              <AccordionContent>
+                <div className='flex justify-end'>
+                  <Button onClick={() => OpenModal(exp)}>Add Expense</Button>
+                </div>
+              <DataTable hideContent={true} searchKey="name" columns={columns} data={exp.expenses}/>
+              <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in {exp.year}: {YearlyExpenseSum(exp.expenses)} </AccordionContent>
+                <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: {TotalSum(exp)}</AccordionContent>
+              </AccordionContent>
+          </AccordionItem>
         ))}
-        
       </Accordion>
     </>
   )

@@ -9,8 +9,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from '@/components/ui/button';
 import { BarChart4, Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import { AlertModal } from '@/components/Modal/alert-modal';
+import { ExpenseModal } from '@/components/Modal/expense-modal';
 import useMemberStore from "@/hooks/useMember";
+import { AlertModal } from "@/components/Modal/alert-modal";
 
 interface CellActionProps {
   data: any;
@@ -29,8 +30,9 @@ export const CellAction: React.FC<CellActionProps> = ({
   const onConfirm = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/member/${data.id}`);
-      toast.success('Member deleted.');
+      console.log("JJJJJJJJJJJJ", data)
+      await axios.delete(`/api/expense/${data.id}`);
+      toast.success('Expense deleted.');
       router.refresh();
     } catch (error) {
       toast.error('Something went wrong');
@@ -41,7 +43,7 @@ export const CellAction: React.FC<CellActionProps> = ({
   }
   return(
     <>
-    <AlertModal 
+    <AlertModal
         isOpen={open} 
         onClose={() => setOpen(false)}
         onConfirm={onConfirm}
@@ -56,34 +58,24 @@ export const CellAction: React.FC<CellActionProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => router.push(`/${data.id}/chart`)}
-          >
-            <BarChart4 className="mr-2 h-4 w-4" /> BarChart
-          </DropdownMenuItem>
-          
             <>
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
               // the long hex string is a random number I place inorder to create a new donation
               // otherwise it will go for update donation
-                onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
+                // onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
+                onClick={() => setOpen(true)}
               >
-                <Copy className="mr-2 h-4 w-4" /> Add Donation
-              </DropdownMenuItem>
-              <DropdownMenuItem
+                <Copy className="mr-2 h-4 w-4" /> Add Expense
+              </DropdownMenuItem> */}
+              {/* <DropdownMenuItem
                 onClick={() => router.push(`/members/${data.id}/donation`)}
               >
                 <Copy className="mr-2 h-4 w-4" /> Update Donation
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => router.push(`/members/${data.id}`)}
-              >
-                <Edit className="mr-2 h-4 w-4" /> Update member
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem
                 onClick={() => setOpen(true)}
               >
-                <Trash className="mr-2 h-4 w-4" /> Delete member
+                <Trash className="mr-2 h-4 w-4" /> Delete Expense
               </DropdownMenuItem>
             </>
         </DropdownMenuContent>
