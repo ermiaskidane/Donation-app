@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Modal } from "@/components/ui/modal";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -15,55 +14,12 @@ import {
 } from "@/components/ui/table"
 import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/expense/components/client";
 
-// const invoices = [
-//   {
-//     // expense: "INV002",
-//     paymentStatus: "Paid",
-//     totalAmount: "$250.00",
-//     description: "Credit Card PayPal PayPal PayPal",
-//   },
-//   {
-//     // description: "INV002",
-//     paymentStatus: "Pending",
-//     totalAmount: "$150.00",
-//     description: "PayPal",
-//   },
-//   {
-//     // description: "INV003",
-//     paymentStatus: "Unpaid",
-//     totalAmount: "$350.00",
-//     description: "Bank Transfer",
-//   },
-//   {
-//     // description: "INV004",
-//     paymentStatus: "Paid",
-//     totalAmount: "$450.00",
-//     description: "Credit Card",
-//   },
-//   {
-//     // description: "INV005",
-//     paymentStatus: "Paid",
-//     totalAmount: "$550.00",
-//     description: "PayPal",
-//   },
-//   {
-//     // description: "INV006",
-//     paymentStatus: "Pending",
-//     totalAmount: "$200.00",
-//     description: "Bank Transfer",
-//   },
-//   {
-//     // description: "INV007",
-//     paymentStatus: "Unpaid",
-//     totalAmount: "$300.00",
-//     description: "Credit Card",
-//   },
-// ]
 
 interface CurrentAmountModalProps {
   isOpen: boolean;
   onClose: () => void;
-  TotalExpense: any[];
+  donation: any[],
+  YearlyExpense: any[];
   loading: boolean;
 }
 
@@ -71,15 +27,35 @@ interface CurrentAmountModalProps {
 export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
   isOpen,
   onClose,
-  TotalExpense,
+  donation,
+  YearlyExpense,
   loading,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  console.log(TotalExpense)
+  const [yearlyCost, setYearlyCost] = useState([]);
+
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+
+    // Calculate yearly costs when the component is mounted
+    const costs = YearlyExpense.map((exp) => YearlyExpenseSum(exp.expenses));
+    setYearlyCost(costs);
+  }, [YearlyExpense]);
+
+  // As the yearlyCost is partially static it is best practice to use usememo
+  // prevents recalculating except during updates
+  const overAllCost = useMemo(() => {
+    return yearlyCost.reduce((acc, total) => acc + total, 0);
+  }, [yearlyCost]);
+
+  const overAllDonation = donation.reduce((acc, total) => {
+    return acc + total.amount;
+  }, 0)
+
+  const calculateCurrentAmount = (donation, cost) => {
+    return donation - cost
+  }
 
   if (!isMounted) {
     return null;
@@ -93,9 +69,9 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
       onClose={onClose}
     >
       <Table>
-        <TableCaption>Total expense {"10000"}.</TableCaption>
-        <TableCaption>Total Amount {"100000"}.</TableCaption>
-        <TableCaption>current Amount {"90000"}.</TableCaption>
+        <TableCaption>Total expense {overAllCost}.</TableCaption>
+        <TableCaption>Total Amount {overAllDonation}.</TableCaption>
+        <TableCaption>current Amount {calculateCurrentAmount(overAllDonation, overAllCost)}.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Year</TableHead>
@@ -103,7 +79,7 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {TotalExpense.map((ToatlExp) => (
+          {YearlyExpense.map((ToatlExp) => (
             <TableRow key={ToatlExp.year}>
               <TableCell>{ToatlExp.year}</TableCell>
               <TableCell className="text-right">£{YearlyExpenseSum(ToatlExp.expenses)}</TableCell>

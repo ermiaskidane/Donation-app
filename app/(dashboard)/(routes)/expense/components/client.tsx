@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import Heading from '@/components/Heading';
 import { Component, Plus, PoundSterling, User } from 'lucide-react';
 import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
+import { ExpenseHeading } from '@/components/expenseHeading';
+import useYearlyExpenseStore from '@/hooks/useExpenseSum';
 
 // interface Donate {
 //   id: string;
@@ -159,33 +161,39 @@ interface ExpenseClientProps {
 }
 
 
-const groupExpensesByYear = (expenses) => {
-  const groupedExpenses = {};
+const groupDonatedByYear = (donation) => {
 
-  expenses.forEach((expense) => {
-    const year = expense.dtime.trim().split(',')[1];
-    if (groupedExpenses[year]) {
-      groupedExpenses[year].push(expense);
+  // console.log("11111111111111111111", donation)
+  const groupedDonation = {};
+
+  donation.forEach((donates) => {
+    const year = donates.dtime.trim().split(',')[1];
+    if (groupedDonation[year]) {
+      groupedDonation[year].push(donates);
     } else {
-      groupedExpenses[year] = [expense];
+      groupedDonation[year] = [donates];
     }
   });
 
-  const yearlyTotals = Object.keys(groupedExpenses).map((year) => ({
+  const yearlyTotals = Object.keys(groupedDonation).map((year) => ({
     year,
-    expenses: groupedExpenses[year],
-    total: groupedExpenses[year].reduce((acc, expense) => acc + expense.amount, 0),
+    donated: groupedDonation[year],
+    total: groupedDonation[year].reduce((acc, donate) => acc + donate.amount, 0),
   }));
 
   return yearlyTotals;
 };
 
+
 export const YearlyExpenseSum = (spent) => {
-  return spent.reduce((acc, total) => {
+  const arrsum = spent.reduce((acc, total) => {
     return acc + total.amount
   }, 0)
+  // console.log("£££££££££££££", arrsum) 
+  return arrsum
 }
 
+// console.log("£££££££££££££", YearlyExpenseSum()) 
 
 export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   invoices,
@@ -198,17 +206,17 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   const [poundOpen, setPoundOpen] = useState(false);
   const [year, setYear] = useState();
 
-  const yearlyExpenses = useState(() => groupExpensesByYear(donation))[0];
-  // Sort yearlyExpenses by the year in ascending order
-  yearlyExpenses.sort((a, b) => parseInt(a.year) - parseInt(b.year));
+  const yearlyDonation = useState(() => groupDonatedByYear(donation))[0];
+  // Sort yearlyDonation by the year in ascending order
+  yearlyDonation.sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
   const TotalSum = (exp) => {
     // Find the yearly expenses object for the current year
-    const yearlyExpense = yearlyExpenses.find((item) => Number(item.year) === exp.year);
+    const yearlyDonate = yearlyDonation.find((item) => Number(item.year) === exp.year);
   
     // console.log("~~~~~~~~~~~~~", yearlyExpense)
-    if (yearlyExpense) {
-      const total = yearlyExpense.total - YearlyExpenseSum(exp.expenses);
+    if (yearlyDonate) {
+      const total = yearlyDonate.total - YearlyExpenseSum(exp.expenses);
       return total;
     }
   
@@ -219,14 +227,14 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
     setOpen(true);
     setYear(exp.year)
 
-    console.log("BBBBBBBBBBBBBBB", exp)
+    // console.log("BBBBBBBBBBBBBBB", exp)
   }
 
   const onSubmit = async (data) => {
     try {
       setLoading(true)
 
-      console.log("KKKKKKKKKKKKK",{data, year})
+      // console.log("KKKKKKKKKKKKK",{data, year})
       await axios.post(`/api/expense/${year}`, data)
 
       router.refresh();
@@ -239,8 +247,8 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
       setOpen(!open);
     }
   }
-  console.log(":?>>>>>>>>>><<<<<<<<<", invoices)
-  console.log(":??????????????", yearlyExpenses)
+  // console.log(":?>>>>>>>>>><<<<<<<<< expense", invoices)
+  // console.log(":?????????????? donated", yearlyDonation)
   return (
     <>
     <ExpenseModal
@@ -252,18 +260,11 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
       <CurrentAmountModal
         isOpen={poundOpen} 
         onClose={() => setPoundOpen(false)}
-        TotalExpense={invoices}
+        donation={donation}
+        YearlyExpense={invoices}
         loading={loading}
       />
-      <div className="flex items-center justify-between">
-        <h2 className="py-4 text-center text-xl font-bold sm:text-2xl">Yearly Expenses</h2>
-        <div className="flex flex-col gap-2 md:flex-row">
-          <Button onClick={() => setPoundOpen(true)} >
-            <PoundSterling className="mr-2 h-4 w-4" /> Current Amount
-          </Button>
-        </div>
-      </div>
-      {/* <Heading title="Yearly Expenses" subtitle="Manage users role" center /> */}
+      <ExpenseHeading openAmount={() => setPoundOpen(true)}/>
       <Accordion type="single" collapsible className="w-full">
         {invoices.map((exp, i) => (
           <AccordionItem value={exp.id} key={exp.id}>

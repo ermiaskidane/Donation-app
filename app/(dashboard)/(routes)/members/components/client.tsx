@@ -31,22 +31,17 @@ export const MembersClient: React.FC<MembersClientProps> = ({
       setRoleUser(userRole.role);
   }, [userRole, setRoleUser]);
 
-  // console.log("::::::::::::AAAAAAAAAAAAAAAAA", userRole.role)
-  // console.log("::::::::::::SSSSSSSSSSS", roleUser)
-
-
   const totalDonationsAmount = data.reduce((total, item) => {
     const donationsAmount = item.donations.reduce((donationTotal, donation) => {
         return donationTotal + donation.amount;
     }, 0);
 
     return total + donationsAmount;
-}, 0);
-// console.log("ZZZZZZZZZZZZZZZZZZZZZZZZ", data)
-// console.log("ASSSSSSSSSSSSSSSSSSS", totalDonationsAmount)
+  }, 0);
+
   return  (
     <>
-{/*     <AlertDemo/> */}
+    {/*     <AlertDemo/> */}
     <div className="flex items-center justify-between">
     <Heading title={`Members (${data.length.toString()})`} subtitle={`Total Amount of Money £${totalDonationsAmount}`} />
     {userRole.role === "ADMIN" && (

@@ -15,7 +15,7 @@ interface ExpenseModalProps {
   isOpen: boolean;
   onClose: () => void;
   loading: boolean;
-  onSubmit?: (datas: MemberFormValues) => void
+  onSubmit?: (datas: ExpenseModalValues) => void
 }
 
 const formSchema = z.object({
@@ -24,7 +24,7 @@ const formSchema = z.object({
   amount: z.coerce.number().min(1),
 })
 
-type MemberFormValues = z.infer<typeof formSchema>
+type ExpenseModalValues = z.infer<typeof formSchema>
 
 export const ExpenseModal: React.FC<ExpenseModalProps> = ({
   isOpen,
@@ -34,7 +34,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const form = useForm<MemberFormValues>({
+  const form = useForm<ExpenseModalValues>({
     resolver: zodResolver(formSchema),
     defaultValues:  {
       description: "",

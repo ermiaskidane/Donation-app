@@ -77,9 +77,6 @@ const ExpensePage = async() =>{
 
   // console.log("@@@@@@@@@@@@@@@", expense)
 
-  const sum = donated.reduce((acc, total) => {
-    return acc + total.amount;
-  }, 0)
 
   // console.log("::::::::::::::::::", donated)
   return (
