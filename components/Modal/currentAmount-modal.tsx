@@ -13,13 +13,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/expense/components/client";
+import { Donation, Expense, Year } from "@prisma/client";
+import { ExpenseColumn } from "@/app/(dashboard)/(routes)/expense/components/columns";
 
 
 interface CurrentAmountModalProps {
   isOpen: boolean;
   onClose: () => void;
-  donation: any[],
-  YearlyExpense: any[];
+  donation: Donation[],
+  YearlyExpense: ExpenseColumn[];
+  // YearlyExpense: (Year & {expenses: Expense})[];
   loading: boolean;
 }
 
@@ -31,8 +34,8 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
   YearlyExpense,
   loading,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [yearlyCost, setYearlyCost] = useState([]);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [yearlyCost, setYearlyCost] = useState<number[]>([]);
 
 
   useEffect(() => {
@@ -53,7 +56,7 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
     return acc + total.amount;
   }, 0)
 
-  const calculateCurrentAmount = (donation, cost) => {
+  const calculateCurrentAmount = (donation: number, cost: number) => {
     return donation - cost
   }
 
