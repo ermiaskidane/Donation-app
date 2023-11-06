@@ -6,8 +6,9 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import {ToasterProvider} from '@/providers/toast-provider'
 import { CrispProvider } from '@/components/crisp-provider'
-import InfiniteSlide from '@/components/inifiniteslide'
+import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
+import InfoNavbar from '@/components/InfoNavbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
         <body className={inter.className}>
           <ToasterProvider/>
           <InfiniteSlide infoList={info}/>
+          <InfoNavbar/>
           <Navbar/>
           {children}
           <Footer/>

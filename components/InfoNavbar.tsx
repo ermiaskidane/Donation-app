@@ -1,60 +1,42 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './inifiniteslide.module.css'
-import gsap from 'gsap';
 import { Info } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Delete, Plus, EyeOff } from 'lucide-react';
+import { Delete, Plus, X } from 'lucide-react';
 import { InfoAddModal } from './Modal/InfoAdd-modal';
 import { InfoDeleteModal } from './Modal/InfoDelete-modal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import useInfoModal from '@/hooks/useInfo';
 
 
 interface InfiniteSlideProps {
-  infoList: Array<Info>;
+  infoList?: Array<Info>;
 }
 
-const InfiniteSlide = ({
+const InfoNavbar = ({
   infoList
 } : InfiniteSlideProps) => {
 
   const router = useRouter()
 
+  const infoModal = useInfoModal(); 
+
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const slider = useRef(null);
-
-  useEffect(() => {
-    const sliderRef = slider.current;
-    const animation = gsap.to(sliderRef, {
-      x: '-100%',
-      ease: 'linear',
-      duration: 20,
-      repeat: -1,
-      onComplete: () => {
-        gsap.set(sliderRef, { x: '100%' }); // Reset the position to the right corner
-      },
-    });
-
-    return () => {
-      animation.kill();
-    };
-  }, []);
 
   const onSubmit = async (data: {title: string}) => {
     try {
       setLoading(true)
 
-      console.log("@@@@@@@@@@@@", data)
       await axios.post(`/api/info/`, data)
 
       
@@ -84,12 +66,10 @@ const InfiniteSlide = ({
       setOpenDelete(!openDelete);
     }
   }
-
-  if (infoList.length === 0) {
-    return null; // Don't render anything if the info array is empty
-  }
   
-
+if (!infoModal.isOpen) {
+  return null
+}
 
   return (
     <>
@@ -105,21 +85,15 @@ const InfiniteSlide = ({
         onConfirm={onConfirm}
         loading={false}
       />
-    <main className={styles.main}>
+    <main className={styles.main} >
       <Popover>
         <PopoverTrigger asChild>
-          <div className={styles.sliderContainer} >
-            {/* <EyeOff className='absolute   z-50 block cursor-pointer'/> */}
-            <div ref={slider} className={styles.slider}>
-            {infoList.map((news, index) => (
-                  <p key={news.title} className={styles.slideText}>
-                    {news.title}
-                  </p>
-              ))}
-            </div>
+          <div className={`${styles.sliderContainer}, flex justify-between items-center w-full` } >
+            <p className='mx-auto'>Manage New Information</p>
+            <X onClick={infoModal.onClose}/>
           </div>
         </PopoverTrigger>
-          <PopoverContent className="w-80 bg-[#00ffff] mt-4">
+          <PopoverContent className="w-80 bg-[#00ffff] mt-4 ">
             <div className="grid gap-4">
               <div className="space-y-2">
                 <h4 className="font-medium leading-none">Info</h4>
@@ -140,4 +114,4 @@ const InfiniteSlide = ({
 }
 
 
-export default InfiniteSlide;
+export default InfoNavbar;

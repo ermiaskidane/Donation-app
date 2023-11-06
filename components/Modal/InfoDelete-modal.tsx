@@ -33,6 +33,7 @@ export const InfoDeleteModal: React.FC<InfoDeleteModalProps> = ({
     <Modal
       title="Are you sure?"
       description="This action cannot be undone."
+      info={true}
       isOpen={isOpen}
       onClose={onClose}
     >

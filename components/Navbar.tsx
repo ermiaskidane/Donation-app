@@ -7,10 +7,12 @@ import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "./ui/menub
 import Link from "next/link";
 import { ChurchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import InfoNavbar from "./InfoNavbar";
+import useInfoModal from "@/hooks/useInfo";
 
 const Navbar = () => {
   const pathName = usePathname();
-  const params = useParams() 
+  const infoModal = useInfoModal(); 
   const { userId } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false)
@@ -62,6 +64,17 @@ const Navbar = () => {
                 <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
                   <span>Write</span>
                 </Link>
+              </li>
+              <li>
+                <Link href="/expense" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                  <span>Expense</span>
+                </Link>
+              </li>
+              <li>
+                <p className="cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
+                  <span onClick={infoModal.onOpen}>Info</span>
+                  {/* <InfoNavbar/> */}
+                </p>
               </li>
               <li>
                 <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">

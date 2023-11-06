@@ -9,7 +9,6 @@ import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface InfoAddModalProps {
   isOpen: boolean;
@@ -51,6 +50,7 @@ export const InfoAddModal: React.FC<InfoAddModalProps> = ({
     <Modal
       title="HeadLine Information"
       description=""
+      info={true}
       isOpen={isOpen}
       onClose={onClose}
     >
@@ -72,7 +72,7 @@ export const InfoAddModal: React.FC<InfoAddModalProps> = ({
                 )}
             />
             <Button disabled={loading} className="w-1/2 mt-8 self-center" type="submit">
-              create
+              Send
             </Button>
           </div>
         </form>
