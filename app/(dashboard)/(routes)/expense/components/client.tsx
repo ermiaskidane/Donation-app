@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -8,163 +8,42 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { DataTable } from "@/components/ui/data-table";
-import {  columns } from "./columns";
+import {  ExpenseColumn, columns } from "./columns";
 import { Button } from '@/components/ui/button';
 import { ExpenseModal } from '@/components/Modal/expense-modal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import Heading from '@/components/Heading';
-import { Component, Plus, PoundSterling, User } from 'lucide-react';
 import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 import { ExpenseHeading } from '@/components/expenseHeading';
-import useYearlyExpenseStore from '@/hooks/useExpenseSum';
-
-// interface Donate {
-//   id: string;
-//   dtime: string;
-//   amount: number;
-//   memberId: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
-
-// interface YearlyDonate {
-//   year: string;
-//   yearDonate: Donate[];
-//   total: number;
-// }
-
-// interface ExpenseClientProps {
-//   donation: Donate[];
-// }
-
-// // the steps we follow here are
-
-// // 1.Preprocess the data to group expenses by year.
-// // 2.Calculate the total expense for each year.
-// // 3.Pass the preprocessed data to your component for rendering.
-
-
-// // The groupExpensesByYear function groups expenses by year and calculates the total expenses for each year.
-// const groupExpensesByYear = (donation: Donate[]): YearlyDonate[] => {
-//   const groupedDonates: { [year: string]: Donate[] } = {};
-
-//   donation.forEach((donate) => {
-//     const year = donate.dtime.trim().split(',')[1]
-//     if (groupedDonates[year]) {
-//       groupedDonates[year].push(donate);
-//     } else {
-//       groupedDonates[year] = [donate];
-//     }
-//   });
-
-//   const yearlyTotals: YearlyDonate[] = Object.keys(groupedDonates).map((year) => ({
-//     year,
-//     yearDonate: groupedDonates[year],
-//     total: groupedDonates[year].reduce((acc, donate) => acc + donate.amount, 0),
-//   }));
-
-//   return yearlyTotals;
-// };
-
-// export const ExpenseClient: React.FC<ExpenseClientProps> = ({ donation }) => {
-//   // The useState hook is used to calculate yearlyExpenses only once 
-//   // when the component is initialized, which improves performance.
-
-//   const yearlyExpenses = useState<YearlyDonate[]>(() => groupExpensesByYear(donation))[0];
-
-//   // Sort yearlyExpenses by the year in ascending order
-//   yearlyExpenses.sort((a, b) => parseInt(a.year) - parseInt(b.year));
-
-//   // console.log("ZZZZZZZZZZZZZZZZZZ", invoices)
-//   // console.log("KKKKKKKKKKKKKL", groupExpensesByYear(invoices))
-//   console.log("KKKKKKKKKKKKKL", yearlyExpenses)
-//   return (
-//     <>
-//       <Accordion type="single" collapsible className="w-full">
-//         {yearlyExpenses.map((yearlyExpense) => (
-//           <AccordionItem value={yearlyExpense.year} key={yearlyExpense.year}>
-//             <AccordionTrigger>{`Expenses in ${yearlyExpense.year}`}</AccordionTrigger>
-//             <AccordionContent>
-//               <DataTable hideContent={true} searchKey="name" columns={columns} data={yearlyExpense.yearDonate} />
-//               <AccordionContent className='font-semibold text-black text-center pt-5'>{`Total Expense in ${yearlyExpense.year}: £${yearlyExpense.total}`}</AccordionContent>
-//             </AccordionContent>
-//           </AccordionItem>
-//         ))}
-//       </Accordion>
-//     </>
-//   );
-// };
-
-// import {
-//   Accordion,
-//   AccordionContent,
-//   AccordionItem,
-//   AccordionTrigger,
-// } from "@/components/ui/accordion"
-// import { DataTable } from "@/components/ui/data-table";
-
-// import {
-//   Table,
-//   TableBody,
-//   TableCaption,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table"
-// import {  columns } from "./columns";
-
-// interface ExpenseClientProps {
-//   invoices: any[];
-// }
-
-// const YearlyExpenses = [
-//   {"Exyear": "Expenses in 2021"},
-//   {"Exyear": "Expenses in 2022"},
-//   {"Exyear": "Expenses in 2023"}
-// ]
-
-// // console.log(":::::::", Object.keys(YearlyExpenses))
-// // console.log(":::::::", Object.values(YearlyExpenses)[i])
-
-// export const ExpenseClient: React.FC<ExpenseClientProps> = ({
-//   invoices,
-// }) => {
-//   return (
-//     <>
-//       <Accordion type="single" collapsible className="w-full">
-//         {YearlyExpenses.map((year, i) => (
-//           // <div key={Object.keys(year)[0]}></div>
-//           <AccordionItem value={year.Exyear} key={Object.keys(year)[0]}>
-//           <AccordionTrigger>{year.Exyear}</AccordionTrigger>
-//           <AccordionContent>
-//           <DataTable hideContent={true} searchKey="name" columns={columns} data={invoices}/>
-//           <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in 2021: £2250</AccordionContent>
-//           <AccordionContent className='font-semibold text-black text-center'>Total Amount in 2021: £10000 - £2250 = £7750</AccordionContent>
-//           </AccordionContent>
-//         </AccordionItem>
-//         ))}
-        
-//       </Accordion>
-//     </>
-//   )
-// }
-
-
-
+import useUserRoleStore from '@/hooks/useUserRole';
+import { Donation, Expense, Year, User as userRole } from '@prisma/client';
 
 interface ExpenseClientProps {
-  invoices: any[];
-  donation: any[]
+  invoices: ExpenseColumn[]
+  // OR
+  // invoices: (Year & {expenses: Expense})[],
+  donation: Donation[],
+  userRole: userRole
 }
 
+interface AddExpense {
+  paymentStatus: string;
+  description: string;
+  amount: number;
+}
 
-const groupDonatedByYear = (donation) => {
+// the steps we follow here are
 
-  // console.log("11111111111111111111", donation)
-  const groupedDonation = {};
+// 1.Preprocess the data to group expenses by year.
+// 2.Calculate the total expense for each year.
+// 3.Pass the preprocessed data to your component for rendering.
+
+
+// The groupExpensesByYear function groups expenses by year and calculates the total expenses for each year.
+const groupDonatedByYear = (donation: Donation[]) => {
+
+  const groupedDonation: { [year: string]: Donation[] } = {};
 
   donation.forEach((donates) => {
     const year = donates.dtime.trim().split(',')[1];
@@ -185,32 +64,40 @@ const groupDonatedByYear = (donation) => {
 };
 
 
-export const YearlyExpenseSum = (spent) => {
+export const YearlyExpenseSum = (spent: Expense[]) => {
   const arrsum = spent.reduce((acc, total) => {
     return acc + total.amount
   }, 0)
-  // console.log("£££££££££££££", arrsum) 
+
   return arrsum
 }
 
-// console.log("£££££££££££££", YearlyExpenseSum()) 
-
 export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   invoices,
-  donation
+  donation,
+  userRole
 }) => {
 
   const router = useRouter()
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [poundOpen, setPoundOpen] = useState(false);
-  const [year, setYear] = useState();
+  
+  const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [poundOpen, setPoundOpen] = useState<boolean>(false);
+  const [year, setYear] = useState<number | undefined>();
 
   const yearlyDonation = useState(() => groupDonatedByYear(donation))[0];
+
   // Sort yearlyDonation by the year in ascending order
   yearlyDonation.sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
-  const TotalSum = (exp) => {
+  const { roleUser, setRoleUser} = useUserRoleStore()
+
+  // change the defualt Zustand Guest to the actual current userrole
+  useEffect(() => {
+      setRoleUser(userRole.role);
+  }, [userRole, setRoleUser]);
+
+  const TotalSum = (exp: ExpenseColumn) => {
     // Find the yearly expenses object for the current year
     const yearlyDonate = yearlyDonation.find((item) => Number(item.year) === exp.year);
   
@@ -223,18 +110,16 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
     return 0; // Handle the case when there's no matching yearly expense data
   };
 
-  const OpenModal = (exp) => {
-    setOpen(true);
-    setYear(exp.year)
-
-    // console.log("BBBBBBBBBBBBBBB", exp)
+  const OpenModal = (exp: ExpenseColumn) => {
+    if (exp) {
+      setOpen(true);
+      setYear(exp.year);
+    }
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: AddExpense) => {
     try {
       setLoading(true)
-
-      // console.log("KKKKKKKKKKKKK",{data, year})
       await axios.post(`/api/expense/${year}`, data)
 
       router.refresh();
@@ -247,7 +132,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
       setOpen(!open);
     }
   }
-  // console.log(":?>>>>>>>>>><<<<<<<<< expense", invoices)
+  console.log(":?>>>>>>>>>><<<<<<<<< expense", invoices)
   // console.log(":?????????????? donated", yearlyDonation)
   return (
     <>
@@ -270,9 +155,11 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
           <AccordionItem value={exp.id} key={exp.id}>
             <AccordionTrigger>{exp.year}</AccordionTrigger>
               <AccordionContent>
-                <div className='flex justify-end'>
-                  <Button onClick={() => OpenModal(exp)}>Add Expense</Button>
-                </div>
+                {userRole.role === "ADMIN" && (
+                  <div className='flex justify-end'>
+                    <Button onClick={() => OpenModal(exp)}>Add Expense</Button>
+                  </div>
+                )}
               <DataTable hideContent={true} searchKey="name" columns={columns} data={exp.expenses}/>
               <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in {exp.year}: {YearlyExpenseSum(exp.expenses)} </AccordionContent>
                 <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: {TotalSum(exp)}</AccordionContent>

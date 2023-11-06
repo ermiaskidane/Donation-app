@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart4, Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from '@/components/Modal/alert-modal';
-import useMemberStore from "@/hooks/useMember";
+import useMemberStore from "@/hooks/useUserRole";
 
 interface CellActionProps {
   data: MembersColumn;

@@ -10,8 +10,8 @@ import { Separator } from "@/components/ui/separator";
  
 import { MembersColumn, columns } from "./columns";
 import { User as userRole} from "@prisma/client";
-import useMemberStore from "@/hooks/useMember";
 import { useEffect } from "react";
+import useUserRoleStore from "@/hooks/useUserRole";
 // import AlertDemo from "@/components/UserInformation";
 
 interface MembersClientProps {
@@ -25,8 +25,9 @@ export const MembersClient: React.FC<MembersClientProps> = ({
 }) => {
   const router = useRouter();
 
-  const { roleUser, setRoleUser} = useMemberStore()
+  const { roleUser, setRoleUser} = useUserRoleStore()
 
+  // change the defualt Zustand Guest to the actual current userrole
   useEffect(() => {
       setRoleUser(userRole.role);
   }, [userRole, setRoleUser]);

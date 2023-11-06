@@ -3,22 +3,17 @@
 import { ColumnDef } from "@tanstack/react-table"
 import CellAction from "./cell-action";
 
-// export type MembersColumn = {
-//   id: string;
-//   name: string;
-//   phone: string;
-//   email: string;
-//   amount: number;
-//   updatedAt: string;
-//   donations: {
-//     id: string;
-//     dtime: string;
-//     amount: number;
-//     memberId: string;
-//     createdAt: Date;
-//     updatedAt: Date;
-//   }[]
-// }
+export type ExpenseColumn = {
+  id: string;
+  year: number;
+  expenses: {
+    id: string;
+    description: string;
+    amount: number;
+    paymentStatus: string;
+    yearId: string;
+  }[]
+}
 
 
 export const columns: ColumnDef<any>[] = [

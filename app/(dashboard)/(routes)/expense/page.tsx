@@ -18,6 +18,7 @@ import {
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
 import {dataExpense} from '@/lib/data'
+import { initialUser } from '@/lib/initial-user'
 
 
 const invoices = [
@@ -66,6 +67,8 @@ const invoices = [
 ]
 
 const ExpensePage = async() =>{
+
+  const user = await initialUser()
   
   const donated = await db.donation.findMany()
 
@@ -81,7 +84,7 @@ const ExpensePage = async() =>{
   // console.log("::::::::::::::::::", donated)
   return (
     <div className="px-4">
-      <ExpenseClient invoices={expense} donation={donated}/>
+      <ExpenseClient invoices={expense} donation={donated} userRole={user}/>
     </div>
   )
 }
