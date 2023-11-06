@@ -11,22 +11,20 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-interface ExpenseModalProps {
+interface InfoAddModalProps {
   isOpen: boolean;
   onClose: () => void;
   loading: boolean;
-  onSubmit?: (datas: ExpenseModalValues) => void
+  onSubmit?: (data: InfoAddModalValues) => void
 }
 
 const formSchema = z.object({
-  description: z.string().min(1),
-  paymentStatus: z.string().min(1),
-  amount: z.coerce.number().min(1),
+  title: z.string().min(1),
 })
 
-type ExpenseModalValues = z.infer<typeof formSchema>
+type InfoAddModalValues = z.infer<typeof formSchema>
 
-export const ExpenseModal: React.FC<ExpenseModalProps> = ({
+export const InfoAddModal: React.FC<InfoAddModalProps> = ({
   isOpen,
   onClose,
   loading,
@@ -34,12 +32,10 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const form = useForm<ExpenseModalValues>({
+  const form = useForm<InfoAddModalValues>({
     resolver: zodResolver(formSchema),
     defaultValues:  {
-      description: "",
-      paymentStatus: "",
-      amount: 0
+      title: "",
     }
   })
 
@@ -53,7 +49,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
 
   return (
     <Modal
-      title="Manage Expenses of The Year"
+      title="HeadLine Information"
       description=""
       isOpen={isOpen}
       onClose={onClose}
@@ -64,42 +60,16 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
           <div className="gap-6 flex flex-col md:w-11/12 mx-auto">
             <FormField
                 control={form.control}
-                name="description"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input disabled={loading} placeholder="what is the expense" {...field} />
+                      <Input disabled={loading} placeholder="write title of information" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-            />
-            <FormField
-                control={form.control}
-                name="paymentStatus"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>PaymentStatus</FormLabel>
-                    <FormControl>
-                      <Input disabled={loading} placeholder="paid or unpaid" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-            />
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input type="number" disabled={loading} placeholder="100" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
             <Button disabled={loading} className="w-1/2 mt-8 self-center" type="submit">
               create

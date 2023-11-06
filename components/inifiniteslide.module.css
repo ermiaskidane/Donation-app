@@ -7,11 +7,12 @@
   /* height: min-content; */
 
   height: 5vh;
+  /* background-color: #00ffff7c; */
   background-color: aqua;
 
   overflow: hidden;
 
-  z-index: 110;
+  z-index: 40;
 
 }
 
@@ -52,7 +53,7 @@
 
   position: relative;
 
-  z-index: 110;
+  z-index: 40;
 
   margin: 0px;
 

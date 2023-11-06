@@ -71,10 +71,22 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
     >
+      {/* const number = 1234567.89; // Example number
+          const formattedNumber = number.toLocaleString(undefined, {
+          minimumFractionDigits: 2, // Minimum number of decimal places
+          maximumFractionDigits: 2, // Maximum number of decimal places
+          useGrouping: true, // Use grouping separators (e.g., thousands separator)
+      }); */}
       <Table>
-        <TableCaption>Total expense {overAllCost}.</TableCaption>
-        <TableCaption>Total Amount {overAllDonation}.</TableCaption>
-        <TableCaption>current Amount {calculateCurrentAmount(overAllDonation, overAllCost)}.</TableCaption>
+        <TableCaption className="text-black">Total expense: £{overAllCost.toLocaleString(undefined, {
+          useGrouping: true,
+        })}</TableCaption>
+        <TableCaption className="text-black">Total Amount: £{overAllDonation.toLocaleString(undefined, {
+          useGrouping: true,
+        })}</TableCaption>
+        <TableCaption className="font-semibold text-black">current Amount: £{calculateCurrentAmount(overAllDonation, overAllCost).toLocaleString(undefined, {
+          useGrouping: true,
+        })}</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Year</TableHead>

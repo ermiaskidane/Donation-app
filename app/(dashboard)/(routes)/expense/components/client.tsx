@@ -161,8 +161,8 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
                   </div>
                 )}
               <DataTable hideContent={true} searchKey="name" columns={columns} data={exp.expenses}/>
-              <AccordionContent className='font-semibold text-black text-center pt-5'>Total Expense in {exp.year}: {YearlyExpenseSum(exp.expenses)} </AccordionContent>
-                <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: {TotalSum(exp)}</AccordionContent>
+              <AccordionContent className=' text-black text-center pt-5'>Total Expense in {exp.year}: £{YearlyExpenseSum(exp.expenses)} </AccordionContent>
+                <AccordionContent className='font-semibold text-black text-center'>Total Amount in {exp.year}: £{TotalSum(exp)}</AccordionContent>
               </AccordionContent>
           </AccordionItem>
         ))}
