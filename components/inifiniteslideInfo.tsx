@@ -120,7 +120,7 @@ const InfiniteSlide = ({
             </div>
           </div>
         </PopoverTrigger>
-        {currentUser.role === "ADMIN" && (
+        {currentUser?.role === "ADMIN" && (
           <PopoverContent className="w-80 bg-[#00ffff] mt-4 ali">
           <div className="grid gap-4">
             <div className="space-y-2">

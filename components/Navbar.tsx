@@ -63,7 +63,7 @@ const Navbar = ({currentUser}: navbarProps) => {
               </li>) 
               }
 
-    if (userId) {
+    if (currentUser) {
       return (<>
               <li>
                 <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
@@ -92,6 +92,7 @@ const Navbar = ({currentUser}: navbarProps) => {
 
     return null 
   }
+
   return (
     <header>
     <nav className=" z-10 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent">
