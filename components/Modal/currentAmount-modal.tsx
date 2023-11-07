@@ -15,6 +15,7 @@ import {
 import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/expense/components/client";
 import { Donation, Expense, Year } from "@prisma/client";
 import { ExpenseColumn } from "@/app/(dashboard)/(routes)/expense/components/columns";
+import { ScrollArea } from "../ui/scroll-area";
 
 
 interface CurrentAmountModalProps {
@@ -71,37 +72,33 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
     >
-      {/* const number = 1234567.89; // Example number
-          const formattedNumber = number.toLocaleString(undefined, {
-          minimumFractionDigits: 2, // Minimum number of decimal places
-          maximumFractionDigits: 2, // Maximum number of decimal places
-          useGrouping: true, // Use grouping separators (e.g., thousands separator)
-      }); */}
-      <Table>
-        <TableCaption className="text-black">Total expense: £{overAllCost.toLocaleString(undefined, {
-          useGrouping: true,
-        })}</TableCaption>
-        <TableCaption className="text-black">Total Amount: £{overAllDonation.toLocaleString(undefined, {
-          useGrouping: true,
-        })}</TableCaption>
-        <TableCaption className="font-semibold text-black">current Amount: £{calculateCurrentAmount(overAllDonation, overAllCost).toLocaleString(undefined, {
-          useGrouping: true,
-        })}</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Year</TableHead>
-            <TableHead className="text-right">Cost</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {YearlyExpense.map((ToatlExp) => (
-            <TableRow key={ToatlExp.year}>
-              <TableCell>{ToatlExp.year}</TableCell>
-              <TableCell className="text-right">£{YearlyExpenseSum(ToatlExp.expenses)}</TableCell>
+      <ScrollArea className="h-96 w-full ">
+        <Table>
+          <TableCaption className="text-black">Total expense: £{overAllCost.toLocaleString(undefined, {
+            useGrouping: true,
+          })}</TableCaption>
+          <TableCaption className="text-black">Total Amount: £{overAllDonation.toLocaleString(undefined, {
+            useGrouping: true,
+          })}</TableCaption>
+          <TableCaption className="font-semibold text-black">current Amount: £{calculateCurrentAmount(overAllDonation, overAllCost).toLocaleString(undefined, {
+            useGrouping: true,
+          })}</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Year</TableHead>
+              <TableHead className="text-right">Cost</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {YearlyExpense.map((ToatlExp) => (
+              <TableRow key={ToatlExp.year}>
+                <TableCell>{ToatlExp.year}</TableCell>
+                <TableCell className="text-right">£{YearlyExpenseSum(ToatlExp.expenses)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </ScrollArea>
     </Modal>
   );
 };

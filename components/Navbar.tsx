@@ -43,9 +43,24 @@ const Navbar = ({currentUser}: navbarProps) => {
       active: pathName === `/blog`
     },
     {
+      href: `/write`,
+      label: "Write",
+      active: pathName === `/write`
+    },
+    {
       href: `/members`,
       label: "Members",
       active: pathName === `/members`
+    },
+    {
+      href: `/expense`,
+      label: "Expense",
+      active: pathName === `/expense`
+    },
+    {
+      href: `/profile`,
+      label: "Profile",
+      active: pathName === `/profile`
     },
     {
       href: `/about`,
@@ -65,16 +80,6 @@ const Navbar = ({currentUser}: navbarProps) => {
 
     if (currentUser) {
       return (<>
-              <li>
-                <Link href="/write" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                  <span>Write</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/expense" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                  <span>Expense</span>
-                </Link>
-              </li>
               {currentUser.role === "ADMIN" &&
               <li>
                 <p className="cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
@@ -82,11 +87,6 @@ const Navbar = ({currentUser}: navbarProps) => {
                 </p>
               </li>
               }
-              <li>
-                <Link href="/profile" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                  <span>Profile</span>
-                </Link>
-              </li>
             </>)
     }
 

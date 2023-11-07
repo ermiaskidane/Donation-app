@@ -172,7 +172,6 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
         onSubmit={onSubmitYear}
         loading={loading}
       />
-      {/* Add button inside the ExpenseHeading for the creation of year manually */}
       <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)}/>
       <Accordion type="single" collapsible className="w-full">
         {invoices.map((exp, i) => (

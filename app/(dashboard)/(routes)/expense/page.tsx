@@ -1,24 +1,10 @@
 import React from 'react'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
-import {dataExpense} from '@/lib/data'
 import { initialUser } from '@/lib/initial-user'
+import { redirectToSignIn } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
+import NotifyUser from '@/components/notifyUser'
 
 
 const invoices = [
@@ -69,6 +55,16 @@ const invoices = [
 const ExpensePage = async() =>{
 
   const user = await initialUser()
+
+  if (!user) {
+    return redirectToSignIn();
+  } 
+
+  if(user.role === "GUEST"){
+    // redirect("/")
+    // check out later
+    return <NotifyUser/>
+  }
   
   const donated = await db.donation.findMany()
 

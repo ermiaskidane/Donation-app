@@ -21,10 +21,6 @@ export const columns: ColumnDef<any>[] = [
     accessorKey: "description",
     header: "Description",
   },
-  // {
-  //   accessorKey: "expense",
-  //   header: "Expense"
-  // },
   {
     accessorKey: "paymentStatus",
     header: "PaymentStatus",
@@ -34,7 +30,6 @@ export const columns: ColumnDef<any>[] = [
     header: "Amount",
   },
   {
-    //implement id in your data later at the moment invoices daoes not have id 
     id: "actions",
     cell: ({row}) => <CellAction data={row.original} />
   }
