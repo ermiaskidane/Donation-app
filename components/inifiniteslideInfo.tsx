@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './inifiniteslide.module.css'
 import gsap from 'gsap';
-import { Info } from '@prisma/client';
+import { Info, User } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
@@ -19,10 +19,12 @@ import { useRouter } from 'next/navigation';
 
 interface InfiniteSlideProps {
   infoList: Array<Info>;
+  currentUser: User | null;
 }
 
 const InfiniteSlide = ({
-  infoList
+  infoList,
+  currentUser
 } : InfiniteSlideProps) => {
 
   const router = useRouter()
@@ -96,13 +98,13 @@ const InfiniteSlide = ({
         isOpen={addOpen} 
         onClose={() => setAddOpen(false)}
         onSubmit={onSubmit}
-        loading={false}
+        loading={loading}
       />
       <InfoDeleteModal
         isOpen={openDelete} 
         onClose={() => setOpenDelete(false)}
         onConfirm={onConfirm}
-        loading={false}
+        loading={loading}
       />
     <main className={styles.main}>
       <Popover>
@@ -118,20 +120,22 @@ const InfiniteSlide = ({
             </div>
           </div>
         </PopoverTrigger>
+        {currentUser.role === "ADMIN" && (
           <PopoverContent className="w-80 bg-[#00ffff] mt-4 ali">
-            <div className="grid gap-4">
-              <div className="space-y-2">
-                <h4 className="font-medium leading-none">Info</h4>
-                <p className="text-sm text-muted-foreground">
-                  Fill information you want to display.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
-                <p onClick={() => setAddOpen(true)}><Plus className="mb-1 mr-1 h-4 w-4 inline-block" /> Add New</p>
-                <p onClick={() => setOpenDelete(true)}><Delete className="mb-1 mr-1 h-4 w-4 inline-block" /> Delete</p>
-              </div>
+          <div className="grid gap-4">
+            <div className="space-y-2">
+              <h4 className="font-medium leading-none">Info</h4>
+              <p className="text-sm text-muted-foreground">
+                Fill information you want to display.
+              </p>
             </div>
-        </PopoverContent>
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
+              <p onClick={() => setAddOpen(true)}><Plus className="mb-1 mr-1 h-4 w-4 inline-block" /> Add New</p>
+              <p onClick={() => setOpenDelete(true)}><Delete className="mb-1 mr-1 h-4 w-4 inline-block" /> Delete</p>
+            </div>
+          </div>
+      </PopoverContent>
+        )}
       </Popover>
     </main>
   </>

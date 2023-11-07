@@ -35,17 +35,14 @@ export const POST = async (req: Request) => {
     return new NextResponse("title is required", { status: 400 });
   }
 
-  const user = await db.user.findFirst({
+  const UserAdmin = await db.user.findFirst({
     where: {
       userId
     }
   });
 
-  // Handle the possibility that user?.email is undefined
-  const userEmail = user?.email || "default@example.com";
-
-  if(userEmail === "default@example.com") {
-    return new NextResponse("userEmail can not be null", { status: 400 });
+  if (UserAdmin?.role !== "ADMIN"){
+    return new NextResponse("Unauthorized", { status: 405 });
   }
   
   const info = await db.info.create({
@@ -70,7 +67,6 @@ export const DELETE = async(req: Request) =>  {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    console.log("@@@@@@@@@@@@@LLLLLLLLLLLLL", "from delete route")
 
     const UserAdmin = await db.user.findFirst({
       where: {

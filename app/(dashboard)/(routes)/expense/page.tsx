@@ -78,6 +78,10 @@ const ExpensePage = async() =>{
     }
   })
 
+  // Sort expense by the year in ascending order
+  expense.sort((a, b) => (a.year) - (b.year));
+
+  
   // console.log("@@@@@@@@@@@@@@@", expense)
 
 

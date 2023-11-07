@@ -18,6 +18,7 @@ import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 import { ExpenseHeading } from '@/components/expenseHeading';
 import useUserRoleStore from '@/hooks/useUserRole';
 import { Donation, Expense, Year, User as userRole } from '@prisma/client';
+import { CalenderModal } from '@/components/Modal/calender-modal';
 
 interface ExpenseClientProps {
   invoices: ExpenseColumn[]
@@ -83,6 +84,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [poundOpen, setPoundOpen] = useState<boolean>(false);
+  const [calenderOpen, setCalenderOpen] = useState<boolean>(false);
   const [year, setYear] = useState<number | undefined>();
 
   const yearlyDonation = useState(() => groupDonatedByYear(donation))[0];
@@ -132,7 +134,22 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
       setOpen(!open);
     }
   }
-  console.log(":?>>>>>>>>>><<<<<<<<< expense", invoices)
+  const onSubmitYear = async (data: {year: number}) => {
+    try {
+      setLoading(true)
+      await axios.post(`/api/expense`, data)
+
+      router.refresh();
+      router.push('/expense');
+      toast.success("expense year has been created")
+    } catch(error: any){
+      toast.error('Something went wrong.');
+    } finally{
+      setLoading(false);
+      setCalenderOpen(!calenderOpen);
+    }
+  }
+  // console.log(":?>>>>>>>>>><<<<<<<<< expense", invoices)
   // console.log(":?????????????? donated", yearlyDonation)
   return (
     <>
@@ -149,7 +166,14 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
         YearlyExpense={invoices}
         loading={loading}
       />
-      <ExpenseHeading openAmount={() => setPoundOpen(true)}/>
+      <CalenderModal
+        isOpen={calenderOpen} 
+        onClose={() => setCalenderOpen(false)}
+        onSubmit={onSubmitYear}
+        loading={loading}
+      />
+      {/* Add button inside the ExpenseHeading for the creation of year manually */}
+      <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)}/>
       <Accordion type="single" collapsible className="w-full">
         {invoices.map((exp, i) => (
           <AccordionItem value={exp.id} key={exp.id}>

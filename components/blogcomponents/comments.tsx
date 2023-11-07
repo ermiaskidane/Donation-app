@@ -6,12 +6,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useSWR from 'swr'
 import React, { useState } from 'react'
-import { comment } from '@/lib/data';
 import { format, parseISO } from 'date-fns'
 import { Comment, NestComment } from '@/type';
 import { usePathname } from 'next/navigation';
-
-// import { Comment, NestComment, User } from '@prisma/client';
 
 interface CommentProps {
   postSlug: string,
@@ -38,12 +35,8 @@ const Comments = ({
   const [nestDesc, setNestDesc] = useState("")
   const path = usePathname()
 
-  console.log("::::::::::::::::", path)
   // swr make a continious request for any update of the data
-  const { data, mutate, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_COMMENT_API}?postSlug=${postSlug}`,
-    fetcher
-  )
+  const { data, mutate, isLoading } = useSWR(`/api/comments?postSlug=${postSlug}`, fetcher)
 
  // Create an array to track the open/closed state of each comment
  const [commentOpen, setCommentOpen] = useState(new Array(data?.length).fill(false));

@@ -77,13 +77,13 @@ if (!infoModal.isOpen) {
         isOpen={addOpen} 
         onClose={() => setAddOpen(false)}
         onSubmit={onSubmit}
-        loading={false}
+        loading={loading}
       />
       <InfoDeleteModal
         isOpen={openDelete} 
         onClose={() => setOpenDelete(false)}
         onConfirm={onConfirm}
-        loading={false}
+        loading={loading}
       />
     <main className={styles.main} >
       <Popover>
