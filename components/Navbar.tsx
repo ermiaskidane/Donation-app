@@ -69,6 +69,7 @@ const Navbar = ({currentUser}: navbarProps) => {
     // },
   ]
 
+  console.log(":::::::::::::::", currentUser)
   const renderConditional = () => {
     if(!userId){
       return (
@@ -95,7 +96,7 @@ const Navbar = ({currentUser}: navbarProps) => {
                   </Link>
                 </li>
               }
-              {currentUser.role === "MEMBER" || currentUser.role === "ADMIN" && (
+              {(currentUser.role === "MEMBER" || currentUser.role === "ADMIN") && (
                 <>
                   <li>
                     <Link href="/members" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/members" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>

@@ -6,7 +6,6 @@ import { redirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 
 
-
 const ExpensePage = async() =>{
 
   const user = await initialUser()
