@@ -42,44 +42,83 @@ const Navbar = ({currentUser}: navbarProps) => {
       label: "Blog",
       active: pathName === `/blog`
     },
-    {
-      href: `/write`,
-      label: "Write",
-      active: pathName === `/write`
-    },
-    {
-      href: `/members`,
-      label: "Members",
-      active: pathName === `/members`
-    },
-    {
-      href: `/expense`,
-      label: "Expense",
-      active: pathName === `/expense`
-    },
-    {
-      href: `/profile`,
-      label: "Profile",
-      active: pathName === `/profile`
-    },
-    {
-      href: `/about`,
-      label: "About",
-      active: pathName === `/about`
-    },
+    // {
+    //   href: `/write`,
+    //   label: "Write",
+    //   active: pathName === `/write`
+    // },
+    // {
+    //   href: `/members`,
+    //   label: "Members",
+    //   active: pathName === `/members`
+    // },
+    // {
+    //   href: `/expense`,
+    //   label: "Expense",
+    //   active: pathName === `/expense`
+    // },
+    // {
+    //   href: `/profile`,
+    //   label: "Profile",
+    //   active: pathName === `/profile`
+    // },
+    // {
+    //   href: `/about`,
+    //   label: "About",
+    //   active: pathName === `/about`
+    // },
   ]
 
   const renderConditional = () => {
     if(!userId){
-      return (<li>
-                <Link href="/sign-in" className="hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                  <span>Login</span>
-                </Link>
-              </li>) 
-              }
+      return (
+      <>
+        <li>
+          <Link href="/about" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/about" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+            <span>About</span>
+          </Link>
+        </li>
+        <li>
+          <Link href="/sign-in" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/sign-in" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+            <span>Login</span>
+          </Link>
+        </li>
+      </> 
+      )}
 
     if (currentUser) {
       return (<>
+              {currentUser.role === "ADMIN" && 
+                <li>
+                  <Link href="/write" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/write" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+                    <span>Write</span>
+                  </Link>
+                </li>
+              }
+              {currentUser.role === "MEMBER" || currentUser.role === "ADMIN" && (
+                <>
+                  <li>
+                    <Link href="/members" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/members" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+                      <span>Members</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/expense" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/expense" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+                      <span>Expense</span>
+                    </Link>
+                  </li>
+                </>
+              )}
+              <li>
+                <Link href="/profile" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/profile" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+                  <span>Profile</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/about" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
+                  <span>About</span>
+                </Link>
+              </li>
               {currentUser.role === "ADMIN" &&
               <li>
                 <p className="cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
@@ -125,7 +164,7 @@ const Navbar = ({currentUser}: navbarProps) => {
                                           href={link.href}
                                           className={
                                           cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", 
-                                          link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}
+                                          link.active ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}
                                         >
                                             <span>{link.label}</span>
                                         </Link>
@@ -139,7 +178,7 @@ const Navbar = ({currentUser}: navbarProps) => {
                         </div>
                     </div>
                 </div>
-
+                
                 {/* for mobile NavBar  */}
                 {isOpen && (
                   <>
@@ -150,7 +189,7 @@ const Navbar = ({currentUser}: navbarProps) => {
                             {
                                 routes.map((link) => (
                                     <li key={link.label}>
-                                        <Link href={link.href} className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base",  link.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
+                                        <Link href={link.href} className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base",  link.active ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
                                             <span>{link.label}</span>
                                         </Link>
                                     </li>

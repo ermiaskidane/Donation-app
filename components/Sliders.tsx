@@ -10,7 +10,6 @@ function Sliders() {
   // const [moveL, setMoveL] = useState(false)
 
   const images = ['https://source.unsplash.com/collection/1346951/800x800?sig=1',
-  'https://source.unsplash.com/collection/1346951/800x800?sig=2',
   'https://source.unsplash.com/collection/1346951/800x800?sig=3',
   'https://source.unsplash.com/collection/1346951/800x800?sig=4',
   'https://source.unsplash.com/collection/1346951/800x800?sig=5',
