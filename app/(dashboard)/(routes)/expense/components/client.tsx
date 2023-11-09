@@ -172,7 +172,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
         onSubmit={onSubmitYear}
         loading={loading}
       />
-      <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)}/>
+      <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)} userRole={userRole}/>
       <Accordion type="single" collapsible className="w-full">
         {invoices.map((exp, i) => (
           <AccordionItem value={exp.id} key={exp.id}>
