@@ -25,7 +25,9 @@ export const metadata: Metadata = {
   children: React.ReactNode
 }) => {
 
-  const currentClient= await currentUser()
+  const currentClient = await currentUser()
+
+  // console.log("££££££££££££££££", currentClient)
 
   const info = await db.info.findMany()
   const user = await db.user.findFirst({where: {userId: currentClient?.id}})

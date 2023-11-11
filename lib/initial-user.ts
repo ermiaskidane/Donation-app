@@ -1,12 +1,15 @@
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { RedirectToSignIn, currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
+import { SignedOutAuthObject } from "@clerk/nextjs/server";
 
 export const initialUser = async () => {
   const user = await currentUser();
 
+  console.log("QWQWQWQWQWQWQWQWQW", user)
+
   if(!user) {
-    return redirectToSignIn()
+    return redirectToSignIn();
   }
 
   const profile = await db.user.findUnique({

@@ -22,8 +22,6 @@ const Navbar = ({currentUser}: navbarProps) => {
 
   const [isOpen, setIsOpen] = useState(false)
 
-  // console.log("£££££££££££££££", useAuth())
-
   // mobile ToggleBar
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)
@@ -70,6 +68,7 @@ const Navbar = ({currentUser}: navbarProps) => {
   ]
 
   console.log(":::::::::::::::", currentUser)
+  console.log("£££££££££££££££", useAuth())
   const renderConditional = () => {
     if(!userId){
       return (
