@@ -3,9 +3,10 @@ import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 
 export const initialUser = async () => {
+  
   const user = await currentUser();
 
-  if(!user) {
+  if(!user) { 
     return redirectToSignIn()
   }
 
@@ -16,8 +17,9 @@ export const initialUser = async () => {
   })
 
   if (profile) {
-    return profile;
+    return profile; 
   }
+
 
   const newUser = await db.user.create({
     data: {

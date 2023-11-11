@@ -3,7 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-function page() {
+async function page() {
+
   return (
     <section className="w-full flex flex-col items-center px-20 pt-20 pb-10">
       <article className="flex flex-col my-4">

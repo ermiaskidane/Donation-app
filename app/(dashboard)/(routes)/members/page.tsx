@@ -6,17 +6,24 @@ import { data } from "@/lib/data"
 import { db } from '@/lib/db';
 import { redirect } from "next/navigation";
 import { MembersColumn } from "./components/columns";
+import { currentProfile } from "@/lib/current-profile";
 
 
 const MembersPage = async() => {
+  // // due to the middleware which put "/" both in auth and publicRoute
+  // // I had to place initialUser on blog page so the home page can be accessed 
+  // // without logged in   
+  // const user = await initialUser()
 
   const user = await initialUser()
+
+  const currentuser = await currentProfile()
   // console.log("user", user)
-  if (!user) {
+  if (!currentuser) {
     return redirectToSignIn();
   }
 
-  if(user.role === "GUEST"){
+  if(currentuser.role === "GUEST"){
     redirect("/");
   }
 

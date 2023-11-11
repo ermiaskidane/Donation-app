@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import React from 'react'
 
-function page() {
+const Page = async() => {
+  
   return (
     <div className="flex flex-col " >
       <div className="h-screen w-full z-5 bg-[url('/images/img-home.jpg')]">
@@ -32,4 +33,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
