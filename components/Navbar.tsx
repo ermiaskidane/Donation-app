@@ -67,8 +67,8 @@ const Navbar = ({currentUser}: navbarProps) => {
     // },
   ]
 
-  console.log(":::::::::::::::", currentUser) 
-  console.log("£££££££££££££££", useAuth())
+  // console.log(":::::::::::::::", currentUser) 
+  // console.log("£££££££££££££££", useAuth())
   const renderConditional = () => {
     if(!userId){
       return (
@@ -86,7 +86,7 @@ const Navbar = ({currentUser}: navbarProps) => {
       </> 
       )}
 
-    if (currentUser) {
+    if (currentUser && userId) {
       return (<>
               {currentUser.role === "ADMIN" && 
                 <li>
