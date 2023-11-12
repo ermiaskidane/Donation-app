@@ -2,9 +2,8 @@ import getBlog, { IParams } from '@/app/actions/getBlogs'
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { db } from '@/lib/db'
-import { initialUser } from '@/lib/initial-user'
+// import { initialUser } from '@/lib/initial-user'
 import React from 'react'
 
 interface BlogPageProps {
@@ -14,9 +13,7 @@ interface BlogPageProps {
 
 const  HomePage = async({searchParams}: BlogPageProps) => {
 
-  // const User = await initialUser();
-
-
+  // await initialUser()
   const categories = await db.category.findMany()
   const blogList = await getBlog(searchParams)
 

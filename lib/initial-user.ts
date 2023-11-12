@@ -1,12 +1,11 @@
-import { RedirectToSignIn, currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
-import { SignedOutAuthObject } from "@clerk/nextjs/server";
 
 export const initialUser = async () => {
   const user = await currentUser();
 
-  console.log("QWQWQWQWQWQWQWQWQW", user)
+  // console.log("QWQWQWQWQWQWQWQWQW", user)
 
   if(!user) {
     return redirectToSignIn();
@@ -18,9 +17,13 @@ export const initialUser = async () => {
     }
   })
 
-  if (profile) {
+  // console.log("from profile 1", profile)
+
+  if (profile) { 
     return profile;
   }
+
+  // console.log("111111111111from profile 111111111", profile)
 
   const newUser = await db.user.create({
     data: {
@@ -30,7 +33,7 @@ export const initialUser = async () => {
       imageUrl: user.imageUrl,
     }
   })
-
+  // console.log("22222222222222from newUser 22222222222222", newUser)
   return newUser;
 }
 

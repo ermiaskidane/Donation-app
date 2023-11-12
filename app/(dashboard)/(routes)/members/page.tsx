@@ -6,17 +6,24 @@ import { data } from "@/lib/data"
 import { db } from '@/lib/db';
 import { redirect } from "next/navigation";
 import { MembersColumn } from "./components/columns";
+import { currentProfile } from "@/lib/current-profile";
 
 
 const MembersPage = async() => {
 
-  const user = await initialUser()
-  
-  if (!user) {
-    return redirectToSignIn();
-  } 
+  // due to the middleware which put "/" both in auth and publicRoute I had to place initialUser on members page
+  //  and .env after logged in redirect me to /members page so the home page can be accessed 
+  // without logged in and user could be created in database. Somehow await initialUser() is called twice caused to create
+  // two times for the new user, to handle this Admin can delete manually in the /users page 
+   await initialUser()
 
-  if(user.role === "GUEST"){
+  const currentuser = await currentProfile()
+  // console.log("user", user)
+  if (!currentuser) {
+    return redirectToSignIn();
+  }
+
+  if(currentuser.role === "GUEST"){
     redirect("/");
   }
 
@@ -44,7 +51,7 @@ const MembersPage = async() => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6 ">
-        <MembersClient data={formattedMembers} userRole={user}/>
+        <MembersClient data={formattedMembers} userRole={currentuser}/>
       </div>
     </div>
   )

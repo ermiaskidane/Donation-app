@@ -10,6 +10,7 @@ import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
 import InfoNavbar from '@/components/InfoNavbar'
 import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { initialUser } from '@/lib/initial-user'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +32,8 @@ export const metadata: Metadata = {
 
   const info = await db.info.findMany()
   const user = await db.user.findFirst({where: {userId: currentClient?.id}})
-
+ 
+  // console.log("^^^^^^^^^^^^^^^^^^^^^^^", user)
   return (
     <ClerkProvider>
       <html lang="en">
