@@ -3,6 +3,7 @@ import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
 import { db } from '@/lib/db'
+import { initialUser } from '@/lib/initial-user'
 // import { initialUser } from '@/lib/initial-user'
 import React from 'react'
 
@@ -13,7 +14,6 @@ interface BlogPageProps {
 
 const  HomePage = async({searchParams}: BlogPageProps) => {
 
-  // await initialUser()
   const categories = await db.category.findMany()
   const blogList = await getBlog(searchParams)
 

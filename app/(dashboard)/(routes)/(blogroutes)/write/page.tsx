@@ -1,4 +1,5 @@
 import WriteBlog from '@/components/blogcomponents/writeBlog'
+import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { initialUser } from '@/lib/initial-user'
 import { redirectToSignIn } from '@clerk/nextjs'
@@ -7,13 +8,13 @@ import React, { useState } from 'react'
 
 const WritePage = async() =>{
 
-  const user = await initialUser()
+  const currentuser = await currentProfile()
 
-  if (!user) {
+  if (!currentuser) {
     return redirectToSignIn();
   } 
 
-  if(user.role === "GUEST" || user.role === "MEMBER" ){
+  if(currentuser.role === "GUEST" || currentuser.role === "MEMBER" ){
     redirect("/");
   }
 

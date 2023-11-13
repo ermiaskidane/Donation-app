@@ -68,7 +68,7 @@ const Navbar = ({currentUser}: navbarProps) => {
   ]
 
   // console.log(":::::::::::::::", currentUser) 
-  // console.log("£££££££££££££££", useAuth())
+  console.log("£££££££££££££££", useAuth())
   const renderConditional = () => {
     if(!userId){
       return (

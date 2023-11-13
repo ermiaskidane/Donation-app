@@ -6,16 +6,16 @@ import React from 'react'
 import { UsersClient } from './components/clients';
 import { UsersColumn } from './components/columns';
 import { format } from 'date-fns';
+import { currentProfile } from '@/lib/current-profile';
 
 const UsersPage = async() => {
+  const currentuser = await currentProfile()
 
-  const user = await initialUser()
-
-  if (!user) {
+  if (!currentuser) {
     return redirectToSignIn();
   } 
 
-  if(user.role !== "ADMIN"){
+  if(currentuser.role !== "ADMIN"){
     redirect("/")
   }
 

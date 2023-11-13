@@ -4,17 +4,18 @@ import { db } from '@/lib/db'
 import { initialUser } from '@/lib/initial-user'
 import { redirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
+import { currentProfile } from '@/lib/current-profile'
 
 
 const ExpensePage = async() =>{
 
-  const user = await initialUser()
+  const currentuser = await currentProfile()
 
-  if (!user) {
+  if (!currentuser) {
     return redirectToSignIn();
   } 
 
-  if(user.role === "GUEST"){
+  if(currentuser.role === "GUEST"){
     redirect("/")
   }
   
@@ -36,7 +37,7 @@ const ExpensePage = async() =>{
   // console.log("::::::::::::::::::", donated)
   return (
     <div className="px-4">
-      <ExpenseClient invoices={expense} donation={donated} userRole={user}/>
+      <ExpenseClient invoices={expense} donation={donated} userRole={currentuser}/>
     </div>
   )
 }
