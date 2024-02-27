@@ -10,7 +10,7 @@ interface ExpenseHeadingProps {
   userRole: userRole;
 }
  
-
+ 
 export const ExpenseHeading:React.FC<ExpenseHeadingProps> = ({openAmount, openCalender, userRole}: ExpenseHeadingProps) => {
   return (
   

@@ -1,4 +1,7 @@
 import React from 'react'
+// import React from "react";
+import { MacbookScroll } from "@/components/ui/macbook-scroll";
+import Link from "next/link";
 
 const Event = () => {
   return (
@@ -13,6 +16,7 @@ const Event = () => {
             height=""
             className="w-full"
           />
+          
         </div>
         <div className="md:7/12 lg:w-1/2">
           <h2 className="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">

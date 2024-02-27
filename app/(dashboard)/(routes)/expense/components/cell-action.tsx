@@ -75,11 +75,3 @@ export const CellAction: React.FC<CellActionProps> = ({
 }
 
 export default CellAction
-
-
-
-// Breaking News 1 The church plays a crucial role in fostering a sense of community and belonging among Eritrean expatriates, offering religious services, cultural events, and a place for Eritreans to celebrate their rich traditions.
-// Latest Updates on COVID-19
-// Technology Advancements in 2023
-// World Economy Outlook
-// Sports Highlights of the Week

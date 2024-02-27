@@ -18,7 +18,7 @@ interface MembersClientProps {
   data: MembersColumn[];
   userRole: userRole
 }
- 
+  
 export const MembersClient: React.FC<MembersClientProps> = ({
   data,
   userRole

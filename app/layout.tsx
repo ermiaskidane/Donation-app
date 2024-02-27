@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   // console.log("^^^^^^^^^^^^^^^^^^^^^^^", user)
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
