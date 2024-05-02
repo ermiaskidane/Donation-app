@@ -9,9 +9,6 @@ import { CrispProvider } from '@/components/crisp-provider'
 import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
 import InfoNavbar from '@/components/InfoNavbar'
-
-// import { currentUser, redirectToSignIn } from "@clerk/nextjs";
-import { initialUser } from '@/lib/initial-user'
 import { auth } from '@clerk/nextjs/server'
 
 const inter = Inter({ subsets: ['latin'] })
