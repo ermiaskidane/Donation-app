@@ -1,18 +1,17 @@
 import { db } from '@/lib/db';
-import { initialUser } from '@/lib/initial-user'
-import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { UsersClient } from './components/clients';
 import { UsersColumn } from './components/columns';
 import { format } from 'date-fns';
 import { currentProfile } from '@/lib/current-profile';
+import { auth } from '@clerk/nextjs/server';
 
 const UsersPage = async() => {
   const currentuser = await currentProfile()
 
   if (!currentuser) {
-    return redirectToSignIn();
+    return auth().redirectToSignIn();
   } 
 
   if(currentuser.role !== "ADMIN"){

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
-import { initialUser } from '@/lib/initial-user'
+// import { initialUser } from '@/lib/initial-user'
 import { RedirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { currentProfile } from '@/lib/current-profile'
