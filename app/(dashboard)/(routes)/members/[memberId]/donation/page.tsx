@@ -1,5 +1,5 @@
 import React from 'react'
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import {DonationForm} from './components/donation-form'
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
@@ -11,6 +11,8 @@ const AddDonation = async ({
 }) => {
 
   const user = await currentUser();
+
+  console.log("dsafs", user)
 
   const userRole = await db.user.findUnique({
     where: {

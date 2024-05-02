@@ -1,6 +1,6 @@
 import {db} from '@/lib/db'
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 // CREATE A COMMENT
 export const POST = async (req: Request, 

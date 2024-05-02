@@ -1,5 +1,5 @@
-import { redirectToSignIn } from "@clerk/nextjs";
-import { initialUser } from "@/lib/initial-user";
+import { auth } from "@clerk/nextjs/server";
+// import { initialUser } from "@/lib/initial-user";
 import { MembersClient } from "./components/client";
 import { format } from "date-fns";
 import { data } from "@/lib/data"
@@ -15,14 +15,15 @@ const MembersPage = async() => {
   //  and .env after logged in redirect me to /members page so the home page can be accessed 
   // without logged in and user could be created in database. Somehow await initialUser() is called twice caused to create
   // two times for the new user, to handle this Admin can delete manually in the /users page 
-  const Initialuser  = await initialUser()
+  // const Initialuser  = await initialUser()
 
-  console.log(Initialuser)
+  // console.log(Initialuser)
+  // console.log("sdsds", auth())
   
   const currentuser: User | null = await currentProfile()
   // console.log("user", user)
   if (!currentuser) {
-    return redirectToSignIn();
+    return auth().redirectToSignIn();
   }
 
   if(currentuser.role === "GUEST"){

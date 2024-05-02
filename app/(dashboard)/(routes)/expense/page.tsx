@@ -2,7 +2,7 @@ import React from 'react'
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
 import { initialUser } from '@/lib/initial-user'
-import { redirectToSignIn } from '@clerk/nextjs'
+import { RedirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { currentProfile } from '@/lib/current-profile'
 
@@ -12,7 +12,7 @@ const ExpensePage = async() =>{
   const currentuser = await currentProfile()
 
   if (!currentuser) {
-    return redirectToSignIn();
+    return <RedirectToSignIn/>;
   } 
 
   if(currentuser.role === "GUEST"){

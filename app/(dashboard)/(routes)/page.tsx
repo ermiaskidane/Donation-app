@@ -4,7 +4,6 @@ import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
 import { MacbookScroll } from '@/components/ui/macbook-scroll'
 import { db } from '@/lib/db'
-import { initialUser } from '@/lib/initial-user'
 // import { initialUser } from '@/lib/initial-user'
 import React from 'react'
 
@@ -58,3 +57,21 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
 }
 
 export default HomePage
+
+
+// import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+// import Image from "next/image";
+
+// export default function Home() {
+//   return (
+//     <div>
+//       <h1>Hello Home Page</h1>
+//       <SignedOut>
+//         <SignInButton />
+//       </SignedOut>
+//       <SignedIn>
+//         <UserButton />
+//       </SignedIn>
+//     </div>
+//   );
+// }

@@ -1,5 +1,5 @@
 import './globals.css'
-import { ClerkProvider, useAuth } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
@@ -9,8 +9,10 @@ import { CrispProvider } from '@/components/crisp-provider'
 import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
 import InfoNavbar from '@/components/InfoNavbar'
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+
+// import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { initialUser } from '@/lib/initial-user'
+import { auth } from '@clerk/nextjs/server'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,14 +28,16 @@ export const metadata: Metadata = {
   children: React.ReactNode
 }) => {
 
-  const currentClient = await currentUser()
+  const currentClient = auth()
 
-  // console.log("££££££££££££££££", currentClient)
+  // console.log("££££££££££££££££", auth())
+  console.log("££££££££££££££££", currentClient.userId)
+  const userId = currentClient?.userId ?? '';
 
   const info = await db.info.findMany()
-  const user = await db.user.findFirst({where: {userId: currentClient?.id}})
+  const user = await db.user.findFirst({where: {userId}})
  
-  // console.log("^^^^^^^^^^^^^^^^^^^^^^^", user)
+  console.log("^^^^^^^^^^^^^^^^^^^^^^^", user)
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
