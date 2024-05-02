@@ -1,7 +1,7 @@
 import WriteBlog from '@/components/blogcomponents/writeBlog'
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
-import { initialUser } from '@/lib/initial-user'
+// import { initialUser } from '@/lib/initial-user'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import React, { useState } from 'react'
