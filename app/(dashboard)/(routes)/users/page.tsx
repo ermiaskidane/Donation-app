@@ -6,6 +6,11 @@ import { UsersColumn } from './components/columns';
 import { format } from 'date-fns';
 import { currentProfile } from '@/lib/current-profile';
 import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "User",
+};
 
 const UsersPage = async() => {
   const currentuser = await currentProfile()

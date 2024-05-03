@@ -4,7 +4,6 @@ import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
 import { MacbookScroll } from '@/components/ui/macbook-scroll'
 import { db } from '@/lib/db'
-// import { initialUser } from '@/lib/initial-user'
 import React from 'react'
 
 interface BlogPageProps {
@@ -17,7 +16,7 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
   const categories = await db.category.findMany()
   const blogList = await getBlog(searchParams)
 
-  // console.log("££££££££££££££££££", categories)
+
   return (
     <div className="flex flex-col " >
       <div className="h-screen w-full z-5 ">
@@ -57,21 +56,3 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
 }
 
 export default HomePage
-
-
-// import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-// import Image from "next/image";
-
-// export default function Home() {
-//   return (
-//     <div>
-//       <h1>Hello Home Page</h1>
-//       <SignedOut>
-//         <SignInButton />
-//       </SignedOut>
-//       <SignedIn>
-//         <UserButton />
-//       </SignedIn>
-//     </div>
-//   );
-// }

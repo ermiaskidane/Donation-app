@@ -14,8 +14,14 @@ import { auth } from '@clerk/nextjs/server'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Record Donation',
-  description: 'Donation contribute by members',
+  title: {
+    default: "Donation Record",
+    template: "%s - Donation Record"
+  },
+  description: 'Donation Record app for the community',
+  twitter: {
+    card: "summary_large_image",
+  },
 }
 
 

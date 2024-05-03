@@ -1,11 +1,16 @@
 import getBlog, { IParams } from '@/app/actions/getBlogs'
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
+import { Metadata } from 'next';
 import React from 'react'
 
 interface BlogPageProps {
   // searchParams: string
   searchParams: IParams
 }
+
+export const metadata: Metadata = {
+  title: "Blog",
+};
  
 const BlogPage = async({searchParams}: BlogPageProps) => {
 

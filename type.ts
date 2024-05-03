@@ -37,3 +37,15 @@ export interface Comment {
   NestComments: NestComment[];
   user: User;
 }
+
+export interface UpdatedPost {
+  id: string;
+  slug: string;
+  title: string;
+  desc: string;
+  img: string;
+  views: number;
+  catSlug: string;
+  userEmail: string;
+  createdAt: string;
+}

@@ -5,7 +5,12 @@ import { db } from '@/lib/db'
 import { RedirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { currentProfile } from '@/lib/current-profile'
+import { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+  title: "Expense",
+};
 
 const ExpensePage = async() =>{
 

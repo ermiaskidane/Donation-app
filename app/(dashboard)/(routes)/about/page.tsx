@@ -4,6 +4,18 @@ import Link from 'next/link'
 import React from 'react'
 
 import Slider from "@/components/Sliders"
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "About",
+};
+
+// if you want to override the layout.tsx metadata
+// export const metadata: Metadata = {
+//   title: {
+//     absolute: "About"
+//   }
+// };
 
 function About() {
   return (

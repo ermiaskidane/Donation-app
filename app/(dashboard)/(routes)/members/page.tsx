@@ -8,20 +8,16 @@ import { redirect } from "next/navigation";
 import { MembersColumn } from "./components/columns";
 import { currentProfile } from "@/lib/current-profile";
 import { User } from "@prisma/client";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Members",
+};
 
 
 const MembersPage = async() => {
-  // due to the middleware which put "/" both in auth and publicRoute I had to place initialUser on members page
-  //  and .env after logged in redirect me to /members page so the home page can be accessed 
-  // without logged in and user could be created in database. Somehow await initialUser() is called twice caused to create
-  // two times for the new user, to handle this Admin can delete manually in the /users page 
-  // const Initialuser  = await initialUser()
-
-  // console.log(Initialuser)
-  // console.log("sdsds", auth())
   
   const currentuser: User | null = await currentProfile()
-  // console.log("user", user)
   if (!currentuser) {
     return auth().redirectToSignIn();
   }
