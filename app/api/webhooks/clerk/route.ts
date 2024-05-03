@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     const user = {
       userId: id,
       email: email_addresses[0].email_address,
-      name: name: first_name !== null ? first_name : username!,
+      name: first_name !== null ? first_name : username!,
       // firstName: first_name,
       // lastName: last_name,
       imageUrl: image_url,
