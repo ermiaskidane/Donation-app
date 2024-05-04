@@ -77,8 +77,9 @@ export async function POST(req: Request) {
     })
 
     if(existUser) {
-      return;
+      return new NextResponse('User already exists', { status: 200 });
     }
+    
 
     const newUser = await db.user.create({
       data: user,
