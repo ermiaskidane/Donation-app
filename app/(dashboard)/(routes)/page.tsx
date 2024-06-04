@@ -19,7 +19,7 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
 
   return (
     <div className="flex flex-col " >
-      <div className="h-screen w-full z-5 ">
+      <div className="h-screen w-full z-5 bg-[url('/images/img-home.jpg')] ">
 {/*       <div className="overflow-hidden dark:bg-[#0B0B0F] bg-white w-full">
       <MacbookScroll
         // title={
