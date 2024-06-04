@@ -102,3 +102,6 @@ export async function POST(req: Request) {
 
   return new Response('', { status: 200 })
 }
+
+// better reference for clerk-webhooks
+// https://github.com/HamedBahram/clerk-webhooks

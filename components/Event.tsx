@@ -9,7 +9,8 @@ const Event = () => {
       <div className="space-y-6 justify-between text-gray-600 md:flex md:flex-row-reverse md:gap-6 md:space-y-0 lg:gap-12 lg:items-center">
         <div className="md:5/12 lg:w-1/2">
           <img
-            src="./images/img-home.jpg"
+            // src="./images/img-home.jpg"
+            src="./images/Screenshot-248.png"
             alt="imagewh"
             loading="lazy"
             width=""
