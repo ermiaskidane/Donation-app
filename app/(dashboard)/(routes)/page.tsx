@@ -20,7 +20,7 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
   return (
     <div className="flex flex-col " >
       <div className="h-screen w-full z-5 ">
-      <div className="overflow-hidden dark:bg-[#0B0B0F] bg-white w-full">
+{/*       <div className="overflow-hidden dark:bg-[#0B0B0F] bg-white w-full">
       <MacbookScroll
         // title={
         //   <span>
@@ -35,14 +35,14 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
         src={`/linear.webp`}
         showGradient={false}
       />
-    </div>
+    </div> */}
 
-        {/* <div className="flex flex-col justify-center items-center h-full ">
+        <div className="flex flex-col justify-center items-center h-full ">
           <h3 className='flex flex-col justify-center text-slate-100 text-4xl w-full text-center sm:text-5xl md:text-6xl lg:text-7xl  capitalize font-medium md:block md:font-bold'>Church of <span className="sm:text-5xl md:text-6xl lg:text-7xl">st. Micheal</span></h3>
           <div className='text-xl sm:text-3xl md:text-4xl lg:text-5xl space-y-5 font-bold   '>
             <HomeTypeWriteEffect/>
           </div>
-        </div> */}
+        </div>
       </div>
 
       
