@@ -3,6 +3,7 @@ import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import Event from '@/components/Event'
 import HomeTypeWriteEffect from '@/components/homeTypeWriteEffect'
 import { MacbookScroll } from '@/components/ui/macbook-scroll'
+// import CommonCard from '@/lib/commonCard'
 import { db } from '@/lib/db'
 import React from 'react'
 
@@ -50,6 +51,7 @@ const  HomePage = async({searchParams}: BlogPageProps) => {
     <div className="flex flex-col items-center space-y-8 py-20 md:px-4 xl:px-6 md:flex-row md:space-x-8 md:space-y-0">
       <Event/>
     </div>
+    {/* <CommonCard data={blogList} categories={categories} contentRoute={false}/> */}
       <Blogcomponent Blogs={blogList} categories={categories} blogRoute={true} />
     </div>
   )

@@ -36,6 +36,11 @@ const Navbar = ({currentUser}: navbarProps) => {
       active: pathName === `/`
     },
     {
+      href: `/community`,
+      label: "Community",
+      active: pathName === `/community`
+    },
+    {
       href: `/blog`,
       label: "Blog",
       active: pathName === `/blog`
