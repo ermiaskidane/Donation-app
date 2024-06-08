@@ -32,7 +32,7 @@ function Footer() {
         <div className='self-center'>
         <Image
           className="translate-x-12 md:translate-x-10"
-          src="/images/Screenshot (246).png"
+          src="/images/Screenshot-246.png"
           width={80}
           height={80}
           alt="Picture of the author"

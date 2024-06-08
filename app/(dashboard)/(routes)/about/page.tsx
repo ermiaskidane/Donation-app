@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import Slider from "@/components/Sliders"
+import church from "@/public/images/Screenshot-247.png"
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -29,8 +30,10 @@ function About() {
         <div className="items-start px-6 space-y-2 md:px-20 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
           <div className="flex flex-col items-center space-x-2 pt-8">
               <Image
-                src="/images/Screenshot (247).png"
+                // src="/images/Screenshot-247.png"
+                src={church}
                 alt="avatar"
+                placeholder='blur'
                 width={192}
                 height={192}
                 className="h-48 w-48 rounded-full"

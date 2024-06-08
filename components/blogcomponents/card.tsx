@@ -3,19 +3,21 @@ import Link from 'next/link'
 import React from 'react'
 import DOMPurify from 'dompurify';
 import { string } from 'zod'
+// import { loadBase64Image } from '@/lib/load-base64';
 
 interface cardProps {
   blog: any,
 }
 
 
-const Card = ({
+const Card = async({
   blog,
 }: cardProps) => {
   const wpm = 225;
   const word = blog?.desc.trim().split(/\s+/).length
   const readTime = Math.ceil(word / wpm);
 
+  // const { base64, img } = await loadBase64Image(blog.img)
 
   const sanitizedData = (): { __html: string } => {
     if (!blog.desc) {
@@ -25,13 +27,22 @@ const Card = ({
     return { __html: DOMPurify.sanitize(trimDesc) };
   }
 
-
+// console.log("dfsdfs", blog.img)
   return (
     <>
       <div className="relative overflow-hidden rounded-xl">
         {blog.img && (
-          <Image src={blog.img}
-          alt="art cover" loading="lazy" width="1000" height="667" className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"/>
+          <Image 
+            src={blog.img}
+            // {...img}
+            // placeholder='blur'
+            alt="art cover"
+            // blurDataURL={base64} 
+            loading="lazy" 
+            width="1000" 
+            height="667" 
+            className="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105"
+            />
         )}
       </div>
       <div className="mt-6 relative">

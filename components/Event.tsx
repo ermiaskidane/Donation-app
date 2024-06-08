@@ -11,6 +11,7 @@ const Event = () => {
           <img
             // src="./images/img-home.jpg"
             src="./images/Screenshot-248.png"
+            placeholder='blur'
             alt="imagewh"
             loading="lazy"
             width=""
