@@ -59,6 +59,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
       onClose={onClose}
     >
       <Form {...form}>
+        {/* @ts-ignore */}
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
             <div className="gap-6 flex flex-col md:w-11/12 mx-auto">
                <div className="flex items-center justify-center text-center">
