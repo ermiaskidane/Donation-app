@@ -5,14 +5,6 @@ export interface BlogData {
   count: number;
 }
 
-export interface Server {
-  id: string;
-  name: string;
-  imageUrl: string;
-  inviteCode: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 // I had to make my own type for user, nestcomment and comment 
 // cz the createdAt at on @prisma/client  is a Date type so to match with the

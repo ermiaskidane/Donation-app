@@ -10,8 +10,6 @@ export async function POST (
     
   const { userId } = auth();
 
-  // console.log("mmmmmmmmmmmmmmmmmmm", auth())
-
   const body = await req.json();
 
   const { title, desc, slug, catSlug, img} = body
@@ -44,7 +42,6 @@ export async function POST (
       Post: true
     }
   })
-  // console.log("kkkkkkkkkkkkk", UserAdmin)
 
   if (UserAdmin?.role !== "ADMIN"){
     return new NextResponse("Unauthorized", { status: 405 });

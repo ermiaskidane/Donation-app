@@ -16,10 +16,6 @@ export async function POST(
 
     const { description,paymentStatus, amount } = body;
 
-    console.log("DDDDDDDDDDDDDDD",params.year)
-    console.log("SSSSSSSSSSSSSSSS",body)
-    console.log("SSSSSSSSSSSSSSSS",userId)
-
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -41,9 +37,6 @@ export async function POST(
     const UserAdmin = await db.user.findFirst({
       where: {
         userId,
-      },
-      include: {
-        members: true
       }
     })
 
@@ -66,7 +59,6 @@ export async function POST(
       }
     })
 
-    console.log("££££££££££££££££", expense)
     return NextResponse.json(expense);
   } catch (error) {
     console.log('[EXPENSE_POST]', error);
@@ -81,7 +73,6 @@ export async function DELETE(
   try {
     const { userId } = auth();
 
-    console.log("KLJLKLLLLLLLLLLLLLLL", params.year)
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }

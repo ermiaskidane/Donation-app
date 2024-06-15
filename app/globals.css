@@ -82,3 +82,5 @@
   .quill > .ql-container > .ql-editor.ql-blank::before {
     color: #b3b3b1;
   }
+
+  @import "~@uploadthing/react/styles.css"

@@ -10,7 +10,7 @@ interface cardProps {
 }
 
 
-const Card = async({
+const Card = ({
   blog,
 }: cardProps) => {
   const wpm = 225;

@@ -63,7 +63,6 @@ export async function DELETE(
   { params }: { params: { userId: string } }
 ) {
 
-  // console.log("%$%$$%$%$%$%", params.userId)
   try {
     const {userId} = auth()
 
@@ -91,12 +90,10 @@ export async function DELETE(
         id: params.userId
       }
     });
-
-    // console.log("''''''''''''''", userRole)
   
     return NextResponse.json(user);
   } catch (error) {
-    console.log('[BILLBOARDS_GET]', error);
+    console.log('[USERS_DELETE]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };

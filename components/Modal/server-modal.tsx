@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,26 +7,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/file-upload";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-interface ExpenseModalProps {
+interface ServerModalProps {
   isOpen: boolean;
   onClose: () => void;
   loading: boolean;
-  onSubmit?: (datas: ExpenseModalValues) => void
+  onSubmit?: (datas: ServerModalValues) => void
 }
 
 const formSchema = z.object({
   name: z.string().min(1),
-  // image: z.string().min(1),
-  // name: z.coerce.number().min(1),
+  imageUrl: z.string().min(1),
 })
 
-type ExpenseModalValues = z.infer<typeof formSchema>
+export type ServerModalValues = z.infer<typeof formSchema>
 
-export const ExpenseModal: React.FC<ExpenseModalProps> = ({
+export const ServerModal: React.FC<ServerModalProps> = ({
   isOpen,
   onClose,
   loading,
@@ -36,12 +34,14 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const form = useForm<ExpenseModalValues>({
+  const form = useForm<ServerModalValues>({
     resolver: zodResolver(formSchema),
     defaultValues:  {
-      name: ""
+      name: "",
+      imageUrl: ""
     }
   })
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,11 +59,12 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
       onClose={onClose}
     >
       <Form {...form}>
+        {/* @ts-ignore */}
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
             <div className="gap-6 flex flex-col md:w-11/12 mx-auto">
                <div className="flex items-center justify-center text-center">
                  {/* TODO: file upload */}
-                 {/* <FormField
+                 <FormField
                   control={form.control}
                   name="imageUrl"
                   render={({ field }) => (
@@ -77,7 +78,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
                       </FormControl>
                     </FormItem>
                   )}
-                /> */}
+                />
               </div>
 
                <FormField
@@ -103,7 +104,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
                 )}
               />
             
-              <Button  disabled={loading} className="w-1/2 mt-8 self-center" type="submit">
+              <Button  disabled={loading} className="w-1/2 mt-8 self-center" >
                 Create
               </Button>
             </div>
@@ -112,6 +113,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
     </Modal>
   );
 };
+
 // "use client";
 
 // import axios from "axios";

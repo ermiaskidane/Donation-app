@@ -24,8 +24,6 @@ export const POST = async (req: Request) => {
   const body = await req.json();
 
   const { title} = body
-
-  console.log("$$$$$$$$$$$$$", title)
   
   if(!userId) {
     return new NextResponse("Unauthenticated", { status: 403 });
@@ -62,7 +60,6 @@ export const DELETE = async(req: Request) =>  {
   try {
     const { userId } = auth();
 
-    // console.log("KLJLKLLLLLLLLLLLLLLL", params.year)
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }

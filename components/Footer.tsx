@@ -24,7 +24,7 @@ function Footer() {
           <div className='text-sm md:flex-initial md:w-64 md:text-base md:font-medium'>
             <p>
               011234534 phone
-              <span className='block'>test@test.com</span>
+              <span className='block'>hade@gmail.com</span>
             </p>
           </div>
         </div>
