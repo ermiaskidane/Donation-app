@@ -36,11 +36,6 @@ const Navbar = ({currentUser}: navbarProps) => {
       active: pathName === `/`
     },
     {
-      href: `/community`,
-      label: "Community",
-      active: pathName === `/community`
-    },
-    {
       href: `/blog`,
       label: "Blog",
       active: pathName === `/blog`
@@ -49,6 +44,11 @@ const Navbar = ({currentUser}: navbarProps) => {
     //   href: `/write`,
     //   label: "Write",
     //   active: pathName === `/write`
+    // },
+    // {
+    //   href: `/community`,
+    //   label: "Community",
+    //   active: pathName === `/community`
     // },
     // {
     //   href: `/members`,
