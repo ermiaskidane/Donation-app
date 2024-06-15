@@ -9,8 +9,8 @@ import toast from 'react-hot-toast';
 
 export const CommunityHeading = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [calenderOpen, setCalenderOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalKey, setModalKey] = useState<number>(0);
 
   const router = useRouter()
 
@@ -19,7 +19,10 @@ export const CommunityHeading = () => {
       setLoading(true)
       await axios.post(`/api/community/`, data)
 
-      router.refresh();
+      // router.refresh();
+      // window.location.reload(); // Perform a hard refresh
+      // soft refresh (reset the data)
+      setModalKey(prevKey => prevKey + 1);
       router.push('/community');
       toast.success("community has been created")
     } catch (error: any){
@@ -33,6 +36,7 @@ export const CommunityHeading = () => {
   return (
     <>
       <ServerModal
+        key={modalKey} 
         isOpen={open} 
         onClose={() => setOpen(false)}
         onSubmit={onSubmit}

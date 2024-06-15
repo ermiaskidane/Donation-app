@@ -8,14 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-interface ExpenseModalProps {
+interface MemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   loading: boolean;
-  onSubmit?: (datas: ExpenseModalValues) => void
+  onSubmit?: (datas: MemberModalValues) => void
 }
 
 const formSchema = z.object({
@@ -25,9 +24,9 @@ const formSchema = z.object({
   amount: z.coerce.number().min(1),
 })
 
-type ExpenseModalValues = z.infer<typeof formSchema>
+type MemberModalValues = z.infer<typeof formSchema>
 
-export const ExpenseModal: React.FC<ExpenseModalProps> = ({
+export const MemberModal: React.FC<MemberModalProps> = ({
   isOpen,
   onClose,
   loading,
@@ -35,7 +34,7 @@ export const ExpenseModal: React.FC<ExpenseModalProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const form = useForm<ExpenseModalValues>({
+  const form = useForm<MemberModalValues>({
     resolver: zodResolver(formSchema),
     defaultValues:  {
       name: "",
