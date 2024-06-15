@@ -60,7 +60,8 @@ export async function POST(
               name: User!.name,
               phone: "072346218",
               email: User!.email,
-              amount: 0.00
+              amount: 0.00,
+              userId: User!.id
             }
           ]
         }

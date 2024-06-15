@@ -1,36 +1,38 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { Post, Server } from '@prisma/client';
+import { Post, Server, User } from '@prisma/client';
 import Card from '@/components/blogcomponents/card'
 // import Pagination from './Pagination'
 import { useModal } from '@/hooks/useModalStore';
 import { ServerModal } from '@/components/Modal/server-modal';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { ExpenseModal } from '@/components/Modal/member-modal';
+import { MemberModal } from '@/components/Modal/member-modal';
 
-interface cardListprops {
+interface CommunityCardsprops {
   // page: number,
+  user: User | null
   data: Server[],
   // cat:string | null
 }
 
 const CommunityCards = ({
   data,
+  user
   // page,
   // cat
-}: cardListprops) => {
+}: CommunityCardsprops) => {
 
-  const [open, setOpen] = useState<boolean>(false);
   const [openMember, setOpenMember] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [serverId, setServerId] = useState<string>();
+  const [modalKey, setModalKey] = useState<number>(0);
 
   const router = useRouter()
   // const { onOpen } = useModal();
@@ -52,9 +54,11 @@ const CommunityCards = ({
       setLoading(true)
       await axios.post(`/api/community/${serverId}`, data)
 
-      router.refresh();
+      // router.refresh();
+      // soft refresh (reset the data)
+      setModalKey(prevKey => prevKey + 1);
       router.push('/community');
-      toast.success("community has been created")
+      toast.success("client added to community")
     } catch(error: any){
       toast.error('Something went wrong.');
     } finally{
@@ -65,14 +69,8 @@ const CommunityCards = ({
 
   return (
     <>
-    {/* TODO: change this expenseModal to addMemeber */}
-    {/* <ServerModal
-        isOpen={open} 
-        onClose={() => setOpen(false)}
-        onSubmit={onSubmit}
-        loading={loading}
-      /> */}
-      <ExpenseModal
+      <MemberModal
+        key={modalKey} 
         isOpen={openMember} 
         onClose={() => setOpenMember(false)}
         onSubmit={onSubmit}
@@ -93,10 +91,11 @@ const CommunityCards = ({
             <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
               {server.name}
             </h3>
-            {/* <button onClick={() => setOpen(true)}>Add Client</button> */}
-            <div className='flex justify-end'>
-              <Button onClick={() => OpenModal(server.id)}>Add Expense</Button>
-            </div>
+            {!user || user.role === "ADMIN"  && (
+              <div className='flex justify-end'>
+                <Button onClick={() => OpenModal(server.id)}>Add Member</Button>
+              </div>
+            )}
           </div>
           </div>
         ))}
