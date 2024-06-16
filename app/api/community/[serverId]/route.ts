@@ -61,7 +61,15 @@ export async function POST(
               phone,
               email,
               amount,
-              userId: UserAdmin.id
+              userId: UserAdmin.id,
+              donations: {
+                create: [
+                  {
+                    dtime: format(Date.now(), "MMMM do, yyyy"),
+                    amount,
+                  }
+                ]
+              }
           }
         }
       }
