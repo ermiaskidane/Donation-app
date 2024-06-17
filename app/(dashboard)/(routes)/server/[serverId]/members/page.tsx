@@ -1,0 +1,153 @@
+import { auth } from "@clerk/nextjs/server";
+// import { initialUser } from "@/lib/initial-user";
+import { MembersClient } from "./components/client";
+import { format } from "date-fns";
+import { data } from "@/lib/data"
+import { db } from '@/lib/db';
+import { redirect } from "next/navigation";
+import { MembersColumn } from "./components/columns";
+import { currentProfile } from "@/lib/current-profile";
+import { User } from "@prisma/client";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Members",
+};
+
+
+const MembersPage = async({
+  params
+}: {
+  params: { serverId: string }
+}) => {
+  
+  const currentuser: User | null = await currentProfile()
+  if (!currentuser) {
+    return auth().redirectToSignIn();
+  }
+
+  if(currentuser.role === "GUEST"){
+    redirect("/");
+  }
+
+  // const members = await db.member.findMany({
+  //   include:{
+  //     donations: true
+  //   },
+  //   orderBy: {
+  //     createdAt: 'desc',
+  //   }
+  // })
+
+  console.time('Deep Nested Fetch');
+  const memberss = await db.server.findUnique({
+    where: {
+      id: params.serverId
+    },
+    include:{
+      members: {
+        include: {
+          donations: true
+        }
+      },
+    },
+  })
+
+  console.timeEnd('Deep Nested Fetch');
+
+  // console.log(">>>>>>>>>>>>>>", memberss )
+  // console.log("eewe", memberss?.members.map((item) => ({
+  //   id: item.id,
+  //   name: item.name,
+  //   email: item.email,
+  //   phone: item.phone,
+  //   amount: item.amount,
+  //   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+  //   donations: item.donations
+  // })))
+
+  console.time('Separate Queries');
+
+  const serverWithMembers = await db.server.findUnique({
+    where: {
+      id: params.serverId,
+    },
+    include: {
+      members: true,
+    },
+  });
+
+  if (!serverWithMembers) {
+    throw new Error('Server not found');
+  }
+
+  // console.log(">>>>>>>>>>>>>>", serverWithMembers )
+
+  const memberIds = serverWithMembers.members.map(member => member.id);
+
+  const donations = await db.donation.findMany({
+    where: {
+      memberId: {
+        in: memberIds,
+      },
+    },
+  });
+
+  // Combine members and donations
+const membersWithDonations = serverWithMembers.members.map(member => {
+  return {
+    ...member,
+    donations: donations.filter(donation => donation.memberId === member.id),
+  };
+});
+
+// console.log(">>>>>>>>>>>>>>", membersWithDonations )
+console.timeEnd('Separate Queries');
+
+// const result = {
+//   ...serverWithMembers,
+//   members: membersWithDonations,
+// };
+
+// console.log(">>>>>>>>>>>>>>", result )
+
+const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
+  id: item.id,
+  name: item.name,
+  email: item.email,
+  phone: item.phone,
+  amount: item.amount,
+  updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+  donations: item.donations
+}))
+// console.log("eewe", membersWithDonations.map((item) => ({
+//     id: item.id,
+//     name: item.name,
+//     email: item.email,
+//     phone: item.phone,
+//     amount: item.amount,
+//     updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+//     donations: item.donations
+//   })))
+
+  // const formattedMembers: MembersColumn[] = members.map((item) => ({
+  //   id: item.id,
+  //   name: item.name,
+  //   email: item.email,
+  //   phone: item.phone,
+  //   amount: item.amount,
+  //   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+  //   donations: item.donations
+  // }))
+
+
+  return (
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6 ">
+        <MembersClient data={formattedMembers} userRole={currentuser}/>
+      </div>
+    </div>
+  )
+}
+
+export default MembersPage;
