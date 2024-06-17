@@ -23,7 +23,7 @@ const Community = async() => {
     }
   })
 
-  console.log("server", server)
+  // console.log("server", server)
 
   
   return (
