@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, User } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -16,7 +16,7 @@ import useUserRoleStore from "@/hooks/useUserRole";
 
 interface MembersClientProps {
   data: MembersColumn[];
-  userRole: userRole
+  userRole: userRole;
 }
   
 export const MembersClient: React.FC<MembersClientProps> = ({
@@ -24,6 +24,7 @@ export const MembersClient: React.FC<MembersClientProps> = ({
   userRole
 }) => {
   const router = useRouter();
+  const params = useParams();
 
   const { roleUser, setRoleUser} = useUserRoleStore()
 
@@ -51,7 +52,7 @@ export const MembersClient: React.FC<MembersClientProps> = ({
           <User className="mr-2 h-4 w-4" /> Manage User
         </Button>
         {/* as mongodb has to check through ObjectIDwhich has hex string with 12 bytes I used a random number insted of string */}
-        <Button onClick={() => router.push(`/members/6512c326f323f44d75c5414d`)} >
+        <Button onClick={() => router.push(`/server/${params.serverId}/members/6512c326f323f44d75c5414d`)} >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       </div>
