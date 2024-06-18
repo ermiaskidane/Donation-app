@@ -4,8 +4,8 @@ import * as z from "zod"
 import axios from "axios"
 import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
-import Heading from '../../../../../../components/Heading'
-import { Button } from '../../../../../../components/ui/button'
+import Heading from '@/components/Heading'
+import { Button } from '@/components/ui/button'
 import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { Separator } from "@/components/ui/separator"
@@ -35,7 +35,6 @@ export const MemberForm: React.FC<MemberFormProps> = ({
   const params = useParams();
   const router = useRouter();
 
-  console.log("param memberID", params.memberId)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -60,16 +59,15 @@ export const MemberForm: React.FC<MemberFormProps> = ({
 
       if(initialData){
         // console.log("here is the initial data", initialData)
-        await axios.patch(`/api/member/${params.memberId}/update`, data)
+        await axios.patch(`/api/${params.serverId}/member/${params.memberId}/update`, data)
       } else {
-        await axios.post(`/api/member/${params.memberId}`, data)
+        await axios.post(`/api/${params.serverId}/member/${params.memberId}`, data)
       }
 
       router.refresh();
-      router.push('/members');
+      router.push(`/server/${params.serverId}/members`);
       toast.success(toastMessage)
     } catch(error: any){
-      // console.log("something went wrong")
       toast.error('Something went wrong.');
     } finally{
       setLoading(false);
@@ -124,7 +122,8 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
+            {!initialData && (
+              <FormField
               control={form.control}
               name="amount"
               render={({ field }) => (
@@ -137,6 +136,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                 </FormItem>
               )}
             />
+            )}
             <Button disabled={loading} className="w-1/2 mt-8 lg:self-center" type="submit">
               {action}
             </Button>

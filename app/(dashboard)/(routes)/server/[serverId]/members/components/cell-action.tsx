@@ -24,12 +24,13 @@ export const CellAction: React.FC<CellActionProps> = ({
   const router = useRouter();
   const [userRole, setUserRole ] = useState("")
 
+  const params = useParams();
   const { roleUser} = useMemberStore()
 
   const onConfirm = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/member/${data.id}`);
+      await axios.delete(`/api/${params.serverId}/member/${data.id}`);
       toast.success('Member deleted.');
       router.refresh();
     } catch (error) {
@@ -66,17 +67,17 @@ export const CellAction: React.FC<CellActionProps> = ({
               <DropdownMenuItem
               // the long hex string is a random number I place inorder to create a new donation
               // otherwise it will go for update donation
-                onClick={() =>  router.push(`/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
+                onClick={() =>  router.push(`/server/${params.serverId}/members/650eaede98613587b24e4d7b/donation?id=${data.id}` )}
               >
                 <Copy className="mr-2 h-4 w-4" /> Add Donation
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => router.push(`/members/${data.id}/donation`)}
+                onClick={() => router.push(`/server/${params.serverId}/members/${data.id}/donation`)}
               >
                 <Copy className="mr-2 h-4 w-4" /> Update Donation
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => router.push(`/members/${data.id}`)}
+                onClick={() => router.push(`/server/${params.serverId}/members/${data.id}`)}
               >
                 <Edit className="mr-2 h-4 w-4" /> Update member
               </DropdownMenuItem>

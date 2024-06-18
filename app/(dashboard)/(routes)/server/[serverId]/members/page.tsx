@@ -30,15 +30,6 @@ const MembersPage = async({
     redirect("/");
   }
 
-  // const members = await db.member.findMany({
-  //   include:{
-  //     donations: true
-  //   },
-  //   orderBy: {
-  //     createdAt: 'desc',
-  //   }
-  // })
-
   console.time('Deep Nested Fetch');
   const memberss = await db.server.findUnique({
     where: {
@@ -54,17 +45,6 @@ const MembersPage = async({
   })
 
   console.timeEnd('Deep Nested Fetch');
-
-  // console.log(">>>>>>>>>>>>>>", memberss )
-  // console.log("eewe", memberss?.members.map((item) => ({
-  //   id: item.id,
-  //   name: item.name,
-  //   email: item.email,
-  //   phone: item.phone,
-  //   amount: item.amount,
-  //   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
-  //   donations: item.donations
-  // })))
 
   console.time('Separate Queries');
 
@@ -100,8 +80,6 @@ const membersWithDonations = serverWithMembers.members.map(member => {
     donations: donations.filter(donation => donation.memberId === member.id),
   };
 });
-
-// console.log(">>>>>>>>>>>>>>", membersWithDonations )
 console.timeEnd('Separate Queries');
 
 // const result = {
@@ -120,26 +98,6 @@ const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
   donations: item.donations
 }))
-// console.log("eewe", membersWithDonations.map((item) => ({
-//     id: item.id,
-//     name: item.name,
-//     email: item.email,
-//     phone: item.phone,
-//     amount: item.amount,
-//     updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
-//     donations: item.donations
-//   })))
-
-  // const formattedMembers: MembersColumn[] = members.map((item) => ({
-  //   id: item.id,
-  //   name: item.name,
-  //   email: item.email,
-  //   phone: item.phone,
-  //   amount: item.amount,
-  //   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
-  //   donations: item.donations
-  // }))
-
 
   return (
     <div className="flex-col">

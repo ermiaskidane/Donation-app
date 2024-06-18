@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 
 export async function POST(
   req: Request,
-  {params}: {params: {memberId: string}}
+  {params}: {params: { serverId: string, memberId: string}}
 ){
   try{
     const {userId} = auth()
@@ -35,6 +35,10 @@ export async function POST(
       return new NextResponse("Amount is required", { status: 400 });
     }
 
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
+
     if (!params.memberId) {
       return new NextResponse("Member id is required", { status: 400 });
     }
@@ -51,26 +55,35 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const member = await db.member.create({
+    // note: we use deep nested query but only the admin can make this query so
+    // there wont be much number of admins overall, optimazation will make less differnce with 
+    // seperate query
+    const expense = await db.server.update({
+      where: {
+        id: params.serverId
+      }, 
       data: {
-        name,
-        phone,
-        email,
-        amount,
-        userId: UserAdmin.id,
-        donations: {
-          create: {
-              dtime: format(Date.now(), "MMMM do, yyyy"),
+        members: {
+          create:{ 
+              name,
+              phone,
+              email,
               amount,
+              userId: UserAdmin.id,
+              donations: {
+                create: [
+                  {
+                    dtime: format(Date.now(), "MMMM do, yyyy"),
+                    amount,
+                  }
+                ]
+              }
           }
         }
-      },
-      include: {
-        donations: true
       }
     })
 
-    return NextResponse.json(member);
+    return NextResponse.json(expense);
   } catch(error){
     console.log('[MEMBER_POST]', error)
     return new NextResponse("Internal Error", {status: 500})
@@ -79,7 +92,7 @@ export async function POST(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { memberId: string} }
+  { params }: { params: {serverId: string, memberId: string} }
 ) {
   try {
     const { userId } = auth();
@@ -88,8 +101,12 @@ export async function DELETE(
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
+
     if (!params.memberId) {
-      return new NextResponse("Product id is required", { status: 400 });
+      return new NextResponse("Member id is required", { status: 400 });
     }
 
     const UserAdmin = await db.user.findFirst({
@@ -102,13 +119,20 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const product = await db.member.delete({
+    const member = await db.server.update({
       where: {
-        id: params.memberId
+        id: params.serverId
       },
+      data: {
+        members: {
+          delete: {
+            id: params.memberId
+          }
+        }
+      }
     });
   
-    return NextResponse.json(product);
+    return NextResponse.json(member);
   } catch (error) {
     console.log('[MEMBER_DELETE]', error);
     return new NextResponse("Internal error", { status: 500 });
