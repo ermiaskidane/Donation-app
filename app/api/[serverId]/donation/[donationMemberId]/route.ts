@@ -6,7 +6,7 @@ import {db} from '@/lib/db';
 
 export async function POST(
   req: Request,
-  { params }: { params: { donationMemberId: string } }
+  { params }: { params: { serverId: string, donationMemberId: string } }
 ) {
   try {
 
@@ -41,14 +41,22 @@ export async function POST(
     const UserAdmin = await db.user.findFirst({
       where: {
         userId,
-      },
-      include: {
-        members: true
       }
     })
 
     if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
+    }
+
+    // check if the serverId is correct from the frontEnd else return error
+    const server = await db.server.findUnique({
+      where: {
+        id: params.serverId,
+      }
+    })
+
+    if(!server) {
+      return new NextResponse("server not found", { status: 405 });
     }
  
     const member = await db.member.update({
@@ -65,15 +73,6 @@ export async function POST(
         }
       }
     })
-
-
-    // const Donator = await db.donation.create({
-    //   data: {
-    //     dtime,
-    //     amount,
-    //     memberId: params.donationMemberId 
-    //     }
-    // })
 
     return NextResponse.json(member);
   } catch (error) {

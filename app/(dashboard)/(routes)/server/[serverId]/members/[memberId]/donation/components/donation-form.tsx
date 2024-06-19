@@ -67,12 +67,12 @@ export const DonationForm: React.FC<DonationFormProps> = ({
       if(initialData) {
         // note that data.dtime is the Id of selected donation even though is displayed as
         // date time it pass as Id due to value={donated.id} line 107
-        await axios.patch(`/api/donation/${params.memberId}/${data.dtime}`, data);
+        await axios.patch(`/api/${params.serverId}/donation/${params.memberId}/${data.dtime}`, data);
       } else {
-        await axios.post(`/api/donation/${currentMemberId}`, data)
+        await axios.post(`/api/${params.serverId}/donation/${currentMemberId}`, data)
       }
       router.refresh();
-      router.push("/members");
+      router.push(`/server/${params.serverId}/members`);
       toast.success(toastMessage);
     } catch(error: any){
       toast.error("something went wrong.")

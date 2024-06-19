@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { ServerModal, ServerModalValues } from '@/components/Modal/server-modal';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { Member, Server } from '@prisma/client';
 
 export const CommunityHeading = () => {
   const [open, setOpen] = useState<boolean>(false);
