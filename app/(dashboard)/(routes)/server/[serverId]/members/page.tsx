@@ -37,6 +37,9 @@ const MembersPage = async({
     },
     include:{
       members: {
+        orderBy: {
+          createdAt: 'desc',
+        },
         include: {
           donations: true
         }
@@ -53,8 +56,12 @@ const MembersPage = async({
       id: params.serverId,
     },
     include: {
-      members: true,
-    },
+      members: {
+        orderBy: {
+          createdAt: 'desc',
+        }    
+      },
+    }
   });
 
   if (!serverWithMembers) {

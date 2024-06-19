@@ -12,14 +12,11 @@ const AddDonation = async ({
 
   const user = await currentUser();
 
-  console.log("dsafs", user)
-
   const userRole = await db.user.findUnique({
     where: {
       userId: user?.id,
     }
   });
-  // console.log("@@@@@@@@@@@@@@@", userRole)
 
   if(userRole?.role !== "ADMIN"){
     redirect("/members");
@@ -34,15 +31,11 @@ const AddDonation = async ({
     }
   });
 
-  // console.log("@@@@@@@@@@@@@", member)
-
   const donation = await db.donation.findFirst({
     where: {
       memberId: params.memberId,
     }
   });
-
-  // console.log("????????????????????", donation)
 
   return (
     <div className='flex-col'>

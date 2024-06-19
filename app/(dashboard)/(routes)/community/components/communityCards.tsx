@@ -50,28 +50,29 @@ const CommunityCards = ({
   }
 
   const onSubmit = async (data: any) => {
-    try {
-      setLoading(true)
-      await axios.post(`/api/community/${serverId}`, data)
+    console.log("data", data)
+    // try {
+    //   setLoading(true)
+    //   await axios.post(`/api/community/${serverId}`, data)
 
-      // router.refresh();
-      // soft refresh (reset the data)
-      setModalKey(prevKey => prevKey + 1);
-      router.push('/community');
-      toast.success("client added to community")
-    } catch(error: any){
-      toast.error('Something went wrong.');
-    } finally{
-      setLoading(false);
-      setOpenMember(false);
-    }
+    //   // router.refresh();
+    //   // soft refresh (reset the data)
+    //   setModalKey(prevKey => prevKey + 1);
+    //   router.push('/community');
+    //   toast.success("client added to community")
+    // } catch(error: any){
+    //   toast.error('Something went wrong.');
+    // } finally{
+    //   setLoading(false);
+    //   setOpenMember(false);
+    // }
   }
 
   return (
     <>
-      <MemberModal
+      <ServerModal
         key={modalKey} 
-        isOpen={openMember} 
+        isOpen={openMember}
         onClose={() => setOpenMember(false)}
         onSubmit={onSubmit}
         loading={loading}

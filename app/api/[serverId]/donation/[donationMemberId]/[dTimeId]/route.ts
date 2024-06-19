@@ -5,7 +5,7 @@ import {db} from '@/lib/db';
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { donationMemberId: string, dTimeId: string} }
+  { params }: { params: {serverId: string, donationMemberId: string, dTimeId: string} }
 ) {
   try {
     const { userId } = auth();
@@ -46,6 +46,18 @@ export async function PATCH(
     if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }
+
+    // check if the serverId is correct from the frontEnd else return error
+    const server = await db.server.findUnique({
+      where: {
+        id: params.serverId,
+      }
+    })
+
+    if(!server) {
+      return new NextResponse("server not found", { status: 405 });
+    }
+
    const member = await db.member.update({
     where: {
       id: params.donationMemberId
@@ -64,14 +76,6 @@ export async function PATCH(
       }
     }
    })
-    // const donations = await db.donation.update({
-    //   where: {
-    //     id: params.dTimeId 
-    //   },
-    //   data: {
-    //     amount,
-    //   }
-    // })
  
     return NextResponse.json(member);
   } catch (error) {
