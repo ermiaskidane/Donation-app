@@ -22,9 +22,6 @@ const Community = async() => {
       members: true,
     }
   })
-
-  // console.log("server", server)
-
   
   return (
     <section className="p-8">

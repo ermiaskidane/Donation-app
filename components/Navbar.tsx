@@ -82,17 +82,14 @@ const Navbar = ({currentUser}: navbarProps) => {
           </Link>
         </li>
         <li>
-          {/* <Link href="/sign-in" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/sign-in" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
-            <span onClick={() => setIsOpen(false)}>Login</span>
-          </Link> */}
-            <SignedOut>
-              <SignInButton>
-                <button className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/sign-in" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>sign in</button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+          <SignedOut>
+            <SignInButton>
+              <button className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/sign-in" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>sign in</button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </li>
       </> 
       )}

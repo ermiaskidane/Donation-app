@@ -19,9 +19,6 @@ export async function POST(
     // change the string dtime to Date type dtime
     const dt = parseISO(dtime)
 
-    // parseISO('2018-13-32')
-    // console.log("£££££££££££££££", format(dtime, "MMMM do, yyyy"))
-
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
