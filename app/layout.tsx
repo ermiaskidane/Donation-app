@@ -33,14 +33,12 @@ export const metadata: Metadata = {
 
   const currentClient = auth()
 
-  // console.log("££££££££££££££££", auth())
-  console.log("££££££££££££££££", currentClient.userId)
   const userId = currentClient?.userId ?? '';
 
   const info = await db.info.findMany()
   const user = await db.user.findFirst({where: {userId}})
  
-  console.log("^^^^^^^^^^^^^^^^^^^^^^^", user)
+
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>

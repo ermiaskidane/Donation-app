@@ -41,8 +41,6 @@ export async function PATCH(
       }
     })
 
-    // console.log("{{{{{{{{{{{{{{{{{{{", UserAdmin)
-
     if (UserAdmin?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }

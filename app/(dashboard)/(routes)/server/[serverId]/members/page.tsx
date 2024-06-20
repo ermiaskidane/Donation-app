@@ -30,26 +30,26 @@ const MembersPage = async({
     redirect("/");
   }
 
-  console.time('Deep Nested Fetch');
-  const memberss = await db.server.findUnique({
-    where: {
-      id: params.serverId
-    },
-    include:{
-      members: {
-        orderBy: {
-          createdAt: 'desc',
-        },
-        include: {
-          donations: true
-        }
-      },
-    },
-  })
+  // console.time('Deep Nested Fetch');
+  // const memberss = await db.server.findUnique({
+  //   where: {
+  //     id: params.serverId
+  //   },
+  //   include:{
+  //     members: {
+  //       orderBy: {
+  //         createdAt: 'desc',
+  //       },
+  //       include: {
+  //         donations: true
+  //       }
+  //     },
+  //   },
+  // })
 
-  console.timeEnd('Deep Nested Fetch');
+  // console.timeEnd('Deep Nested Fetch');
 
-  console.time('Separate Queries');
+  // console.time('Separate Queries');
 
   const serverWithMembers = await db.server.findUnique({
     where: {
@@ -68,8 +68,6 @@ const MembersPage = async({
     throw new Error('Server not found');
   }
 
-  // console.log(">>>>>>>>>>>>>>", serverWithMembers )
-
   const memberIds = serverWithMembers.members.map(member => member.id);
 
   const donations = await db.donation.findMany({
@@ -87,14 +85,7 @@ const membersWithDonations = serverWithMembers.members.map(member => {
     donations: donations.filter(donation => donation.memberId === member.id),
   };
 });
-console.timeEnd('Separate Queries');
-
-// const result = {
-//   ...serverWithMembers,
-//   members: membersWithDonations,
-// };
-
-// console.log(">>>>>>>>>>>>>>", result )
+// console.timeEnd('Separate Queries');
 
 const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
   id: item.id,
