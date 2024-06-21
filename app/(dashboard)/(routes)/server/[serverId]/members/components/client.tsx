@@ -10,8 +10,9 @@ import { Separator } from "@/components/ui/separator";
  
 import { MembersColumn, columns } from "./columns";
 import { User as userRole} from "@prisma/client";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import useUserRoleStore from "@/hooks/useUserRole";
+import { ServerToggle } from "@/components/serverToggle";
 // import AlertDemo from "@/components/UserInformation";
 
 interface MembersClientProps {
@@ -44,6 +45,9 @@ export const MembersClient: React.FC<MembersClientProps> = ({
   return  (
     <>
     {/*     <AlertDemo/> */}
+    <div className=" flex justify-end px-0">
+      <ServerToggle serverId={params.serverId} />
+    </div>
     <div className="flex items-center justify-between">
     <Heading title={`Members (${data.length.toString()})`} subtitle={`Total Amount of Money £${totalDonationsAmount}`} />
     {userRole.role === "ADMIN" && (

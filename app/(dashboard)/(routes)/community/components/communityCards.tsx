@@ -14,7 +14,7 @@ import { ServerModal } from '@/components/Modal/server-modal';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { MemberModal } from '@/components/Modal/member-modal';
-import { MobileToggle } from '@/components/serverToggle';
+import { ServerToggle } from '@/components/serverToggle';
 
 interface CommunityCardsprops {
   // page: number,
@@ -99,7 +99,7 @@ const CommunityCards = ({
                     eventthough the aim is to display only user with ADMIN type
                   */}
                   {!user || user.role === "ADMIN"  && (
-                    <MobileToggle serverId={server.id} />
+                    <ServerToggle serverId={server.id} />
                     // <div className='flex justify-end'>
                     //   <Button onClick={() => OpenModal(server.id)}>Add Member</Button>
                     // </div>
