@@ -22,7 +22,7 @@ export const ServerToggle = ({
 }) => {
   const pathname = usePathname();
 
-  // console.log("path", serverId)
+  // console.log("path", pathname)
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -51,14 +51,14 @@ export const ServerToggle = ({
               <Link href={"/write"}>Write</Link>
             </li>
             <li className={cn("border-b-2 py-3", 
-              pathname === "Write" && "text-[#0084c1fb]"
+              pathname === `/server/${serverId}/members` && "text-[#0084c1fb]"
             )}>
               <Link href={`/server/${serverId}/members`}>Members</Link>
             </li>
             <li className={cn("border-b-2 py-3", 
-              pathname === "Write" && "text-[#0084c1fb]"
+              pathname === `/server/${serverId}/expenses` && "text-[#0084c1fb]"
             )}>
-              <Link href={"/expense"}>Expense</Link>
+              <Link href={`/server/${serverId}/expenses`}>Expenses</Link>
             </li>
           </ul>
           </div>
