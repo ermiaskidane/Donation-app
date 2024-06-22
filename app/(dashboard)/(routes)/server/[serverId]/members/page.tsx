@@ -65,7 +65,7 @@ const MembersPage = async({
   });
 
   if (!serverWithMembers) {
-    throw new Error('Server not found');
+    redirect("/community")
   }
 
   const memberIds = serverWithMembers.members.map(member => member.id);
@@ -99,7 +99,7 @@ const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
 
   return (
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6 ">
+      <div className="flex-1 space-y-4 px-8 ">
         <MembersClient data={formattedMembers} userRole={currentuser}/>
       </div>
     </div>

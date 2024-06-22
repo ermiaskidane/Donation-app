@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/expense/components/client";
-import { Donation, Expense, Year } from "@prisma/client";
+import { Donation, Expense, Member, Year } from "@prisma/client";
 import { ExpenseColumn } from "@/app/(dashboard)/(routes)/expense/components/columns";
 import { ScrollArea } from "../ui/scroll-area";
 
@@ -21,7 +21,7 @@ import { ScrollArea } from "../ui/scroll-area";
 interface CurrentAmountModalProps {
   isOpen: boolean;
   onClose: () => void;
-  donation: Donation[],
+  donation: (Member & {donations: Donation[]})[],
   YearlyExpense: ExpenseColumn[];
   // YearlyExpense: (Year & {expenses: Expense})[];
   loading: boolean;
@@ -38,7 +38,6 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [yearlyCost, setYearlyCost] = useState<number[]>([]);
 
-
   useEffect(() => {
     setIsMounted(true);
 
@@ -49,13 +48,17 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
 
   // As the yearlyCost is partially static it is best practice to use usememo
   // prevents recalculating except during updates
-  const overAllCost = useMemo(() => {
+  const totalExpenses = useMemo(() => {
     return yearlyCost.reduce((acc, total) => acc + total, 0);
   }, [yearlyCost]);
 
-  const overAllDonation = donation.reduce((acc, total) => {
-    return acc + total.amount;
-  }, 0)
+
+  // Calculate overall donation
+  const overAllDonation = useMemo(() => {
+    return donation.reduce((totalSum, member) => {
+      return totalSum + member.donations.reduce((memberSum, donation) => memberSum + donation.amount, 0);
+    }, 0);
+  }, [donation]);
 
   const calculateCurrentAmount = (donation: number, cost: number) => {
     return donation - cost
@@ -74,13 +77,13 @@ export const CurrentAmountModal: React.FC<CurrentAmountModalProps> = ({
     >
       <ScrollArea className="h-96 w-full ">
         <Table>
-          <TableCaption className="text-black">Total expense: £{overAllCost.toLocaleString(undefined, {
+          <TableCaption className="text-black">Total expense: £{totalExpenses.toLocaleString(undefined, {
             useGrouping: true,
           })}</TableCaption>
           <TableCaption className="text-black">Total Amount: £{overAllDonation.toLocaleString(undefined, {
             useGrouping: true,
           })}</TableCaption>
-          <TableCaption className="font-semibold text-black">current Amount: £{calculateCurrentAmount(overAllDonation, overAllCost).toLocaleString(undefined, {
+          <TableCaption className="font-semibold text-black">current Amount: £{calculateCurrentAmount(overAllDonation, totalExpenses).toLocaleString(undefined, {
             useGrouping: true,
           })}</TableCaption>
           <TableHeader>
