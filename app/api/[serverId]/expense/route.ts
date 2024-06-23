@@ -6,6 +6,7 @@ import {db} from '@/lib/db';
 
 export async function POST(
   req: Request,
+  { params } : { params: {serverId: string}}
 ) {
   try {
 
@@ -15,13 +16,16 @@ export async function POST(
 
     const { year } = body;
 
-
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!year ) {
       return new NextResponse("year is required", { status: 400 });
+    }
+
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
     }
 
 
@@ -35,13 +39,20 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const YearExpense = await db.year.create({
+    const serverYearExpense = await db.server.update({
+      where: {
+        id: params.serverId
+      },
       data: {
-        year
+        years: {
+          create: {
+            year,
+          }
+        }
       }
     })
 
-    return NextResponse.json(YearExpense);
+    return NextResponse.json(serverYearExpense);
   } catch (error) {
     console.log('[EXPENSE_POST]', error);
     return new NextResponse("Internal error", { status: 500 });

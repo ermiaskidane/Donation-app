@@ -18,8 +18,8 @@ import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 import { ExpenseHeading } from '@/components/expenseHeading';
 import useUserRoleStore from '@/hooks/useUserRole';
 import { Donation, Expense, Member, Year, User as userRole } from '@prisma/client';
-import { CalenderModal } from '@/components/Modal/calender-modal';
 import { ServerToggle } from '@/components/serverToggle';
+import { CalenderModal } from '@/components/Modal/calender-modal';
 
 interface ExpenseClientProps {
   yearlyExpense: ExpenseColumn[]
@@ -93,7 +93,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   const [open, setOpen] = useState<boolean>(false);
   const [poundOpen, setPoundOpen] = useState<boolean>(false);
   const [calenderOpen, setCalenderOpen] = useState<boolean>(false);
-  const [year, setYear] = useState<number | undefined>();
+  const [yearId, setYearId] = useState<string>();
 
   const groupedDonations = groupDonationsByYear(donation);
   
@@ -119,17 +119,17 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   const OpenModal = (exp: ExpenseColumn) => {
     if (exp) {
       setOpen(true);
-      setYear(exp.year);
+      setYearId(exp.id);
     }
   }
 
   const onSubmit = async (data: AddExpense) => {
     try {
       setLoading(true)
-      await axios.post(`/api/expense/${year}`, data)
+      await axios.post(`/api/${params.serverId}/expense/${yearId}`, data)
 
       router.refresh();
-      router.push('/expense');
+      router.push(`/server/${params.serverId}/expenses`);
       toast.success("expense has been created")
     } catch(error: any){
       toast.error('Something went wrong.');
@@ -141,10 +141,10 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   const onSubmitYear = async (data: {year: number}) => {
     try {
       setLoading(true)
-      await axios.post(`/api/expense`, data)
+      await axios.post(`/api/${params.serverId}/expense`, data)
 
       router.refresh();
-      router.push('/expense');
+      router.push(`/server/${params.serverId}/expenses`);
       toast.success("expense year has been created")
     } catch(error: any){
       toast.error('Something went wrong.');

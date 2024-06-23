@@ -6,7 +6,7 @@ import {db} from '@/lib/db';
 
 export async function POST(
   req: Request,
-  { params }: { params: { year: string } }
+  { params }: { params: {serverId: string, yearId: string } }
 ) {
   try {
 
@@ -33,6 +33,14 @@ export async function POST(
       return new NextResponse("amount are required", { status: 400 });
     }
 
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
+
+    if (!params.yearId) {
+      return new NextResponse("Year id is required", { status: 400 });
+    }
+
 
     const UserAdmin = await db.user.findFirst({
       where: {
@@ -44,9 +52,19 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
+    const server = await db.server.findUnique({
+      where: {
+        id: params.serverId,
+      }
+    })
+
+    if(!server) {
+      return new NextResponse("server not found", { status: 405 });
+    }
+
     const expense = await db.year.update({
       where: {
-        year: Number(params.year)
+        id: params.yearId
       }, 
       data: {
         expenses: {
@@ -68,16 +86,22 @@ export async function POST(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { year: string} }
+  { params }: { params: {serverId: string, yearId: string} }
 ) {
   try {
     const { userId } = auth();
+
+
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!params.year) {
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
+
+    if (!params.yearId) {
       return new NextResponse("year id is required", { status: 400 });
     }
 
@@ -91,11 +115,21 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
+    const server = await db.server.findUnique({
+      where: {
+        id: params.serverId,
+      }
+    })
 
+    if(!server) {
+      return new NextResponse("server not found", { status: 405 });
+    }
 
+    // note: params.yearId is not the year Schema Id from the frontEnd 
+    // it send as Id of Expesne schema
     const expenses = await db.expense.delete({
       where: {
-        id: params.year
+        id: params.yearId 
       },
     });
   

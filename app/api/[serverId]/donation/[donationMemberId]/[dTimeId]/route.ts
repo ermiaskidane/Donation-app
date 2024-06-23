@@ -19,18 +19,22 @@ export async function PATCH(
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!params.donationMemberId) {
-      return new NextResponse("donationMember id is required", { status: 400 });
-    }
-
+    
     if (!dtime) {
       return new NextResponse("dtime is required", { status: 400 });
     }
-
+    
     if (!amount ) {
       return new NextResponse("amount are required", { status: 400 });
     }
+    
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
 
+    if (!params.donationMemberId) {
+      return new NextResponse("donationMember id is required", { status: 400 });
+    }
 
     const UserAdmin = await db.user.findFirst({
       where: {

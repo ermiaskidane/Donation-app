@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import {  MoreHorizontal, Trash } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from "@/components/Modal/alert-modal";
 import useUserRoleStore from "@/hooks/useUserRole";
 
@@ -22,16 +22,15 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const params = useParams()
 
   const { roleUser} = useUserRoleStore()
-
-  console.log("EEEEEEEEEEEEE", roleUser)
 
   const onConfirm = async () => {
     try {
       setLoading(true);
-      console.log("JJJJJJJJJJJJ", data)
-      await axios.delete(`/api/expense/${data.id}`);
+      // console.log("JJJJJJJJJJJJ", data)
+      await axios.delete(`/api/${params.serverId}/expense/${data.id}`);
       toast.success('Expense deleted.');
       router.refresh();
     } catch (error) {
