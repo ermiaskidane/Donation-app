@@ -35,6 +35,10 @@ export async function PATCH(
       return new NextResponse("amount id is required", { status: 400 });
     }
 
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
+
     if (!params.memberId) {
       return new NextResponse("Member id is required", { status: 400 });
     }
