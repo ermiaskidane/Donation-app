@@ -11,11 +11,9 @@ import { Input } from "@/components/ui/input";
 import { FileUpload } from "@/components/file-upload";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Member, Server } from "@prisma/client";
 
 interface ServerModalProps {
   isOpen: boolean;
-  initialData?: Server[] | null;
   onClose: () => void;
   loading: boolean;
   onSubmit?: (datas: ServerModalValues) => void
@@ -30,7 +28,6 @@ export type ServerModalValues = z.infer<typeof formSchema>
 
 export const ServerModal: React.FC<ServerModalProps> = ({
   isOpen,
-  initialData,
   onClose,
   loading,
   onSubmit
@@ -39,7 +36,7 @@ export const ServerModal: React.FC<ServerModalProps> = ({
 
   const form = useForm<ServerModalValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData ||  {
+    defaultValues:  {
       name: "",
       imageUrl: ""
     }
@@ -53,8 +50,6 @@ export const ServerModal: React.FC<ServerModalProps> = ({
   if (!isMounted) {
     return null;
   }
-
-  console.log("dfsdfs", initialData)
 
   return (
     <Modal

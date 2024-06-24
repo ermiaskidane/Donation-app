@@ -20,11 +20,13 @@ import { useRouter } from 'next/navigation';
 interface InfiniteSlideProps {
   infoList: Array<Info>;
   currentUser: User | null;
+  serverId:  string;
 }
 
 const InfiniteSlide = ({
   infoList,
-  currentUser
+  currentUser,
+  serverId,
 } : InfiniteSlideProps) => {
 
   const router = useRouter()
@@ -55,13 +57,12 @@ const InfiniteSlide = ({
   const onSubmit = async (data: {title: string}) => {
     try {
       setLoading(true)
-
-      await axios.post(`/api/info/`, data)
+      await axios.post(`/api/${serverId}/info/`, data)
 
       
       router.refresh();
       // router.push('/expense');
-      toast.success("Info has been created")
+      toast.success("Info created")
     } catch(error: any){
       toast.error('Something went wrong.');
     } finally{
@@ -74,8 +75,7 @@ const InfiniteSlide = ({
   const onConfirm = async () => {
     try {
       setLoading(true);
-      // console.log("JJJJJJJJJJJJ", data)
-      await axios.delete(`/api/info/`);
+      await axios.delete(`/api/${serverId}/info/`);
       toast.success('Info deleted.');
       router.refresh();
     } catch (error) {

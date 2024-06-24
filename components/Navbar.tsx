@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import InfoNavbar from "./InfoNavbar";
 import useInfoModal from "@/hooks/useInfo";
 import { User } from "@prisma/client";
+import useServerStore from "@/hooks/useServerId";
 
 interface navbarProps {
   currentUser: User | null;
@@ -19,6 +20,7 @@ const Navbar = ({currentUser}: navbarProps) => {
   const pathName = usePathname();
   const infoModal = useInfoModal(); 
   const { userId } = useAuth();
+  const serverId = useServerStore((state) => state.serverId);
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -103,20 +105,6 @@ const Navbar = ({currentUser}: navbarProps) => {
                   </Link>
                 </li>
               }
-              {(currentUser.role === "MEMBER" || currentUser.role === "ADMIN") && (
-                <>
-                  <li>
-                    <Link href="/members" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/members" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
-                      <span onClick={() => setIsOpen(false)}>Members</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/expense" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/expense" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
-                      <span onClick={() => setIsOpen(false)}>Expense</span>
-                    </Link>
-                  </li>
-                </>
-              )}
               <li>
                 <Link href="/profile" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/profile" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
                   <span onClick={() => setIsOpen(false)}>Profile</span>
@@ -141,7 +129,7 @@ const Navbar = ({currentUser}: navbarProps) => {
   }
 
   return (
-    <header>
+    <header className={cn("", serverId && "mt-10")}>
     <nav className=" z-10 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent">
         <div className=" mx-auto px-6 md:px-12 xl:px-6">
             <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 md:gap-0 md:py-4">

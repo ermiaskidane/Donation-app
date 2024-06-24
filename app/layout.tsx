@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
-          <InfiniteSlide infoList={info} currentUser={user}/>
+          {/* <InfiniteSlide infoList={info} currentUser={user}/> */}
           <InfoNavbar/>
           <Navbar currentUser={user}/>
           {children}
