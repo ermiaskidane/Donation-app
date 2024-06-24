@@ -12,10 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/expense/components/client";
 import { Donation, Expense, Member, Year } from "@prisma/client";
-import { ExpenseColumn } from "@/app/(dashboard)/(routes)/expense/components/columns";
 import { ScrollArea } from "../ui/scroll-area";
+import { ExpenseColumn } from "@/app/(dashboard)/(routes)/server/[serverId]/expenses/components/columns";
+import { YearlyExpenseSum } from "@/app/(dashboard)/(routes)/server/[serverId]/expenses/components/client";
 
 
 interface CurrentAmountModalProps {
