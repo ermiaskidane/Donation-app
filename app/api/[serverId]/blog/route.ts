@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { auth, currentUser } from "@clerk/nextjs/server";
 import {db} from '@/lib/db';
+import { create } from 'domain';
 
 // CREATE A POST
 export async function POST (
-  req: Request
+  req: Request,
+  { params } : { params: {serverId: string}}
 )  {
   try {
     
@@ -34,6 +36,10 @@ export async function POST (
     return new NextResponse("catSlug are required", { status: 400 });
   }
 
+  if (!params.serverId) {
+    return new NextResponse("Server id is required", { status: 400 });
+  }
+
   const UserAdmin = await db.user.findFirst({
     where: {
       userId,
@@ -47,18 +53,25 @@ export async function POST (
     return new NextResponse("Unauthorized", { status: 405 });
   }
 
-  const post = await db.post.create({
+  const server = await db.server.update({
+    where: {
+      id: params.serverId
+    },
     data: {
-      title, 
-      desc,
-      img, 
-      slug, 
-      catSlug,
-      userEmail: UserAdmin.email
+      posts: {
+        create: {
+          title, 
+          desc,
+          img, 
+          slug, 
+          catSlug,
+          userEmail: UserAdmin.email
+        }
+      }
     }
   })
 
-  return NextResponse.json(post);
+  return NextResponse.json(server);
   } catch(error) {
     console.log('[BLOG_POST]', error);
     return new NextResponse("Internal error", { status: 500 });

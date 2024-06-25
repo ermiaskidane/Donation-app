@@ -106,7 +106,7 @@ const InfiniteSlide = ({
         onConfirm={onConfirm}
         loading={loading}
       />
-    <main className={styles.main}>
+    <div className={styles.main}>
       <Popover>
         <PopoverTrigger asChild>
           <div className={styles.sliderContainer} >
@@ -137,7 +137,7 @@ const InfiniteSlide = ({
       </PopoverContent>
         )}
       </Popover>
-    </main>
+    </div>
   </>
   );
 }

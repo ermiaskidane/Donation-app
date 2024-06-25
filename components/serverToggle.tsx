@@ -1,3 +1,5 @@
+"use client"
+
 import { ChevronRight, CircleChevronRight, Menu } from "lucide-react"
 
 import {
@@ -41,14 +43,14 @@ export const ServerToggle = ({
         <div className="grid gap-2 py-1 font-medium">
           <ul className="grid cursor-pointer">
             <li className={cn("border-b-2 py-3", 
-              pathname === "/community" && "text-[#0084c1fb]"
+              pathname === `/server/${serverId}/blog` && "text-[#0084c1fb]"
             )}>
-              <Link href={"/blog"}>Blog</Link>
+              <Link href={`/server/${serverId}/blog`}>Blog</Link>
             </li>
             <li className={cn("border-b-2 py-3", 
-              pathname === "Write" && "text-[#0084c1fb]"
+              pathname === `/server/${serverId}/write` && "text-[#0084c1fb]"
             )}>
-              <Link href={"/write"}>Write</Link>
+              <Link href={`/server/${serverId}/write`}>Write</Link>
             </li>
             <li className={cn("border-b-2 py-3", 
               pathname === `/server/${serverId}/members` && "text-[#0084c1fb]"
