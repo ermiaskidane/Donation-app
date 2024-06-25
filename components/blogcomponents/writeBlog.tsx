@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 
 interface WriteBlogProps {
   categories?: Category[]
+  serverId: string;
 }
 interface State {
   title: string;
@@ -20,7 +21,8 @@ interface State {
 }
 
 const WriteBlog = ({
-  categories
+  categories,
+  serverId
 }: WriteBlogProps) => {
   const router = useRouter();
 
@@ -81,7 +83,7 @@ str
       )
 
       const { url } = uploadRes.data
-      const response = await axios.post('/api/blog', {
+      const response = await axios.post(`/api/${serverId}/blog`, {
         title: state.title,
         desc: value,
         img: url,

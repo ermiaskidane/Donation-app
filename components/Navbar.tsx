@@ -115,13 +115,13 @@ const Navbar = ({currentUser}: navbarProps) => {
                   <span onClick={() => setIsOpen(false)}>About</span>
                 </Link>
               </li>
-              {currentUser.role === "ADMIN" &&
+              {/* {currentUser.role === "ADMIN" &&
               <li>
                 <p className="cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
                   <span onClick={infoModal.onOpen}>Info</span>
                 </p>
               </li>
-              }
+              } */}
             </>)
     }
 

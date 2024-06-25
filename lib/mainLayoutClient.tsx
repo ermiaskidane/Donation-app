@@ -25,7 +25,7 @@ export const MainLayoutClient = ({
 
   return (
     <div className="h-full">
-      <div className="flex w-full h-[41px] z-10 flex-col fixed inset-y-0">
+      <div className="flex w-full h-11 z-10 flex-col fixed inset-y-0">
         <InfiniteSlide infoList={info} currentUser={user} serverId={serverId} />
       </div>
       <main className="h-full z-20">{children}</main>
