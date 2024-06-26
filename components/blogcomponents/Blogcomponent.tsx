@@ -44,7 +44,6 @@ const Blogcomponent = ({
   // parseInt doesnot expect a null value for that we use terinary operator
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
   const cat = searchParams.get("cat")
-  // console.log("@@@@@@@@@@", categories)
 
   return (
    
