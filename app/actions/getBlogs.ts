@@ -1,17 +1,19 @@
 import {db} from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export interface IParams {
   cat?: string;
-  page?: number
+  page?: number;
 }
 
 export default async function getBlogs(
-  params: IParams
+  post: IParams,
+  params: {serverId: string}
 ) { 
   try {
-    const { cat, page} = params;
+    const { cat, page} = post;
 
-    // console.log("££££££££££££££££££££££", cat, page)
+    console.log("££££££££££££££££££££££", cat, page, params)
 
     // Provide a default value for page if it's null
   const pageValue = page ? page : 1;
@@ -22,7 +24,8 @@ export default async function getBlogs(
       take: POST_PER_PAGE,
       skip: POST_PER_PAGE * (pageValue - 1),
       where: {
-        ...(cat && {catSlug: cat})
+        ...(cat && {catSlug: cat}),
+        serverId: params.serverId
       },
       orderBy: {
         createdAt: "desc", // Sort by creation timestamp in descending order
@@ -35,8 +38,11 @@ export default async function getBlogs(
       db.post.findMany(query),
       db.post.count({ where: query.where }),
     ])
-    
-    // console.log("LLLLLLSSSSSSSSSSSSSSS", posts, count)
+
+    // if(posts.length === 0 || count === 0){
+    //   return "Post not Found"
+    // }
+  
     return { posts, count } 
   } catch (error: any) {
     throw new Error(error);

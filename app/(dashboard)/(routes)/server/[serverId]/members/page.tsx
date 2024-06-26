@@ -51,6 +51,8 @@ const MembersPage = async({
 
   // console.time('Separate Queries');
 
+  console.log("i am here")
+
   const serverWithMembers = await db.server.findUnique({
     where: {
       id: params.serverId,
@@ -96,6 +98,8 @@ const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
   donations: item.donations
 }))
+
+console.log("i am here too")
 
   return (
     <div className="flex-col">

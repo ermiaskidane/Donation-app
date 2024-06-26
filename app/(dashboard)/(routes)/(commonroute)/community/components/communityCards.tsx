@@ -50,8 +50,8 @@ const CommunityCards = ({
     }
   }
 
-  const onSubmit = async (data: any) => {
-    console.log("data", data)
+  // const onSubmit = async (data: any) => {
+  //   console.log("data", data)
     // try {
     //   setLoading(true)
     //   await axios.post(`/api/community/${serverId}`, data)
@@ -67,17 +67,17 @@ const CommunityCards = ({
     //   setLoading(false);
     //   setOpenMember(false);
     // }
-  }
+  // }
 
   return (
     <>
-      <ServerModal
+      {/* <ServerModal
         key={modalKey} 
         isOpen={openMember}
         onClose={() => setOpenMember(false)}
         onSubmit={onSubmit}
         loading={loading}
-      />
+      /> */}
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {data.map((server) => (
         <div key={server.id} className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
@@ -93,16 +93,12 @@ const CommunityCards = ({
                   <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
                     {server.name}
                   </h3>
-                  {/* TODO: change to Edit server */}
                   {/* 
                     due to the libs/currentProfile file function structure I had to add "!user" 
                     eventthough the aim is to display only user with ADMIN type
                   */}
                   {!user || user.role === "ADMIN"  && (
                     <ServerToggle serverId={server.id} />
-                    // <div className='flex justify-end'>
-                    //   <Button onClick={() => OpenModal(server.id)}>Add Member</Button>
-                    // </div>
                   )}
                 </div>
               </>
