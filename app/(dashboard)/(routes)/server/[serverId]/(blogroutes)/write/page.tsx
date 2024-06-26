@@ -30,7 +30,7 @@ const WritePage = async({
 
   const categories = await db.category.findMany()
   return (
-    <div className='m-4'>
+    <div className='mx-8'>
       <div className=" flex justify-end px-0 pb-2">
         <ServerToggle serverId={params.serverId} />
       </div>

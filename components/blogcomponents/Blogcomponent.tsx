@@ -44,12 +44,14 @@ const Blogcomponent = ({
   // parseInt doesnot expect a null value for that we use terinary operator
   const page = parseInt(searchParams.get("page") ?? "", 10) || 1
   const cat = searchParams.get("cat")
-  // console.log("@@@@@@@@@@", categories)
 
   return (
+   
+
     <>
-    {Blogs.posts.length !== 0 ? (
-      <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
+    {Blogs.posts.length === 0 ? (<h1 className='text-center'>Blog not Found</h1>) :(
+      Blogs.posts.length !== 0 ? (
+        <div className="max-w-7xl mx-auto px-2 md:px-4 xl:px-6">
         {blogRoute && (
           <div className="mb-12 space-y-2 text-center">
             <h2 className="text-3xl font-bold text-gray-800 md:text-4xl dark:text-white">Latest Articles</h2>
@@ -85,9 +87,9 @@ const Blogcomponent = ({
       {/* create the blog  */}
         <CardList data={Blogs} page={page} cat={cat}/>
       </div>
-      ) : (
-            <Loading/>
-          )}
+      ) : (<Loading/>)
+
+    )}
     </>
   )
 }
