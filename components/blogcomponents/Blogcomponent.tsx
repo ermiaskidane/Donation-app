@@ -13,6 +13,7 @@ interface BlogcomponentProps {
   categories?: Category[]
   blogRoute: boolean,
   Blogs: BlogData,
+  serverId?: string
 }
 
 interface CatagoryStyles {
@@ -35,7 +36,8 @@ const CatagoryStyles: CatagoryStyles = {
 const Blogcomponent = ({
   categories,
   blogRoute,
-  Blogs
+  Blogs,
+  serverId
 }: BlogcomponentProps) => {
 
   const searchParams = useSearchParams()

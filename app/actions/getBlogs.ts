@@ -6,14 +6,16 @@ export interface IParams {
   page?: number;
 }
 
+// set params to optional as the post in homePage("/")
+// doesnt have serverId
 export default async function getBlogs(
-  post: IParams,
-  params: {serverId: string}
+  searchParams: IParams,
+  params?: {serverId: string}
 ) { 
   try {
-    const { cat, page} = post;
+    const { cat, page} = searchParams;
 
-    console.log("££££££££££££££££££££££", cat, page, params)
+    // console.log("££££££££££££££££££££££", cat, page, params)
 
     // Provide a default value for page if it's null
   const pageValue = page ? page : 1;
@@ -25,7 +27,7 @@ export default async function getBlogs(
       skip: POST_PER_PAGE * (pageValue - 1),
       where: {
         ...(cat && {catSlug: cat}),
-        serverId: params.serverId
+        serverId: params?.serverId 
       },
       orderBy: {
         createdAt: "desc", // Sort by creation timestamp in descending order

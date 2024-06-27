@@ -16,7 +16,7 @@ interface blog {
   post: Post,
   user: User
 }
-const getBlog = cache(async (params: {slug: string}) => {
+const getBlog = cache(async (params: {serverId: string, slug: string}) => {
   const blog = await getBlogbySlug(params)
   return blog;
 })
@@ -24,7 +24,7 @@ const getBlog = cache(async (params: {slug: string}) => {
 export async function generateMetadata({
   params,
   searchParams
-}: SinglePageProps & {params: {slug: string}}): Promise<Metadata>{
+}: SinglePageProps & {params: {serverId: string, slug: string}}): Promise<Metadata>{
   // the type get conflicted as the action file renders different to our schema
   // so I just perfer to use ts-ignore cz the data is correct
   //@ts-ignore
@@ -49,9 +49,9 @@ export async function generateMetadata({
 const SinglePage = async ({
   params,
   searchParams
-}: SinglePageProps & {params: {slug: string}}) => {
+}: SinglePageProps & {params: {serverId: string, slug: string}}) => {
 
-  const blogList = await getBlogs(searchParams)
+  const blogList = await getBlogs(searchParams, params)
   const blog = await getBlog(params)
 
   // console.log("BBBBBBBBBBBBBb", getBlog)
