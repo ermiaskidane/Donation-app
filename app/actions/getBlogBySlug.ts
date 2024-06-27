@@ -1,23 +1,26 @@
 import {db} from "@/lib/db";
 
 export interface BParams {
-  slug: string
+  slug: string,
+  serverId: string
 }
 
 export default async function getBlogbySlug(
-  params: BParams
+  params: BParams,
 ) { 
   try {
-    const { slug} = params;
+    const { slug, serverId} = params;
+
+    // console.log("searchParams&params", params)
 
     const post = await db.post.findUnique({
-      where: { slug },
+      where: { slug, serverId },
       // include: { user: true },
     });
 
     if (post) {
       const updatedPost = await db.post.update({
-        where: { slug },
+        where: { slug, serverId},
         data: { views: { increment: 1 } }
         // include: { user: true },
       });

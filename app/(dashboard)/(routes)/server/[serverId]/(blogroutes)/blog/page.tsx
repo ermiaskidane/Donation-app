@@ -17,14 +17,13 @@ export const metadata: Metadata = {
 const BlogPage = async({searchParams, params}: BlogPageProps) => {
 
   const blogList = await getBlog(searchParams, params)
-
   
   return (
     <section className=" flex flex-col mx-8">
       <div className=" flex justify-end px-0 pb-2">
         <ServerToggle serverId={params.serverId} />
       </div>
-      <Blogcomponent Blogs={blogList} blogRoute={false} />
+      <Blogcomponent Blogs={blogList} blogRoute={false}  serverId={params.serverId}/>
     </section>
   )
 }
