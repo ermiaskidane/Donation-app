@@ -31,7 +31,7 @@ const SingleBlog = ({
 
 // console.log("ZZZZZZZZZZZZZZZZZZzz", slug)
 // console.log("ZZZZZZZZZZZZZZZZZZzz", blogs)
-// console.log("ZZZZZZZZZZZZZZZZZZzz", blog)
+console.log("ZZZZZZZZZZZZZZZZZZzz", blog)
   
   const sanitizedData = (): { __html: string } => {
     if (!blog.updatedPost.desc) {
@@ -71,7 +71,7 @@ const SingleBlog = ({
       {/* to match with fetch time of the data I choose to display once
       the desc property is fetched */}
       {blog?.updatedPost.desc && (
-      <Comments postSlug={slug}/>
+      <Comments postSlug={slug} postId={blog.updatedPost.id}/>
       )}
       <Blogcomponent Blogs={blogs}  blogRoute={true}/>
     </section>

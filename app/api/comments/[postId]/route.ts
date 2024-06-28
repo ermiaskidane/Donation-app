@@ -3,7 +3,10 @@ import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server';
 
 // GET ALL COMMENTS OF A POST
-export const GET = async (req: Request) => {
+export const GET = async (
+  req: Request,
+  { params }: { params: { postId: string } }
+) => {
   try {
     const { searchParams } = new URL(req.url);
     const postSlug = searchParams.get('postSlug');
@@ -12,6 +15,19 @@ export const GET = async (req: Request) => {
       return new NextResponse("postSlug is required", { status: 400 });
     }
 
+    if (!params.postId) {
+      return new NextResponse("Post id is required", { status: 400 });
+    }
+    
+    const post = await db.post.findUnique({
+      where: { id: params.postId },
+    })
+
+    if(!post) {
+      return new NextResponse("post not found", { status: 405 });
+    }
+
+    // console.log(post)
     const comments = await db.comment.findMany({
       where: {
         ...(postSlug && { postSlug }), // Only include the condition if postSlug is provided.
@@ -28,7 +44,10 @@ export const GET = async (req: Request) => {
           }
         },
         user: true,
-      }
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return NextResponse.json(comments);
@@ -39,7 +58,10 @@ export const GET = async (req: Request) => {
 }
 
 // // CREATE A COMMENT
-export const POST = async (req: Request) => {
+export const POST = async (
+  req: Request,
+  { params }: { params: { postId: string } }
+) => {
   try {
   // check if there is user
   const {userId} = auth()
@@ -60,6 +82,10 @@ export const POST = async (req: Request) => {
     return new NextResponse("postSlug is required", { status: 400 });
   }
 
+  if (!params.postId) {
+    return new NextResponse("Post id is required", { status: 400 });
+  }
+
   const user = await db.user.findFirst({
     where: {
       userId
@@ -71,6 +97,14 @@ export const POST = async (req: Request) => {
 
   if(userEmail === "default@example.com") {
     return new NextResponse("userEmail can not be null", { status: 400 });
+  }
+
+  const post = await db.post.findUnique({
+    where: { id: params.postId },
+  })
+
+  if(!post) {
+    return new NextResponse("post not found", { status: 405 });
   }
   
   const comment = await db.comment.create({
@@ -87,7 +121,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(comment);
   } catch (err) {
-    console.log('[MEMBER_POST]', err)
+    console.log('[COMMENT_POST]', err)
     return new NextResponse("Internal Error", {status: 500})
   }
 }

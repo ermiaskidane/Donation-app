@@ -12,6 +12,7 @@ import { usePathname } from 'next/navigation';
 
 interface CommentProps {
   postSlug: string,
+  postId: string
 }
  
 const fetcher = async (url: any) => {
@@ -29,6 +30,7 @@ const fetcher = async (url: any) => {
 
 const Comments = ({
   postSlug,
+  postId
 }: CommentProps) =>{
   const { isSignedIn, userId } = useAuth();
   const [desc, setDesc] = useState('')
@@ -36,7 +38,7 @@ const Comments = ({
   const path = usePathname()
 
   // swr make a continious request for any update of the data
-  const { data, mutate, isLoading } = useSWR(`/api/comments?postSlug=${postSlug}`, fetcher)
+  const { data, mutate, isLoading } = useSWR(`/api/comments/${postId}?postSlug=${postSlug}`, fetcher)
 
  // Create an array to track the open/closed state of each comment
  const [commentOpen, setCommentOpen] = useState(new Array(data?.length).fill(false));
@@ -56,7 +58,7 @@ const Comments = ({
  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
-  await fetch("/api/comments", {
+  await fetch(`/api/comments/${postId}`, {
     method: "POST",
     body:JSON.stringify({desc, postSlug})
   })
@@ -68,7 +70,7 @@ const Comments = ({
 
  const handleNestedSubmit = async (event: React.FormEvent<HTMLFormElement>, id: string) => {
   event.preventDefault()
-  await fetch(`/api/comments/${userId}?id=${id}`, {
+  await fetch(`/api/comments/${postId}/${userId}?id=${id}`, {
     method: "POST",
     body:JSON.stringify({nestDesc})
   })
