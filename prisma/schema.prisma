@@ -44,11 +44,11 @@ model Server {
   userId String @db.ObjectId
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  members  Member[]
-  years    Year[]
-  posts    Post[]
-  comments Comment[]
-  infos    Info[]
+  members Member[]
+  years   Year[]
+  posts   Post[]
+  // comments Comment[]
+  infos   Info[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -140,8 +140,8 @@ model Comment {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   desc String
 
-  serverId String @db.ObjectId
-  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  // serverId String @db.ObjectId
+  // server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   userEmail String
   user      User   @relation(fields: [userEmail], references: [email])

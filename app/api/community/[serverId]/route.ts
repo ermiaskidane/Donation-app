@@ -16,8 +16,6 @@ export async function POST(
 
     const { name,email, phone, amount } = body;
 
-    console.log(body)
-
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -39,6 +37,9 @@ export async function POST(
       return new NextResponse("amount are required", { status: 400 });
     }
 
+    if (!params.serverId) {
+      return new NextResponse("Server id is required", { status: 400 });
+    }
 
     const UserAdmin = await db.user.findFirst({
       where: {
