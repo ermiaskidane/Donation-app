@@ -14,17 +14,26 @@ import { ScrollArea } from "./ui/scroll-area";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { MemberRole, User } from "@prisma/client";
+import { useModal } from "@/hooks/useModalStore";
+import useServerStore from "@/hooks/useServerId";
+import useInvite from "@/hooks/useInvite";
 // import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
 // import { ServerSidebar } from "@/components/server/server-sidebar";
 
 export const ServerToggle = ({
-  serverId
+  serverId,
+  userRole,
+  server
 }: {
   serverId: string;
+  userRole: MemberRole | undefined;
+  server:  any
 }) => {
+  const {setServer, server: data} = useInvite()
+  // console.log("dsafsdfdfd",data )
   const pathname = usePathname();
 
-  // console.log("path", pathname)
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -47,11 +56,20 @@ export const ServerToggle = ({
             )}>
               <Link href={`/server/${serverId}/blog`}>Blog</Link>
             </li>
-            <li className={cn("border-b-2 py-3", 
-              pathname === `/server/${serverId}/write` && "text-[#0084c1fb]"
-            )}>
-              <Link href={`/server/${serverId}/write`}>Write</Link>
-            </li>
+            {userRole === "ADMIN" &&
+            <>
+              <li className={cn("border-b-2 py-3", 
+                pathname === `/server/${serverId}/write` && "text-[#0084c1fb]"
+              )}>
+                <Link href={`/server/${serverId}/write`}>Write</Link>
+              </li>
+              <li className={cn("border-b-2 py-3", 
+                pathname === `/server/${serverId}/write` && "text-[#0084c1fb]"
+              )}>
+                <h2 onClick={() => setServer(server)}>Invite People</h2>
+              </li>
+            </>
+            }
             <li className={cn("border-b-2 py-3", 
               pathname === `/server/${serverId}/members` && "text-[#0084c1fb]"
             )}>

@@ -29,7 +29,6 @@ export const CellAction: React.FC<CellActionProps> = ({
   const onConfirm = async () => {
     try {
       setLoading(true);
-      // console.log("JJJJJJJJJJJJ", data)
       await axios.delete(`/api/${params.serverId}/expense/${data.id}`);
       toast.success('Expense deleted.');
       router.refresh();

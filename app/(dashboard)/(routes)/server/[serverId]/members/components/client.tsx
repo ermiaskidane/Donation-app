@@ -9,7 +9,7 @@ import Heading  from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
  
 import { MembersColumn, columns } from "./columns";
-import { User as userRole} from "@prisma/client";
+import { Member, MemberRole, Server, User as userRole} from "@prisma/client";
 import { Fragment, useEffect } from "react";
 import useUserRoleStore from "@/hooks/useUserRole";
 import { ServerToggle } from "@/components/serverToggle";
@@ -17,12 +17,14 @@ import { ServerToggle } from "@/components/serverToggle";
 
 interface MembersClientProps {
   data: MembersColumn[];
-  userRole: userRole;
+  userRole: MemberRole | undefined;
+  server: (Server & {members: Member[]})
 }
   
 export const MembersClient: React.FC<MembersClientProps> = ({
   data,
-  userRole
+  userRole,
+  server
 }) => {
   const router = useRouter();
   const params = useParams();
@@ -31,7 +33,7 @@ export const MembersClient: React.FC<MembersClientProps> = ({
 
   // change the defualt Zustand Guest to the actual current userrole
   useEffect(() => {
-      setRoleUser(userRole.role);
+      setRoleUser(userRole);
   }, [userRole, setRoleUser]);
 
   const totalDonationsAmount = data.reduce((total, item) => {
@@ -46,13 +48,14 @@ export const MembersClient: React.FC<MembersClientProps> = ({
     <>
     {/*     <AlertDemo/> */}
     <div className=" flex justify-end px-0">
-      <ServerToggle serverId={params.serverId} />
+      {/*@ts-ignore*/}
+      <ServerToggle serverId={params.serverId} userRole={userRole} server={server}/>
     </div>
     <div className="flex items-center justify-between">
     <Heading title={`Members (${data.length.toString()})`} subtitle={`Total Amount of Money £${totalDonationsAmount}`} />
-    {userRole.role === "ADMIN" && (
+    {userRole === "ADMIN" && (
       <div className="flex flex-col gap-2 md:flex-row">
-        <Button onClick={() => router.push(`/users`)} >
+        <Button onClick={() => router.push(`/server/${params.serverId}/users`)} >
           <User className="mr-2 h-4 w-4" /> Manage User
         </Button>
         {/* as mongodb has to check through ObjectIDwhich has hex string with 12 bytes I used a random number insted of string */}

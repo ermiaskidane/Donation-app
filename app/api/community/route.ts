@@ -4,6 +4,7 @@ import { format, parseISO } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 
 import {db} from '@/lib/db';
+import { MemberRole } from '@prisma/client';
 
 export async function POST(
   req: Request,
@@ -35,18 +36,22 @@ export async function POST(
       }
     })
 
-    // change user to admin on creation of server
-    if (User?.role !== "ADMIN"){
-      await db.user.update({
-        where: {
-          id: User?.id
-        },
-        data: {
-          role: "ADMIN"
-        }
-      })
-      // return new NextResponse("Unauthorized", { status: 405 });
+    if (!User) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    // change user to admin on creation of server
+    // if (User?.role !== "ADMIN"){
+    //   await db.user.update({
+    //     where: {
+    //       id: User?.id
+    //     },
+    //     data: {
+    //       role: "ADMIN"
+    //     }
+    //   })
+    //   // return new NextResponse("Unauthorized", { status: 405 });
+    // }
 
     const server = await db.server.create({
       data: {
@@ -54,6 +59,11 @@ export async function POST(
         imageUrl,
         inviteCode: uuidv4(),
         userId: User!.id,
+        positions: {
+          create: [
+            {userId: User.id, role: MemberRole.ADMIN }
+          ]
+        },
         members: {
           create: [
             {
@@ -75,6 +85,7 @@ export async function POST(
         }
       }
     })
+    console.log("fdggd", server)
     return NextResponse.json(server);
   } catch (error) {
     console.log('[COMMUNITY_POST]', error);

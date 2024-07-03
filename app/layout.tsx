@@ -10,6 +10,7 @@ import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
 import InfoNavbar from '@/components/InfoNavbar'
 import { auth } from '@clerk/nextjs/server'
+import { ModalProvider } from '@/providers/modal-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
         <body className={inter.className}>
           <ToasterProvider/>
           {/* <InfiniteSlide infoList={info} currentUser={user}/> */}
+          <ModalProvider/>
           <InfoNavbar/>
           <Navbar currentUser={user}/>
           {children}

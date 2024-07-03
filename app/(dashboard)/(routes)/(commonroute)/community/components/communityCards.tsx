@@ -18,14 +18,14 @@ import { ServerToggle } from '@/components/serverToggle';
 
 interface CommunityCardsprops {
   // page: number,
-  user: User | null
+  // user: User | null
   data: Server[],
   // cat:string | null
 }
 
 const CommunityCards = ({
   data,
-  user
+  // user
   // page,
   // cat
 }: CommunityCardsprops) => {
@@ -97,9 +97,9 @@ const CommunityCards = ({
                     due to the libs/currentProfile file function structure I had to add "!user" 
                     eventthough the aim is to display only user with ADMIN type
                   */}
-                  {!user || user.role === "ADMIN"  && (
-                    <ServerToggle serverId={server.id} />
-                  )}
+                  {/* {!user || user.role === "ADMIN"  && (
+                    <ServerToggle serverId={server.id} userRole={user}/>
+                  )} */}
                 </div>
               </>
             )}

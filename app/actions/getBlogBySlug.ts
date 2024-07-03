@@ -11,18 +11,14 @@ export default async function getBlogbySlug(
   try {
     const { slug, serverId} = params;
 
-    // console.log("searchParams&params", params)
-
     const post = await db.post.findUnique({
       where: { slug, serverId },
-      // include: { user: true },
     });
 
     if (post) {
       const updatedPost = await db.post.update({
         where: { slug, serverId},
         data: { views: { increment: 1 } }
-        // include: { user: true },
       });
 
       

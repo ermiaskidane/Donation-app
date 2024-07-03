@@ -43,9 +43,6 @@ export async function POST (
   const UserAdmin = await db.user.findFirst({
     where: {
       userId,
-    },
-    include: {
-      Post: true
     }
   })
 

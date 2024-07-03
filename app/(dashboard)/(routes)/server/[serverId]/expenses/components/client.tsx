@@ -176,7 +176,8 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
         loading={loading}
       />
       <div className=" flex justify-end px-0">
-        <ServerToggle serverId={params.serverId} />
+        {/*@ts-ignore*/}
+        <ServerToggle serverId={params.serverId} userRole={userRole}/>
       </div>
       <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)} userRole={userRole}/>
       <Accordion type="single" collapsible className="w-full">
