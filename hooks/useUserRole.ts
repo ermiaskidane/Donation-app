@@ -2,12 +2,12 @@ import { create } from 'zustand'
 
 interface useUserRoleState {
   roleUser: string,
-  setRoleUser: (roleUser: string) => void
+  setRoleUser: (roleUser: string | undefined) => void
 }
 
 const useUserRoleStore = create<useUserRoleState>()((set) => ({
   roleUser: "GUEST",
-  setRoleUser: (roleUser: string) => set({roleUser}),
+  setRoleUser: (roleUser: string | undefined) => set({roleUser}),
 }))
 
 

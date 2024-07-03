@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  
 const Community = async() => {
 
-  const currentuser = await currentProfile()
+  // const currentuser = await currentProfile()
 
   const server = await db.server.findMany({
     include: {
@@ -26,8 +26,9 @@ const Community = async() => {
   return (
     <section className="p-8">
       <CommunityHeading/>
-      <Separator className="mb-8" />
-      <CommunityCards data={server} user={currentuser} />
+      <Separator className="my-8" />
+      <CommunityCards data={server} />
+      {/* <CommunityCards data={server} user={currentuser} /> */}
     </section>
   )
 }

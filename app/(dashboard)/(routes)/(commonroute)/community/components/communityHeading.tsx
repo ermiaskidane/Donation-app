@@ -6,8 +6,6 @@ import React, { useState } from 'react'
 import { ServerModal, ServerModalValues } from '@/components/Modal/server-modal';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { Member, Server } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
 
 export const CommunityHeading = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -24,6 +22,7 @@ export const CommunityHeading = () => {
       // router.refresh();
       // window.location.reload(); // Perform a hard refresh
       // soft refresh (reset the data)
+      // form.reset()
       setModalKey(prevKey => prevKey + 1);
       router.push('/community');
       toast.success("community has been created")
@@ -45,8 +44,8 @@ export const CommunityHeading = () => {
         loading={loading}
       />
 
-      <div className="flex flex-col sm:flex-row items-center justify-between">
-        <h2 className="py-4 text-center text-2xl font-bold sm:text-2xl">Communitys</h2>
+      <div className="flex  sm:flex-row items-center justify-between">
+        <h2 className="py-4 text-center text-2xl font-bold sm:text-2xl">Communities</h2>
           <div className="flex gap-2 mt-1 mb-4 sm:my-0">
               <Button onClick={() => setOpen(true)} className="w-32 sm:w-full" >
                 Add Community

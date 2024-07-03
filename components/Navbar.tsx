@@ -83,7 +83,7 @@ const Navbar = ({currentUser}: navbarProps) => {
             <span onClick={() => setIsOpen(false)}>About</span>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <SignedOut>
             <SignInButton>
               <button className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/sign-in" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>sign in</button>
@@ -92,19 +92,19 @@ const Navbar = ({currentUser}: navbarProps) => {
           <SignedIn>
             <UserButton />
           </SignedIn>
-        </li>
+        </li> */}
       </> 
       )}
 
     if (currentUser && userId) {
       return (<>
-              {currentUser.role === "ADMIN" && 
+              {/* {currentUser.role === "ADMIN" && 
                 <li>
                   <Link href="/write" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/write" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
                     <span onClick={() => setIsOpen(false)}>Write</span>
                   </Link>
                 </li>
-              }
+              } */}
               <li>
                 <Link href="/profile" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/profile" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
                   <span onClick={() => setIsOpen(false)}>Profile</span>
@@ -115,13 +115,6 @@ const Navbar = ({currentUser}: navbarProps) => {
                   <span onClick={() => setIsOpen(false)}>About</span>
                 </Link>
               </li>
-              {/* {currentUser.role === "ADMIN" &&
-              <li>
-                <p className="cursor-pointer hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base">
-                  <span onClick={infoModal.onOpen}>Info</span>
-                </p>
-              </li>
-              } */}
             </>)
     }
 

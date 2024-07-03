@@ -32,7 +32,7 @@ const WritePage = async({
   return (
     <div className='mx-8'>
       <div className=" flex justify-end px-0 pb-2">
-        <ServerToggle serverId={params.serverId} />
+        <ServerToggle serverId={params.serverId} userRole={currentuser}/>
       </div>
       <WriteBlog categories={categories} serverId={params.serverId}/>
     </div>

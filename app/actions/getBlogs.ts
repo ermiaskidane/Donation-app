@@ -15,8 +15,6 @@ export default async function getBlogs(
   try {
     const { cat, page} = searchParams;
 
-    // console.log("££££££££££££££££££££££", cat, page, params)
-
     // Provide a default value for page if it's null
   const pageValue = page ? page : 1;
 
@@ -30,7 +28,7 @@ export default async function getBlogs(
         serverId: params?.serverId 
       },
       orderBy: {
-        createdAt: "desc", // Sort by creation timestamp in descending order
+        createdAt: "desc",
       }
     }
 

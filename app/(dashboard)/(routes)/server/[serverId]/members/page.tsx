@@ -1,5 +1,4 @@
 import { auth } from "@clerk/nextjs/server";
-// import { initialUser } from "@/lib/initial-user";
 import { MembersClient } from "./components/client";
 import { format } from "date-fns";
 import { data } from "@/lib/data"
@@ -7,8 +6,9 @@ import { db } from '@/lib/db';
 import { redirect } from "next/navigation";
 import { MembersColumn } from "./components/columns";
 import { currentProfile } from "@/lib/current-profile";
-import { User } from "@prisma/client";
+import { Position, Server, User } from "@prisma/client";
 import { Metadata } from "next";
+import toast from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Members",
@@ -21,12 +21,22 @@ const MembersPage = async({
   params: { serverId: string }
 }) => {
   
-  const currentuser: User | null = await currentProfile()
+  const currentuser = await currentProfile(params.serverId)
+
   if (!currentuser) {
     return auth().redirectToSignIn();
   }
 
-  if(currentuser.role === "GUEST"){
+  // console.log("dfdsfs", currentuser, currentuser.server)
+
+  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
+
+  // if (!UserRole){
+  //   // throw new Error("We dont have userRole")
+  // }
+
+  // user with empty server or positions or "guest" Role browse them to homepage
+  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST"){
     redirect("/");
   }
 
@@ -67,6 +77,8 @@ const MembersPage = async({
     redirect("/community")
   }
 
+  console.log("dfdsfs", serverWithMembers)
+  console.log("dfdsfs", UserRole)
   const memberIds = serverWithMembers.members.map(member => member.id);
 
   const donations = await db.donation.findMany({
@@ -99,7 +111,7 @@ const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 px-8 ">
-        <MembersClient data={formattedMembers} userRole={currentuser}/>
+        <MembersClient data={formattedMembers} userRole={UserRole} server={serverWithMembers}/>
       </div>
     </div>
   )
