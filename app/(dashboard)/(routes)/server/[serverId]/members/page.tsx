@@ -27,16 +27,14 @@ const MembersPage = async({
     return auth().redirectToSignIn();
   }
 
-  // console.log("dfdsfs", currentuser, currentuser.server)
-
   const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
 
   // if (!UserRole){
   //   // throw new Error("We dont have userRole")
   // }
 
-  // user with empty server or positions or "guest" Role browse them to homepage
-  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST"){
+  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
+  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
     redirect("/");
   }
 
@@ -77,8 +75,8 @@ const MembersPage = async({
     redirect("/community")
   }
 
-  console.log("dfdsfs", serverWithMembers)
-  console.log("dfdsfs", UserRole)
+  // console.log("dfdsfs", serverWithMembers)
+  // console.log("dfdsfs", UserRole)
   const memberIds = serverWithMembers.members.map(member => member.id);
 
   const donations = await db.donation.findMany({
