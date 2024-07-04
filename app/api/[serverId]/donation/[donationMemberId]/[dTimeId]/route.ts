@@ -36,16 +36,25 @@ export async function PATCH(
       return new NextResponse("donationMember id is required", { status: 400 });
     }
 
+    // first check if user role is ADMIN
     const UserAdmin = await db.user.findFirst({
       where: {
         userId,
-      },
-      include: {
-        members: true
       }
     })
 
-    if (UserAdmin?.role !== "ADMIN"){
+    if (!UserAdmin){
+      return new NextResponse("Unauthorized", { status: 405 });
+    }
+
+    const userRole = await db.position.findFirst({
+      where: {
+        serverId: params.serverId,
+        userId: UserAdmin.id
+      }
+    })
+
+    if (userRole?.role !== "ADMIN"){
       return new NextResponse("Unauthorized", { status: 405 });
     }
 

@@ -25,7 +25,8 @@ export const currentProfile = async (serverId: string): Promise<UserProfile | nu
   if (!profile) {
     return null;
   }
-
+  
+// ignore userId bc user with member Role will not get access for this server  
   const server = await db.server.findUnique({
     where: {
       id: serverId,

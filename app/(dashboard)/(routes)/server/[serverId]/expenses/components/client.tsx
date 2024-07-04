@@ -17,7 +17,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 import { ExpenseHeading } from '@/components/expenseHeading';
 import useUserRoleStore from '@/hooks/useUserRole';
-import { Donation, Expense, Member, Year, User as userRole } from '@prisma/client';
+import { Donation, Expense, Member, MemberRole, Year, User as userRole } from '@prisma/client';
 import { ServerToggle } from '@/components/serverToggle';
 import { CalenderModal } from '@/components/Modal/calender-modal';
 
@@ -26,7 +26,7 @@ interface ExpenseClientProps {
   // OR
   // invoices: (Year & {expenses: Expense})[],
   donation: (Member & {donations: Donation[]})[],
-  userRole: userRole
+  userRole: MemberRole | undefined;
 }
 
 interface AddExpense {
@@ -101,7 +101,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
 
   // change the defualt Zustand Guest to the actual current userrole
   useEffect(() => {
-      setRoleUser(userRole.role);
+      setRoleUser(userRole);
   }, [userRole, setRoleUser]);
 
   const TotalSum = (exp: ExpenseColumn) => {
@@ -185,7 +185,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
           <AccordionItem value={exp.id} key={exp.id}>
             <AccordionTrigger>{exp.year}</AccordionTrigger>
               <AccordionContent>
-                {userRole.role === "ADMIN" && (
+                {userRole === "ADMIN" && (
                   <div className='flex justify-end'>
                     <Button onClick={() => OpenModal(exp)}>Add Expense</Button>
                   </div>

@@ -1,25 +1,31 @@
 import React from 'react'
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import {DonationForm} from './components/donation-form'
 import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
+import { currentProfile } from '@/lib/current-profile';
+import { Position } from '@prisma/client';
 
 const AddDonation = async ({
   params
 }: {
-  params: { memberId?: string }
+  params: {serverId: string, memberId?: string }
 }) => {
 
-  const user = await currentUser();
+  const currentuser = await currentProfile(params.serverId)
 
-  const userRole = await db.user.findUnique({
-    where: {
-      userId: user?.id,
-    }
-  });
+  if (!currentuser) {
+    return auth().redirectToSignIn();
+  }
 
-  if(userRole?.role !== "ADMIN"){
-    redirect("/members");
+  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
+
+  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST"){
+    redirect("/");
+  }
+
+  if(UserRole !== "ADMIN"){
+    redirect(`/server/${params.serverId}/members`);
   }
   
   const member = await db.member.findUnique({
