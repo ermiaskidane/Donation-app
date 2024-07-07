@@ -58,19 +58,6 @@ export const CalenderModal: React.FC<CalenderModalProps> = ({
       {/* @ts-ignore */}
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
           <div className="gap-6 flex flex-col md:w-11/12 mx-auto">
-            {/* <FormField
-                control={form.control}
-                name="year"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>year</FormLabel>
-                    <FormControl>
-                      <Input disabled={loading} placeholder="write the year" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-            /> */}
             <FormField
               control={form.control}
               name="year"

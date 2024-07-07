@@ -48,7 +48,7 @@ const InviteCode = async ({
   })
 
   if (existingServer) {
-    return redirect(`/servers/${existingServer.id}`);
+    return redirect(`/server/${existingServer.id}/members`);
   }
 
   // join user to server
@@ -69,7 +69,7 @@ const InviteCode = async ({
   })
 
   if (server) {
-    return redirect(`/servers/${server.id}`);
+    return redirect(`/server/${server.id}/members`);
   }
 
   return null;

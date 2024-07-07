@@ -6,6 +6,7 @@ import { CommunityHeading } from './components/communityHeading';
 import { Separator } from '@/components/ui/separator';
 import { db } from '@/lib/db';
 import { currentProfile } from '@/lib/current-profile';
+import { auth } from '@clerk/nextjs/server';
 // import CommonCard from '@/lib/commonCard';
 
 
@@ -14,8 +15,6 @@ export const metadata: Metadata = {
 };
  
 const Community = async() => {
-
-  // const currentuser = await currentProfile()
 
   const server = await db.server.findMany({
     include: {

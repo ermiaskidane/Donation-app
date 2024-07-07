@@ -64,6 +64,9 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
+
+
+    
     const server = await db.server.findUnique({
       where: {
         id: params.serverId,
