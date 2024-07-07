@@ -8,7 +8,6 @@ import {ToasterProvider} from '@/providers/toast-provider'
 import { CrispProvider } from '@/components/crisp-provider'
 import InfiniteSlide from '@/components/inifiniteslideInfo'
 import { db } from '@/lib/db'
-import InfoNavbar from '@/components/InfoNavbar'
 import { auth } from '@clerk/nextjs/server'
 import { ModalProvider } from '@/providers/modal-provider'
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = {
 
   const userId = currentClient?.userId ?? '';
 
-  const info = await db.info.findMany()
   const user = await db.user.findFirst({where: {userId}})
  
 
@@ -46,9 +44,7 @@ export const metadata: Metadata = {
       <CrispProvider/>
         <body className={inter.className}>
           <ToasterProvider/>
-          {/* <InfiniteSlide infoList={info} currentUser={user}/> */}
           <ModalProvider/>
-          <InfoNavbar/>
           <Navbar currentUser={user}/>
           {children}
           <Footer/>

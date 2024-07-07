@@ -64,7 +64,7 @@ export const ServerToggle = ({
                 <Link href={`/server/${serverId}/write`}>Write</Link>
               </li>
               <li className={cn("border-b-2 py-3", 
-                pathname === `/server/${serverId}/write` && "text-[#0084c1fb]"
+                pathname === `/invite` && "text-[#0084c1fb]"
               )}>
                 <h2 onClick={() => setServer(server)}>Invite People</h2>
               </li>
