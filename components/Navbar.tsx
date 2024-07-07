@@ -7,8 +7,6 @@ import { Menubar, MenubarContent, MenubarMenu, MenubarTrigger } from "./ui/menub
 import Link from "next/link";
 import { ChurchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import InfoNavbar from "./InfoNavbar";
-import useInfoModal from "@/hooks/useInfo";
 import { User } from "@prisma/client";
 import useServerStore from "@/hooks/useServerId";
 
@@ -18,7 +16,6 @@ interface navbarProps {
 
 const Navbar = ({currentUser}: navbarProps) => {
   const pathName = usePathname();
-  const infoModal = useInfoModal(); 
   const { userId } = useAuth();
   const serverId = useServerStore((state) => state.serverId);
 
@@ -28,8 +25,6 @@ const Navbar = ({currentUser}: navbarProps) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)
   },[])
-
-  // console.log("isOpen", isOpen)
 
   const routes = [
     {
@@ -46,32 +41,7 @@ const Navbar = ({currentUser}: navbarProps) => {
       href: `/blog`,
       label: "Blog",
       active: pathName === `/blog`
-    },
-    // {
-    //   href: `/write`,
-    //   label: "Write",
-    //   active: pathName === `/write`
-    // },
-    // {
-    //   href: `/members`,
-    //   label: "Members",
-    //   active: pathName === `/members`
-    // },
-    // {
-    //   href: `/expense`,
-    //   label: "Expense",
-    //   active: pathName === `/expense`
-    // },
-    // {
-    //   href: `/profile`,
-    //   label: "Profile",
-    //   active: pathName === `/profile`
-    // },
-    // {
-    //   href: `/about`,
-    //   label: "About",
-    //   active: pathName === `/about`
-    // },
+    }
   ]
 
   const renderConditional = () => {
@@ -98,13 +68,6 @@ const Navbar = ({currentUser}: navbarProps) => {
 
     if (currentUser && userId) {
       return (<>
-              {/* {currentUser.role === "ADMIN" && 
-                <li>
-                  <Link href="/write" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/write" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
-                    <span onClick={() => setIsOpen(false)}>Write</span>
-                  </Link>
-                </li>
-              } */}
               <li>
                 <Link href="/profile" className={cn("hover:text-primary block transition dark:hover:text-white md:px-4 md:text-base", pathName === "/profile" ? 'text-black font-medium dark:text-white' : 'text-muted-foreground')}>
                   <span onClick={() => setIsOpen(false)}>Profile</span>

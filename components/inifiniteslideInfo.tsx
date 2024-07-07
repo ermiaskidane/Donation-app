@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './inifiniteslide.module.css'
 import gsap from 'gsap';
-import { Info, User } from '@prisma/client';
+import { Info, MemberRole, User } from '@prisma/client';
 import {
   Popover,
   PopoverContent,
@@ -19,13 +19,13 @@ import { useRouter } from 'next/navigation';
 
 interface InfiniteSlideProps {
   infoList: Array<Info>;
-  currentUser: User | null;
+  userRole: MemberRole
   serverId:  string;
 }
 
 const InfiniteSlide = ({
   infoList,
-  currentUser,
+  userRole,
   serverId,
 } : InfiniteSlideProps) => {
 
@@ -120,7 +120,7 @@ const InfiniteSlide = ({
             </div>
           </div>
         </PopoverTrigger>
-        {currentUser?.role === "ADMIN" && (
+        {userRole === "ADMIN" && (
           <PopoverContent className="w-80 bg-[#00ffff] mt-4 ali">
           <div className="grid gap-4">
             <div className="space-y-2">

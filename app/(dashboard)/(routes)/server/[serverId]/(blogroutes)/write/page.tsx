@@ -4,6 +4,7 @@ import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 // import { initialUser } from '@/lib/initial-user'
 import { auth } from '@clerk/nextjs/server'
+import { Position } from '@prisma/client'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import React, { useState } from 'react'
@@ -18,21 +19,41 @@ const WritePage = async({
   params: { serverId: string }
 }) =>{
 
-  const currentuser = await currentProfile()
+  const currentuser = await currentProfile(params.serverId)
 
   if (!currentuser) {
     return auth().redirectToSignIn();
-  } 
+  }
+ 
+  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
 
-  if(currentuser.role === "GUEST" || currentuser.role === "MEMBER" ){
+  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
+  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
     redirect("/");
   }
+
+  const serverWithMembers = await db.server.findUnique({
+    where: {
+      id: params.serverId,
+    },
+    include: {
+      members: {
+        orderBy: {
+          createdAt: 'desc',
+        }    
+      },
+    }
+  });
+
+  if (!serverWithMembers) {
+    redirect("/community")
+  } 
 
   const categories = await db.category.findMany()
   return (
     <div className='mx-8'>
       <div className=" flex justify-end px-0 pb-2">
-        <ServerToggle serverId={params.serverId} userRole={currentuser}/>
+        <ServerToggle serverId={params.serverId} userRole={UserRole} server={serverWithMembers}/>
       </div>
       <WriteBlog categories={categories} serverId={params.serverId}/>
     </div>

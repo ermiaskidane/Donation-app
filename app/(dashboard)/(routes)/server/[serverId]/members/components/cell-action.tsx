@@ -58,7 +58,7 @@ export const CellAction: React.FC<CellActionProps> = ({
       <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => router.push(`/${data.id}/chart`)}
+            onClick={() => router.push(`/server/${params.serverId}/${data.id}/chart`)}
           >
             <BarChart4 className="mr-2 h-4 w-4" /> BarChart
           </DropdownMenuItem>

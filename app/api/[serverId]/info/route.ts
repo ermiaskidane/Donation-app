@@ -54,13 +54,25 @@ export const POST = async (
     return new NextResponse("Server id is required", { status: 400 });
   }
 
+  // first check if user role is ADMIN
   const UserAdmin = await db.user.findFirst({
     where: {
-      userId
+      userId,
     }
-  });
+  })
 
-  if (UserAdmin?.role !== "ADMIN"){
+  if (!UserAdmin){
+    return new NextResponse("Unauthorized", { status: 405 });
+  }
+
+  const userRole = await db.position.findFirst({
+    where: {
+      serverId: params.serverId,
+      userId: UserAdmin.id
+    }
+  })
+
+  if (userRole?.role !== "ADMIN"){
     return new NextResponse("Unauthorized", { status: 405 });
   }
   
@@ -99,15 +111,27 @@ export const DELETE = async(
       return new NextResponse("Server id is required", { status: 400 });
     }
 
-    const UserAdmin = await db.user.findFirst({
-      where: {
-        userId
-      }
-    });
- 
-    if (UserAdmin?.role !== "ADMIN"){
-      return new NextResponse("Unauthorized", { status: 405 });
+    // first check if user role is ADMIN
+  const UserAdmin = await db.user.findFirst({
+    where: {
+      userId,
     }
+  })
+
+  if (!UserAdmin){
+    return new NextResponse("Unauthorized", { status: 405 });
+  }
+
+  const userRole = await db.position.findFirst({
+    where: {
+      serverId: params.serverId,
+      userId: UserAdmin.id
+    }
+  })
+
+  if (userRole?.role !== "ADMIN"){
+    return new NextResponse("Unauthorized", { status: 405 });
+  }
 
     const info = await db.server.update({
       where: {

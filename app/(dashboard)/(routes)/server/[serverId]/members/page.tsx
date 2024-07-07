@@ -26,7 +26,7 @@ const MembersPage = async({
   if (!currentuser) {
     return auth().redirectToSignIn();
   }
-
+ 
   const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
 
   // if (!UserRole){
@@ -73,10 +73,8 @@ const MembersPage = async({
 
   if (!serverWithMembers) {
     redirect("/community")
-  }
+  } 
 
-  // console.log("dfdsfs", serverWithMembers)
-  // console.log("dfdsfs", UserRole)
   const memberIds = serverWithMembers.members.map(member => member.id);
 
   const donations = await db.donation.findMany({
