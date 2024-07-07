@@ -6,11 +6,14 @@ import React, { useState } from 'react'
 import { ServerModal, ServerModalValues } from '@/components/Modal/server-modal';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useAuth } from '@clerk/nextjs';
 
 export const CommunityHeading = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [modalKey, setModalKey] = useState<number>(0);
+
+  const {userId} = useAuth()
 
   const router = useRouter()
 
@@ -47,9 +50,11 @@ export const CommunityHeading = () => {
       <div className="flex  sm:flex-row items-center justify-between">
         <h2 className="py-4 text-center text-2xl font-bold sm:text-2xl">Communities</h2>
           <div className="flex gap-2 mt-1 mb-4 sm:my-0">
+            {userId && (
               <Button onClick={() => setOpen(true)} className="w-32 sm:w-full" >
                 Add Community
               </Button>
+            )}
           </div>
       </div>
     </>

@@ -53,6 +53,7 @@ export async function POST(
     //   // return new NextResponse("Unauthorized", { status: 405 });
     // }
 
+    // TODO: Change the default Phone and amount
     const server = await db.server.create({
       data: {
         name,
