@@ -107,7 +107,7 @@ const formattedMembers: MembersColumn[] = membersWithDonations.map((item) => ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 px-8 ">
-        <MembersClient data={formattedMembers} userRole={UserRole} server={serverWithMembers}/>
+        <MembersClient data={formattedMembers} userRole={UserRole} server={currentuser.server}/>
       </div>
     </div>
   )

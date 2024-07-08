@@ -9,7 +9,7 @@ import Heading  from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
  
 import { MembersColumn, columns } from "./columns";
-import { Member, MemberRole, Server, User as userRole} from "@prisma/client";
+import { Member, MemberRole, Position, Server, User as userRole} from "@prisma/client";
 import { Fragment, useEffect } from "react";
 import useUserRoleStore from "@/hooks/useUserRole";
 import { ServerToggle } from "@/components/serverToggle";
@@ -18,7 +18,7 @@ import { ServerToggle } from "@/components/serverToggle";
 interface MembersClientProps {
   data: MembersColumn[];
   userRole: MemberRole | undefined;
-  server: (Server & {members: Member[]})
+  server: (Server & {positions: Position[]})
 }
   
 export const MembersClient: React.FC<MembersClientProps> = ({
