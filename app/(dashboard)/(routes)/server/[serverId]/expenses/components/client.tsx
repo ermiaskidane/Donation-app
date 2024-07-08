@@ -17,7 +17,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { CurrentAmountModal } from '@/components/Modal/currentAmount-modal';
 import { ExpenseHeading } from '@/components/expenseHeading';
 import useUserRoleStore from '@/hooks/useUserRole';
-import { Donation, Expense, Member, MemberRole, Year, User as userRole } from '@prisma/client';
+import { Donation, Expense, Member, MemberRole, Position, Server, Year, User as userRole } from '@prisma/client';
 import { ServerToggle } from '@/components/serverToggle';
 import { CalenderModal } from '@/components/Modal/calender-modal';
 
@@ -27,6 +27,7 @@ interface ExpenseClientProps {
   // invoices: (Year & {expenses: Expense})[],
   donation: (Member & {donations: Donation[]})[],
   userRole: MemberRole | undefined;
+  server: (Server & {positions: Position[]})
 }
 
 interface AddExpense {
@@ -83,7 +84,8 @@ export const YearlyExpenseSum = (spent: Expense[]) => {
 export const ExpenseClient: React.FC<ExpenseClientProps> = ({
   yearlyExpense,
   donation,
-  userRole
+  userRole,
+  server
 }) => {
 
   const router = useRouter()
@@ -177,7 +179,7 @@ export const ExpenseClient: React.FC<ExpenseClientProps> = ({
       />
       <div className=" flex justify-end px-0">
         {/*@ts-ignore*/}
-        <ServerToggle serverId={params.serverId} userRole={userRole}/>
+        <ServerToggle serverId={params.serverId} userRole={userRole} server={server}/>
       </div>
       <ExpenseHeading openAmount={() => setPoundOpen(true)} openCalender={() => setCalenderOpen(true)} userRole={userRole}/>
       <Accordion type="single" collapsible className="w-full">

@@ -1,10 +1,10 @@
-import { Member, Server } from '@prisma/client';
+import { Member, Position, Server } from '@prisma/client';
 import { create } from 'zustand';
 
 interface InviteState {
   isOpen: boolean;
-  server: Server & {members: Member[]} | null;
-  setServer: (data: Server & {members: Member[]}) => void;
+  server: Server & {positions: Position[]} | null;
+  setServer: (data: Server & {positions: Position[]}) => void;
   onCloseServer: () => void;
 }
 

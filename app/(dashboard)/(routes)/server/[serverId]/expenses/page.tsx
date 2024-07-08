@@ -66,7 +66,7 @@ const ExpensePage = async({
 
   return (
     <div className="px-8">
-      <ExpenseClient yearlyExpense={expenseOfYear} donation={donation} userRole={UserRole}/>
+      <ExpenseClient yearlyExpense={expenseOfYear} donation={donation} userRole={UserRole} server={currentuser.server}/>
     </div>
   )
 }

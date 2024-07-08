@@ -32,28 +32,11 @@ const WritePage = async({
     redirect("/");
   }
 
-  const serverWithMembers = await db.server.findUnique({
-    where: {
-      id: params.serverId,
-    },
-    include: {
-      members: {
-        orderBy: {
-          createdAt: 'desc',
-        }    
-      },
-    }
-  });
-
-  if (!serverWithMembers) {
-    redirect("/community")
-  } 
-
   const categories = await db.category.findMany()
   return (
     <div className='mx-8'>
       <div className=" flex justify-end px-0 pb-2">
-        <ServerToggle serverId={params.serverId} userRole={UserRole} server={serverWithMembers}/>
+        <ServerToggle serverId={params.serverId} userRole={UserRole} server={currentuser.server}/>
       </div>
       <WriteBlog categories={categories} serverId={params.serverId}/>
     </div>
