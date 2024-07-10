@@ -8,24 +8,27 @@ import { UsersColumn, columns } from "./columns";
 import { useParams, useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import { ServerToggle } from "@/components/serverToggle";
-import { User } from "@prisma/client";
+import { MemberRole, Position, Server, User } from "@prisma/client";
 
 interface UsersClientProps {
   data: UsersColumn[],
-  userRole: User,
+  userRole: MemberRole,
+  serverId: string;
+  server: (Server & {positions: Position[]})
 }
 
 export const UsersClient: React.FC<UsersClientProps> = ({
   data,
-  userRole
+  userRole,
+  serverId,
+  server
 }) => {
-  const params = useParams();
-  const router = useRouter();
+  // const params = useParams();
+  // const router = useRouter();
   return (
     <>
     <div className=" flex justify-end px-0">
-      {/*@ts-ignore*/}
-      <ServerToggle serverId={params.serverId} userRole={userRole}/>
+      <ServerToggle server={server} serverId={serverId} userRole={userRole}/>
     </div>
     <div className="flex items-center justify-between">
     <Heading title={`Users (${data.length.toString()})`} subtitle="Manage users role" />

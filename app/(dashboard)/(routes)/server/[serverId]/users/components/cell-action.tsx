@@ -12,6 +12,7 @@ import { BarChart4, Copy, Edit, MoreHorizontal, Trash, Trash2, User } from 'luci
 import { useParams, useRouter } from 'next/navigation';
 import { AlertUserRoleModal } from '@/components/Modal/alert-userRoleModal';
 import { AlertModal } from "@/components/Modal/alert-modal";
+import { Form } from "react-hook-form";
 
 const FormSchema = z.object({
   type: z.enum(["Admin", "Member", "Guest"], {
@@ -31,12 +32,14 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [loading, setLoading] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const [open, setOpen] = useState(false);
+
   const router = useRouter();
+  const params = useParams();
 
   const onConfirm = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/users/${data.id}`);
+      await axios.delete(`/api/${params.serverId}/users/${data.id}`);
       toast.success('User deleted.');
       router.refresh();
     } catch (error) {
@@ -50,11 +53,10 @@ export const CellAction: React.FC<CellActionProps> = ({
   const onSubmit = async (datas: CellActionValues) => {
     try {
       setLoading(true)
-
-      await axios.patch(`/api/users/${data.id}`, datas)
+      await axios.patch(`/api/${params.serverId}/users/${data.id}`, datas)
 
       router.refresh();
-      router.push('/users');
+      router.push(`/server/${params.serverId}/users`);
       toast.success("user has been updated")
     } catch(error: any){
       toast.error('Something went wrong.');
