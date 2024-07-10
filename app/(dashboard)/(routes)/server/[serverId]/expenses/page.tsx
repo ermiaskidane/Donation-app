@@ -1,13 +1,9 @@
 import React from 'react'
 import { ExpenseClient } from './components/client'
 import { db } from '@/lib/db'
-// import { initialUser } from '@/lib/initial-user'
-import { RedirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
-import { currentProfile } from '@/lib/current-profile'
 import { Metadata } from 'next'
-import { auth } from '@clerk/nextjs/server'
-import { Position } from '@prisma/client'
+import { AuthMembers } from '@/lib/authMembers'
 
 
 export const metadata: Metadata = {
@@ -20,18 +16,7 @@ const ExpensePage = async({
   params: { serverId: string }
 }) =>{
 
-  const currentuser = await currentProfile(params.serverId)
-
-  if (!currentuser) {
-    return auth().redirectToSignIn();
-  }
-
-  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
-
-  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
-  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
-    redirect("/");
-  }
+  const {UserRole, currentuser} =  await AuthMembers(params.serverId)
 
   const serverExpense = await db.server.findUnique({
     where: {
@@ -66,7 +51,7 @@ const ExpensePage = async({
 
   return (
     <div className="px-8">
-      <ExpenseClient yearlyExpense={expenseOfYear} donation={donation} userRole={UserRole} server={currentuser.server}/>
+      <ExpenseClient yearlyExpense={expenseOfYear} donation={donation} userRole={UserRole} server={currentuser.server!}/>
     </div>
   )
 }

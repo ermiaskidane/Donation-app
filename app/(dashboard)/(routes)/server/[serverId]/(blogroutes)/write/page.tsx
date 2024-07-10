@@ -1,12 +1,8 @@
 import WriteBlog from '@/components/blogcomponents/writeBlog'
 import { ServerToggle } from '@/components/serverToggle'
-import { currentProfile } from '@/lib/current-profile'
+import { AuthMembers } from '@/lib/authMembers'
 import { db } from '@/lib/db'
-// import { initialUser } from '@/lib/initial-user'
-import { auth } from '@clerk/nextjs/server'
-import { Position } from '@prisma/client'
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 import React, { useState } from 'react'
 
 export const metadata: Metadata = {
@@ -19,18 +15,7 @@ const WritePage = async({
   params: { serverId: string }
 }) =>{
 
-  const currentuser = await currentProfile(params.serverId)
-
-  if (!currentuser) {
-    return auth().redirectToSignIn();
-  }
- 
-  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
-
-  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
-  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
-    redirect("/");
-  }
+  const {UserRole, currentuser} =  await AuthMembers(params.serverId)
 
   const categories = await db.category.findMany()
   return (

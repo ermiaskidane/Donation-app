@@ -1,12 +1,8 @@
 import getBlog, { IParams } from '@/app/actions/getBlogs'
 import Blogcomponent from '@/components/blogcomponents/Blogcomponent'
 import { ServerToggle } from '@/components/serverToggle';
-import { currentProfile } from '@/lib/current-profile';
-import { RedirectToSignIn } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
-import { Position } from '@prisma/client';
+import { AuthMembers } from '@/lib/authMembers';
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import React from 'react'
 
 interface BlogPageProps {
@@ -23,24 +19,7 @@ const BlogPage = async({searchParams, params}: BlogPageProps) => {
 
   const blogList = await getBlog(searchParams, params)
 
-  const currentuser = await currentProfile(params.serverId)
-
-  if (!currentuser) {
-    return auth().redirectToSignIn();
-  }
- 
-  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
-
-  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
-  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
-    redirect("/");
-  }
-
-  // const currentuser = await currentProfile()
-  
-  // if (!currentuser) {
-  //   return <RedirectToSignIn/>;
-  // }
+  const {UserRole, currentuser} =  await AuthMembers(params.serverId)
   
   return (
     <section className=" flex flex-col mx-8">

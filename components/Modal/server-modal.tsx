@@ -63,7 +63,6 @@ export const ServerModal: React.FC<ServerModalProps> = ({
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
             <div className="gap-6 flex flex-col md:w-11/12 mx-auto">
                <div className="flex items-center justify-center text-center">
-                 {/* TODO: file upload */}
                  <FormField
                   control={form.control}
                   name="imageUrl"

@@ -1,13 +1,9 @@
 import { db } from '@/lib/db';
-import { redirect } from 'next/navigation';
 import React from 'react'
 import { UsersClient } from './components/clients';
-import { UsersColumn } from './components/columns';
 import { format } from 'date-fns';
-import { currentProfile } from '@/lib/current-profile';
-import { auth } from '@clerk/nextjs/server';
 import { Metadata } from 'next';
-import { Position } from '@prisma/client';
+import { AuthMembers } from '@/lib/authMembers';
 
 export const metadata: Metadata = {
   title: "User",
@@ -19,21 +15,8 @@ const UsersPage = async({
   params: { serverId: string }
 }) => {
 
-  // Give access only for Admin Members
-  const currentuser = await currentProfile(params.serverId)
-
-  if (!currentuser) {
-    return auth().redirectToSignIn();
-  }
- 
-  const UserRole = currentuser.server?.positions.find((pos: Position) => pos.userId === currentuser.id)?.role
-
-  // user with empty server or positions or "guest" or "undefined" Role browse them back to homepage
-  if(currentuser.server === null || currentuser.server.positions.length === 0 || UserRole === "GUEST" || UserRole === undefined){
-    redirect("/");
-  }
-
-  // 
+  const {UserRole, currentuser} =  await AuthMembers(params.serverId)
+  
   const position = await db.position.findMany({
     where:{
       serverId: params.serverId,
@@ -58,7 +41,7 @@ const UsersPage = async({
     }
   })
 
-  const formattedUserss = users.map((user) => {
+  const formattedUsers = users.map((user) => {
     // Filter positions by the specified serverId and extract roles
     const roles = user.positions
       .filter((position) => position.serverId === params.serverId)
@@ -75,22 +58,11 @@ const UsersPage = async({
       updatedAt: format(user.updatedAt, "MMMM do, yyyy"),
     };
   });
-  
-
-  console.log("sfdsgdfg", formattedUserss)
-
-  // const formattedUsers: UsersColumn[] = userss.map((item) => ({
-  //   id: item.id,
-  //   name: item.name,
-  //   email: item.email,
-  //   role: item.role,
-  //   updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
-  // }))
 
   return (
     <div className='flex-col'>
       <div className="flex-1 space-y-4 p-8 pt-6">
-      <UsersClient data={formattedUserss} userRole={currentuser}/>
+        <UsersClient data={formattedUsers} userRole={UserRole} server={currentuser.server!} serverId={params.serverId} />
       </div>
     </div>
   )
