@@ -22,6 +22,7 @@ module.exports = {
         'img-home': "url('/images/img-home.jpg')",
       },
       colors: {
+        'chart-2': 'hsl(var(--chart-2))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
