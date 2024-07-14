@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import ChartClient from './chartClient';
 import { AuthMembers } from '@/lib/authMembers';
 import { ServerToggle } from '@/components/serverToggle';
+import { ShadcnChart } from './shadcnChart';
 
 const Chartview = async ({
   params
@@ -24,6 +25,7 @@ const Chartview = async ({
     return accumulator + currentValue.amount
   }, 0)
 
+  console.log("fgdfhgf", typeof totalAmount)
   return (
     <>
       <div className=" flex justify-end pr-8">
@@ -32,12 +34,9 @@ const Chartview = async ({
       </div>
 
       <div className="mx-auto w-11/12  md:w-9/12">
-        <h2 className="text-2xl font-semibold text-center py-10">Detail donation by <span className='text-[#8884d8]'>{member?.name}</span></h2>
-        <ChartClient data={member?.donations}/>
-
-        <div className="mt-10">
-          <h2 className="text-center text-lg font-medium">Total amount: <span className='text-[#8884d8]'>£{totalAmount}</span></h2>
-        </div>
+        {/* <h2 className="text-2xl font-semibold text-center py-10">Detail donation by <span className='text-[#8884d8]'>{member?.name}</span></h2> */}
+        {/* <ChartClient data={member?.donations}/> */}
+        <ShadcnChart data={member?.donations} totalAmount={totalAmount} name={member?.name}/>
       </div>
     </>
   )

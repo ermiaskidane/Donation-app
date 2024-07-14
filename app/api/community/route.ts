@@ -17,6 +17,9 @@ export async function POST(
 
     const { name,imageUrl } = body;
 
+    // Ensure the name is lowercase
+    const lowerCaseName = name.toLowerCase();
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
@@ -56,7 +59,7 @@ export async function POST(
     // TODO: Change the default Phone and amount
     const server = await db.server.create({
       data: {
-        name,
+        name: lowerCaseName,
         imageUrl,
         inviteCode: uuidv4(),
         userId: User!.id,
