@@ -37,7 +37,7 @@ const Blogcomponent = ({
   categories,
   blogRoute,
   Blogs,
-  serverId
+  serverId,
 }: BlogcomponentProps) => {
 
   const searchParams = useSearchParams()
@@ -87,7 +87,7 @@ const Blogcomponent = ({
         </div>
       </div>
       {/* create the blog  */}
-        <CardList data={Blogs} page={page} cat={cat}/>
+        <CardList data={Blogs} page={page} cat={cat} serverId={serverId}/>
       </div>
       ) : (<Loading/>)
 

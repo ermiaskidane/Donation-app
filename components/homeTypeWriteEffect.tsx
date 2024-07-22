@@ -5,15 +5,16 @@ import Typewriter from 'typewriter-effect';
 
 const HomeTypeWriteEffect = () => {
   return (
-    <div className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-600">
+    <div className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-300">
     <Typewriter
       options={{
-          strings: ['For god. For love. For Life', "For god. For love. For Life"],
+        strings: ["Memberships", "Events", "Article", "Income", "Expenses" ],
+          // strings: ['For god. For love. For Life', "For god. For love. For Life"],
           autoStart: true,
           loop: true,
         }}
     />
-    </div>
+     </div> 
   )
 }
 
