@@ -8,12 +8,14 @@ import { Post } from '@prisma/client';
 import { BlogData } from '@/type';
 
 interface cardListprops {
+  serverId?: string,
   page: number,
   data: BlogData,
   cat:string | null
 }
 
 const CardList = ({
+  serverId,
   data,
   page,
   cat
@@ -29,7 +31,7 @@ const CardList = ({
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {data?.posts.map((blog) => (
         <div key={blog.id} className="group p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
-          <Card blog={blog}/>
+          <Card blog={blog} serverId={serverId}/>
         </div>
       ))}
     </div>

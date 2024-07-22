@@ -54,7 +54,9 @@ const SinglePage = async ({
   const blogList = await getBlogs(searchParams)
   const blog = await getBlog(params)
 
-  // console.log("BBBBBBBBBBBBBb", getBlog)
+  // console.log("AAAAAAAAAAAAAA", blogList)
+  // console.log("BBBBBBBBBBBBBb", blog)
+  // console.log("CCCCCCCCCCCCC", params.slug)
   return (
     <>
     <SingleBlog blogs={blogList} blog={blog} slug={params.slug}/>

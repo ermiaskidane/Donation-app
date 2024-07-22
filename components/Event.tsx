@@ -48,7 +48,7 @@ const Event = () => {
               </div>
               <div className="w-5/6">
                 <h3 className="font-semibold text-lg text-gray-700 dark:text-teal-300">Real Time Location</h3>
-                <p className="text-gray-500 dark:text-gray-400">acess our location in munchester</p>
+                <p className="text-gray-500 dark:text-gray-400">access our location in munchester</p>
               </div> 
             </div> 
           </div>

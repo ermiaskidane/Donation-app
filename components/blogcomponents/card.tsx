@@ -7,18 +7,20 @@ import { usePathname } from 'next/navigation';
 // import { loadBase64Image } from '@/lib/load-base64';
 
 interface cardProps {
+  serverId?: string
   blog: any,
 }
 
 
 const Card = ({
+  serverId,
   blog,
 }: cardProps) => {
 
   const pathName = usePathname()
 
   const segment = pathName.split("/")
-  const serverId = segment[2]
+  // const serverId = segment[2]
 
   const wpm = 225;
   const word = blog?.desc.trim().split(/\s+/).length
@@ -57,7 +59,7 @@ const Card = ({
         </h3>
         <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={sanitizedData()}/>
         {/* set conditional link to view the blog if user is not in community   */}
-        <Link className=" flex justify-between " href={serverId ? `/server/${serverId}/blog/${blog.slug}`: `blog/${blog.slug}`}>
+        <Link className=" flex justify-between " href={serverId ? `/server/${serverId}/blog/${blog.slug}`: `/blog/${blog.slug}`}>
           <span className="text-info dark:text-blue-300">Read more</span>
           <span className='text-info'>{readTime} minute</span>
         </Link>

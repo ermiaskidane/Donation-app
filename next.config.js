@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: [
       'source.unsplash.com',
+      'images.unsplash.com',
       'res.cloudinary.com',
       'img.clerk.com',
       'utfs.io',

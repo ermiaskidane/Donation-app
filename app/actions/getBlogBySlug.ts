@@ -2,7 +2,7 @@ import {db} from "@/lib/db";
 
 export interface BParams {
   slug: string,
-  serverId: string
+  serverId?: string
 }
 
 export default async function getBlogbySlug(

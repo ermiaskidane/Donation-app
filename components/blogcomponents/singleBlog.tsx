@@ -17,6 +17,7 @@ import { BlogData } from '@/type';
 // }
 interface SingleBlogprops {
   slug: string,
+  serverId?: string
   blogs: BlogData,
   blog: any
 }
@@ -24,6 +25,7 @@ interface SingleBlogprops {
 
 const SingleBlog = ({
   slug,
+  serverId,
   blogs,
   blog
 }: SingleBlogprops) => {
@@ -73,7 +75,7 @@ console.log("ZZZZZZZZZZZZZZZZZZzz", blog)
       {blog?.updatedPost.desc && (
       <Comments postSlug={slug} postId={blog.updatedPost.id}/>
       )}
-      <Blogcomponent Blogs={blogs}  blogRoute={true}/>
+      <Blogcomponent Blogs={blogs} serverId={serverId} blogRoute={true}/>
     </section>
   )
 }
