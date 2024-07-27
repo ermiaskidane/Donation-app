@@ -78,6 +78,8 @@ const Blogcomponent = ({
                 gap-4 capitalize 
                 h-12 justify-center 
                 rounded-xl
+                // bg-teal-500 
+                // bg-opacity-80
                
                 w-full sm:h-14 sm:w-1/5 md:w-1/4 lg:w-1/6 `}
              >
